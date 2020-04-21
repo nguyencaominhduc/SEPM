@@ -1,6 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const morgan = require('morgan');  // create middleware object
+
 const connectDB = require('./config/db');
 
 // Load environment variables
@@ -10,6 +11,8 @@ connectDB()
 
 // Route files
 const products = require('./routes/products')
+
+const users =  require('./routes/users')
 
 // Initialize app variable
 const app = express();
@@ -23,6 +26,8 @@ if (process.env.NODE_ENV === 'development'){
 
 //Mount router
 app.use('/api/v1/products',products);
+
+app.use('/api/v1/users', users);
 
 const PORT = process.env.PORT || 5000;
 
