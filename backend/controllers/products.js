@@ -105,3 +105,18 @@ exports.deleteProduct = async (req, res, next) => {
     }
 }
 
+// @desc    Search for products based on name or category
+// @route   DELETE /api/v1/products/search/:query
+// @access  Private
+exports.searchProduct = async (req, res, next) => {
+    Product.find({
+            $or: [
+                { name: { $regex: new RegExp(req.params.query, 'i') } },
+                { category: { $regex: new RegExp(req.params.query, 'i') } }
+            ]
+        },
+        function(err, result) {
+            res.send(result)
+        })
+}
+
