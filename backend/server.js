@@ -14,6 +14,8 @@ const products = require('./routes/products')
 
 const users =  require('./routes/users')
 
+const reviews =  require('./routes/reviews')
+
 // Initialize app variable
 const app = express();
 // Create body parser
@@ -28,6 +30,8 @@ if (process.env.NODE_ENV === 'development'){
 app.use('/api/v1/products',products);
 
 app.use('/api/v1/users', users);
+
+app.use('/api/v1/reviews', reviews);
 
 const PORT = process.env.PORT || 5000;
 
