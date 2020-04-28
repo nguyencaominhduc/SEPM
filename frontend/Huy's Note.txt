@@ -1,0 +1,12 @@
+In case the app won't load images, please follow below instructions:
+
+First, follow this path and find my-app\node_modules\react-scripts\config\webpack.config
+
+Start editing the webpack.config file by finding these commented out lines in the "module" section, then, simply re-enable these lines of code by commented out them again
+      // loaders: [
+      //   { test: /\.(png|jpg)$/, loader: 'url-loader?limit=8192' }
+      // ],
+
+Save the edited file and re-run the app with npm start to see if the images are loaded in the UI
+
+A lot of scripts ain't working and need more debugging work. An example of the problem you may encounter is the app failed to display the list items or the dropdown menus won't collapse
