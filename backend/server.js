@@ -1,6 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const morgan = require('morgan');  // create middleware object
+const cors = require('cors');
 
 const connectDB = require('./config/db');
 
@@ -18,6 +19,7 @@ const reviews =  require('./routes/reviews')
 
 // Initialize app variable
 const app = express();
+app.use(cors())
 // Create body parser
 app.use(express.json())
 
