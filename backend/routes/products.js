@@ -4,6 +4,7 @@ const router = express.Router();
 const {
   getProducts,
   getProduct,
+  getPopularProducts,
   createProduct,
   updateProduct,
   deleteProduct,
@@ -24,5 +25,9 @@ router
 router
   .route("/search/:query")
   .get(searchProduct)
+
+router
+  .route("/pop")
+  .get(getPopularProducts)
 
 module.exports = router;

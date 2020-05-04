@@ -18,6 +18,24 @@ exports.getProducts = async (req, res, next) => {
     }
 }
 
+// @desc    Get popular products
+// @route   GET /api/v1/products/popular
+// @access  Public
+exports.getPopularProducts = async (req, res, next) => {
+    try {
+        const products = await Product.find().limit(10);
+        res.status(200).json({
+            success: true,
+            count: products.length,
+            data: products
+        })
+    } catch (err) {
+        res.status(400).json({
+            success: false
+        })
+    }
+}
+
 // @desc    Get single product
 // @route   GET /api/v1/products/:id
 // @access  Public
