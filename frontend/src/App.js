@@ -8,6 +8,7 @@ import SearchResult from './SearchResult.js';
 import Review from './Review.js';
 import ProductDetail from './ProductDetail.js';
 import HomePage from './HomePage.js';
+import { connect } from "react-redux";
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/js/dist/dropdown';
@@ -105,5 +106,9 @@ class App extends React.Component {
   }
 }
 
+function mapStateToProps(centralState) {
+  return {
+    product: centralState.product
+}}
 
-export default App;
+export default connect(mapStateToProps)(App);

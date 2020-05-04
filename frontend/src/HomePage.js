@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { Link } from 'react-router-dom'
+import {useHistory , Link, Redirect } from 'react-router-dom'
 import AuthContext from "./auth-context.js";
+
 
 
 class HomePage extends React.Component {
@@ -27,7 +28,6 @@ class HomePage extends React.Component {
         this.setState({ loading: false })
       })
   }
-
   render() {
 
     let listOfProducts =  this.state.products;
@@ -53,144 +53,19 @@ class HomePage extends React.Component {
                     </div>
                     <div className="col-md-6 col-lg-6 slider-search-section d-none d-lg-block">
                       <div className="input-group">
-                        <div className="input-group-btn">
-                          <button
-                            type="button"
-                            className="btn btn-secondary wd-slider-search-btn"
-                            data-toggle="dropdown"
-                            aria-haspopup="true"
-                            aria-expanded="false"
-                          >
-                            All Categories{" "}
-                            <i
-                              className="fa fa-angle-down"
-                              aria-hidden="true"
-                            ></i>
-                          </button>
-                          <div className="dropdown-menu wd-dropdown-menu">
-                            <div className="search-category">
-                              <div className="row">
-                                <div className="col-md-6">
-                                  <h6 className="search-category-title">
-                                    Cameras and photos
-                                  </h6>
-                                  <ul>
-                                    <li>
-                                      <a href="#">
-                                        <i
-                                          className="fa fa-angle-double-right"
-                                          aria-hidden="true"
-                                        ></i>{" "}
-                                        Camera Electronice
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a href="#">
-                                        <i
-                                          className="fa fa-angle-double-right"
-                                          aria-hidden="true"
-                                        ></i>{" "}
-                                        Camera Appereances
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a href="#">
-                                        <i
-                                          className="fa fa-angle-double-right"
-                                          aria-hidden="true"
-                                        ></i>{" "}
-                                        DSLR
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a href="#">
-                                        <i
-                                          className="fa fa-angle-double-right"
-                                          aria-hidden="true"
-                                        ></i>{" "}
-                                        Video cameras
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a href="#">
-                                        <i
-                                          className="fa fa-angle-double-right"
-                                          aria-hidden="true"
-                                        ></i>{" "}
-                                        Top Cameras
-                                      </a>
-                                    </li>
-                                  </ul>
-                                </div>
-                                <div className="col-md-6">
-                                  <h6 className="search-category-title">
-                                    Cameras and photos
-                                  </h6>
-                                  <ul>
-                                    <li>
-                                      <a href="#">
-                                        <i
-                                          className="fa fa-angle-double-right"
-                                          aria-hidden="true"
-                                        ></i>{" "}
-                                        Camera Electronice
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a href="#">
-                                        <i
-                                          className="fa fa-angle-double-right"
-                                          aria-hidden="true"
-                                        ></i>{" "}
-                                        Camera Appereances
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a href="#">
-                                        <i
-                                          className="fa fa-angle-double-right"
-                                          aria-hidden="true"
-                                        ></i>{" "}
-                                        DSLR
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a href="#">
-                                        <i
-                                          className="fa fa-angle-double-right"
-                                          aria-hidden="true"
-                                        ></i>{" "}
-                                        Video cameras
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a href="#">
-                                        <i
-                                          className="fa fa-angle-double-right"
-                                          aria-hidden="true"
-                                        ></i>{" "}
-                                        Top Cameras
-                                      </a>
-                                    </li>
-                                  </ul>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
                         <input
                           type="text"
                           className="form-control input-search-box"
                           placeholder="Enter your search key ..."
                         />
-                        <span className="input-group-btn">
+                        <a className="input-group-btn" href='/SearchResult'>
                           <button
                             className="btn btn-secondary wd-search-btn"
                             type="button"
                           >
                             <i className="fa fa-search" aria-hidden="true"></i>
                           </button>
-                        </span>
+                        </a>
                       </div>
                     </div>
                     <div className="col-md-6 col-lg-3  col-xl-3 text-right">
@@ -1498,60 +1373,6 @@ class HomePage extends React.Component {
 
               {/* <!-- =========================Slider Section============================== --> */}
               <section id="main-slider-section">
-                {/* <div
-              id="main-slider"
-              className="slider-bg2 owl-carousel owl-theme product-review slider-cat"
-            >
-              <div className="item d-flex  slider-bg align-items-center">
-                <div className="container-fluid">
-                  <div className="row justify-content-end">
-                    <div className="slider-text order-2 order-sm-1 col-sm-6  col-xl-4  col-md-6">
-                      <h6 className="sub-title">Choose your favourite market</h6>
-                      <h1 className="slider-title">
-                        <strong className="highlights-text">Compare</strong> Best
-                        Prices
-                      </h1>
-                      <p className="slider-content">Grabe it hurry.</p>
-                      <a
-                        href="shop-left-sidebar.html"
-                        className="btn btn-primary wd-shop-btn slider-btn"
-                      >
-                        Go to store{" "}
-                        <i className="fa fa-arrow-right" aria-hidden="true"></i>
-                      </a>
-                    </div>
-                    <div className="col-sm-6 col-md-6  order-1 order-sm-2 col-xl-6 slider-img">
-                      <img src={require("./img/slider-img/slider3.png")} alt="SLIDER" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="item d-flex  slider-bg align-items-center">
-                <div className="container-fluid">
-                  <div className="row justify-content-end">
-                    <div className="slider-text col-sm-6 col-xl-4  order-2 order-sm-1 col-md-6">
-                      <h6 className="sub-title">Choose your favourite market</h6>
-                      <h1 className="slider-title">
-                        <strong className="highlights-text">Compare</strong> Best
-                        Prices
-                      </h1>
-                      <p className="slider-content">Grabe it hurry.</p>
-                      <a
-                        href="shop-left-sidebar.html"
-                        className="btn btn-primary wd-shop-btn slider-btn"
-                      >
-                        Go to store{" "}
-                        <i className="fa fa-arrow-right" aria-hidden="true"></i>
-                      </a>
-                    </div>
-                    <div className="col-sm-6 col-md-6 col-xl-6  order-1 order-sm-2  slider-img fadeInDown animated">
-                      <img src={require("./img/slider-img/slider4.png")} alt="SLIDER" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-           */}
                 <img
                   src={require("./img/slider-img/landpage.jpg")}
                   alt="SLIDER"
@@ -1710,7 +1531,7 @@ class HomePage extends React.Component {
                                 <strong>{s.data[0].price} VND</strong>
                               </div>
                               <a
-                                href="product-details.html"
+                                href="/ProductDetail"
                                 className="btn btn-primary amazon-details"
                               >
                                 Details{" "}
@@ -1774,9 +1595,7 @@ class HomePage extends React.Component {
                 </div>
               </section>
 
-              {/* <!-- =========================
-          Recent-Product Section
-      ============================== --> */}
+              {/* <!-- =========================Ppopular Product Section============================== --> */}
               <section id="recent-product" className="recent-pro-2">
                 <div className="container-fluid custom-width">
                   <div className="row">
@@ -1793,7 +1612,7 @@ class HomePage extends React.Component {
                     >
                       <div className="recent-product-box">
                         <div className="recent-product-img">
-                          <a href="product-details.html">
+                          <a href="/ProductDetail">
                             <img
                               src={p.data[0].image}
                               style={{ width: "240px", height: "280px" }}
@@ -1852,9 +1671,7 @@ class HomePage extends React.Component {
                 </div>
               </section>
 
-              {/* <!-- =========================
-          Footer Section
-      ============================== --> */}
+              {/* <!-- =========================Footer Section============================== --> */}
               <footer
                 className="footer wow fadeInUp animated footer-2"
                 data-wow-delay="900ms"
@@ -1862,9 +1679,7 @@ class HomePage extends React.Component {
                 <div className="container-fluid custom-width">
                   <div className="row">
                     <div className="col-md-12 col-lg-2">
-                      {/* <!-- ===========================
-    						Footer About
-    					 =========================== --> */}
+                      {/* <!-- ===========================Footer About=========================== --> */}
                       <div className="footer-about">
                         <a href="index.html" className="footer-about-logo">
                           <img src={require("./img/logo.png")} alt="Logo" />
