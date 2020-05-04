@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import AuthContext from './auth-context.js'
+import { Link } from 'react-router-dom'
 
 export default class Auth extends Component {
     static contextType = AuthContext;
@@ -58,17 +59,20 @@ export default class Auth extends Component {
 
     render() {
         return (
-            <div className="login-page">
-                <div className="form">
+            <div className="login-page mt-0 pt-0">
+                <div className="form-group">
                     <form className='login-form' onSubmit={this.submitHandler}>
-                        <h3 className="text-center">
+                        <h2 className="text-center" style={{ color: 'rgb(255,69,0)' }}>
                             LOG IN
-                        </h3>
+                        </h2>
                         <br />
-                        <input type="text" className="rounded-pill" name="username" id="username" ref={this.usernameEl} placeholder="Enter username" />
-                        <input type="password" className="rounded-pill" name="password" id="password" ref={this.passwordEl} placeholder="Enter password" />
+                        <label for="username">Username</label>
+                        <input type="text" className="rounded-pill form-control my-2" name="username" id="username" ref={this.usernameEl} placeholder="Enter username" />
+                        <label for="password">Password</label>
+                        <input type="password" className="rounded-pill form-control my-2" name="password" id="password" ref={this.passwordEl} placeholder="Enter password" />
                         <h5 style={{color: 'red', fontSize: 15 + 'px'}}>{this.state.message}</h5>
-                        <button type='submit' className="rounded-pill btn-block z-depth-0 my-4 waves-effect" style={{ backgroundColor: 'rgb(202, 0, 0)' }}>Sign in</button>
+                        <button type='submit' className="rounded-pill btn-block z-depth-0 my-4 waves-effect text-light" style={{ backgroundColor: 'rgb(255,69,0)' }}>Sign in</button>
+                        <Link to="/Register">No account yet? Register!</Link>
                     </form>
                 </div>
             </div>

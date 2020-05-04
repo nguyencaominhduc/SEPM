@@ -58,7 +58,7 @@ router.get('/getUsers', checkAuth.checkHandler, (req, res, next) => {
     })
 })
 
-router.post('/signup', checkAuth.checkHandler, (req, res, next) => {
+router.post('/signup', (req, res, next) => {
     User.find({ username: req.body.username })
         .exec()
         .then(user => {

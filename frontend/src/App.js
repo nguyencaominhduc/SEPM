@@ -3,6 +3,7 @@ import './css/App.css';
 import Navbar from './Navbar.js'
 import AuthContext from './auth-context.js'
 import Login from './Login.jsx'
+import Register from './Register.jsx'
 import SearchResult from './SearchResult.js';
 import Review from './Review.js';
 import ProductDetail from './ProductDetail.js';
@@ -93,7 +94,7 @@ class App extends React.Component {
                 <Route path='/HomePage' render={() => <HomePage />} />
                 {this.state.token && <Redirect from='/login' to='/HomePage' exact />}
                 <Route path='/Login' render={() => <Login />} />
-
+                <Route path='/Register' render={() => <Register />} />
                 <Route path='/SearchResult' render={() => <SearchResult />} />
               </Switch>
             </AuthContext.Provider>

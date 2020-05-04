@@ -270,6 +270,13 @@ figcaption .featured-bg-color {
   color: #ff9800;
 }
 
+@import url(https://fonts.googleapis.com/css?family=Roboto:300);
+.login-page {
+    width: 360px;
+    padding: 8% 0 0;
+    margin: auto;
+}
+
 #scrollUp {
   bottom: 60px;
   right: 20px;
