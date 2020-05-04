@@ -2,14 +2,16 @@ import React, { Component } from "react";
 import { Link } from 'react-router-dom'
 import AuthContext from "./auth-context.js";
 
+
 class HomePage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { products: [], loading: true };
+    this.state = { products: [], loading: true , popular:[]};
     // this.products = this.products.bind(this);
   }
+
   // load project after call the component
-  componentWillMount() {
+  componentDidMount() {
     fetch(`http://localhost:5000/api/v1/products`, {
       headers: {
         Accept: "application/json",
@@ -18,100 +20,18 @@ class HomePage extends React.Component {
     })
       .then((res) => res.json())
       .then((res) => {
-        this.setState({ products: res.data })
+        this.setState({ products: res.data.slice(1200,1206)})
         console.log(this.state.products)
       })
       .then((res) => {
         this.setState({ loading: false })
       })
   }
-  convertObject(listProducts) {
-    if (!this.state.loading) {
-      setTimeout(() => {
-        listProducts = this.state.products.slice(0, 6).map(product => (
-          <div
-            className="col-12 col-md-6 col-lg-4 p0 amazon-review-box wow fadeIn animated"
-            data-wow-delay="0.2s"
-          >
-            <div className="media">
-              <div className="row">
-                <div className="col-sm-4 col-md-5">
-                  <img
-                    className="img-fluid"
-                    src={require("./img/product-img/product-img-9.jpg")}
-                    // src={product.data.data[0].image}
-                    alt="Generic placeholder image"
-                  />
-                </div>
-                <div className="col-sm-8 col-md-7 p0 d-flex align-items-center">
-                  <div className="amazon-review-box-content">
-                    <div className="rating">
-                      <a href="#">
-                        <i
-                          className="fa fa-star active-color"
-                          aria-hidden="true"
-                        ></i>
-                      </a>
-                      <a href="#">
-                        <i
-                          className="fa fa-star active-color"
-                          aria-hidden="true"
-                        ></i>
-                      </a>
-                      <a href="#">
-                        <i
-                          className="fa fa-star active-color"
-                          aria-hidden="true"
-                        ></i>
-                      </a>
-                      <a href="#">
-                        <i
-                          className="fa fa-star active-color"
-                          aria-hidden="true"
-                        ></i>
-                      </a>
-                      <a href="#">
-                        <i
-                          className="fa fa-star active-color"
-                          aria-hidden="true"
-                        ></i>
-                      </a>
-                    </div>
-                    <h6 className="amazon-review-box-title">
-                      {product.name}
-                      <h1>{product}</h1>
-                    </h6>
-                    <p className="amazon-review-content">
-                      IMPRESSIVE SOUND QUALITY IS THE ULTIOAL &amp; assive noise
-                      isolating, NOT active noise cancellation(ANC).
-                    </p>
-                    <div className="price">
-                      <strong>$159 - $250</strong>
-                    </div>
-                    <a
-                      href="product-details.html"
-                      className="btn btn-primary amazon-details"
-                    >
-                      Details{" "}
-                      <i className="fa fa-arrow-right" aria-hidden="true"></i>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
 
-        ));
-      }, 100)
-      console.log('Finished loading')
-      console.log(listProducts)
-    } else {
-      console.log('Still loading')
-    }
-  }
   render() {
-    var listProducts = null
-    setTimeout(() => this.convertObject(listProducts), 6000)
+
+    let listOfProducts =  this.state.products;
+
     return (
       <AuthContext.Consumer>
         {(context) => {
@@ -1730,227 +1650,81 @@ class HomePage extends React.Component {
                         </div>
                       </div>
                       {/* content loop*/}
-                      {listProducts}
+                      {listOfProducts.map(s=>
                       <div
-                        className="col-12 col-md-6 col-lg-4 p0 amazon-review-box wow fadeIn animated"
-                        data-wow-delay="0.2s"
-                      >
-                        <div className="media">
-                          <div className="row">
-                            <div className="col-sm-4 col-md-5">
-                              <img
-                                className="img-fluid"
-                                src={require("./img/product-img/product-img-9.jpg")}
-                                alt="Generic placeholder image"
-                              />
-                            </div>
-                            <div className="col-sm-8 col-md-7 p0 d-flex align-items-center">
-                              <div className="amazon-review-box-content">
-                                <div className="rating">
-                                  <a href="#">
-                                    <i
-                                      className="fa fa-star active-color"
-                                      aria-hidden="true"
-                                    ></i>
-                                  </a>
-                                  <a href="#">
-                                    <i
-                                      className="fa fa-star active-color"
-                                      aria-hidden="true"
-                                    ></i>
-                                  </a>
-                                  <a href="#">
-                                    <i
-                                      className="fa fa-star active-color"
-                                      aria-hidden="true"
-                                    ></i>
-                                  </a>
-                                  <a href="#">
-                                    <i
-                                      className="fa fa-star active-color"
-                                      aria-hidden="true"
-                                    ></i>
-                                  </a>
-                                  <a href="#">
-                                    <i
-                                      className="fa fa-star active-color"
-                                      aria-hidden="true"
-                                    ></i>
-                                  </a>
-                                </div>
-                                <h6 className="amazon-review-box-title">
-                                  Mpow Bluetooth Headphones
-                                </h6>
-                                <p className="amazon-review-content">
-                                  IMPRESSIVE SOUND QUALITY IS THE ULTIOAL &amp;
-                                  assive noise isolating, NOT active noise
-                                  cancellation(ANC).
-                                </p>
-                                <div className="price">
-                                  <strong>$159 - $250</strong>
-                                </div>
-                                <a
-                                  href="product-details.html"
-                                  className="btn btn-primary amazon-details"
-                                >
-                                  Details{" "}
+                      className="col-12 col-md-6 col-lg-4 p0 amazon-review-box wow fadeIn animated"
+                      data-wow-delay="0.2s"
+                      key={s._id}
+                    >
+                      <div className="media">
+                        <div className="row">
+                          <div className="col-sm-4 col-md-5">
+                            <img
+                              className="img-fluid"
+                              src={s.data[0].image}
+                              style={{ width: "240px", height: "280px" }}
+                              alt="Generic placeholder image"
+                            />
+                          </div>
+                          <div className="col-sm-8 col-md-7 p0 d-flex align-items-center">
+                            <div className="amazon-review-box-content">
+                              <div className="rating">
+                                <a href="#">
                                   <i
-                                    className="fa fa-arrow-right"
+                                    className="fa fa-star active-color"
+                                    aria-hidden="true"
+                                  ></i>
+                                </a>
+                                <a href="#">
+                                  <i
+                                    className="fa fa-star active-color"
+                                    aria-hidden="true"
+                                  ></i>
+                                </a>
+                                <a href="#">
+                                  <i
+                                    className="fa fa-star active-color"
+                                    aria-hidden="true"
+                                  ></i>
+                                </a>
+                                <a href="#">
+                                  <i
+                                    className="fa fa-star active-color"
+                                    aria-hidden="true"
+                                  ></i>
+                                </a>
+                                <a href="#">
+                                  <i
+                                    className="fa fa-star active-color"
                                     aria-hidden="true"
                                   ></i>
                                 </a>
                               </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div
-                        className="col-12 col-md-6 col-lg-4 p0 amazon-review-box wow fadeIn animated"
-                        data-wow-delay="0.4s"
-                      >
-                        <div className="media">
-                          <div className="row">
-                            <div className="col-sm-4 col-md-5">
-                              <img
-                                className="img-fluid"
-                                src={require("./img/product-img/product-img-9.jpg")}
-                                alt="Generic placeholder image"
-                              />
-                            </div>
-                            <div className="col-sm-8 col-md-7 p0 d-flex align-items-center">
-                              <div className="amazon-review-box-content">
-                                <div className="rating">
-                                  <a href="#">
-                                    <i
-                                      className="fa fa-star active-color"
-                                      aria-hidden="true"
-                                    ></i>
-                                  </a>
-                                  <a href="#">
-                                    <i
-                                      className="fa fa-star active-color"
-                                      aria-hidden="true"
-                                    ></i>
-                                  </a>
-                                  <a href="#">
-                                    <i
-                                      className="fa fa-star active-color"
-                                      aria-hidden="true"
-                                    ></i>
-                                  </a>
-                                  <a href="#">
-                                    <i
-                                      className="fa fa-star active-color"
-                                      aria-hidden="true"
-                                    ></i>
-                                  </a>
-                                  <a href="#">
-                                    <i
-                                      className="fa fa-star active-color"
-                                      aria-hidden="true"
-                                    ></i>
-                                  </a>
-                                </div>
-                                <h6 className="amazon-review-box-title">
-                                  New smartphone for your pocket
-                                </h6>
-                                <p className="amazon-review-content">
-                                  IMPRESSIVE SOUND QUALITY IS THE ULTIOAL &amp;
-                                  assive noise isolating, NOT active noise
-                                  cancellation(ANC).
-                                </p>
-                                <div className="price">
-                                  <strong>$120 - $150</strong>
-                                </div>
-                                <a
-                                  href="product-details.html"
-                                  className="btn btn-primary amazon-details"
-                                >
-                                  Details{" "}
-                                  <i
-                                    className="fa fa-arrow-right"
-                                    aria-hidden="true"
-                                  ></i>
-                                </a>
+                              <h6 className="amazon-review-box-title">
+                              {s.name}
+                              </h6>
+                              <p className="amazon-review-content">
+                              {s.category}
+                              </p>
+                              <div className="price">
+                                <strong>{s.data[0].price} VND</strong>
                               </div>
+                              <a
+                                href="product-details.html"
+                                className="btn btn-primary amazon-details"
+                              >
+                                Details{" "}
+                                <i
+                                  className="fa fa-arrow-right"
+                                  aria-hidden="true"
+                                ></i>
+                              </a>
                             </div>
                           </div>
                         </div>
                       </div>
-                      <div
-                        className="col-12 col-md-6 col-lg-4 p0 amazon-review-box wow fadeIn animated"
-                        data-wow-delay="0.6s"
-                      >
-                        <div className="media">
-                          <div className="row">
-                            <div className="col-sm-4 col-md-5">
-                              <img
-                                className="img-fluid"
-                                src={require("./img/product-img/product-img-9.jpg")}
-                                alt="Generic placeholder image"
-                              />
-                            </div>
-                            <div className="col-sm-8 col-md-7 p0 d-flex align-items-center">
-                              <div className="amazon-review-box-content">
-                                <div className="rating">
-                                  <a href="#">
-                                    <i
-                                      className="fa fa-star active-color"
-                                      aria-hidden="true"
-                                    ></i>
-                                  </a>
-                                  <a href="#">
-                                    <i
-                                      className="fa fa-star active-color"
-                                      aria-hidden="true"
-                                    ></i>
-                                  </a>
-                                  <a href="#">
-                                    <i
-                                      className="fa fa-star active-color"
-                                      aria-hidden="true"
-                                    ></i>
-                                  </a>
-                                  <a href="#">
-                                    <i
-                                      className="fa fa-star active-color"
-                                      aria-hidden="true"
-                                    ></i>
-                                  </a>
-                                  <a href="#">
-                                    <i
-                                      className="fa fa-star active-color"
-                                      aria-hidden="true"
-                                    ></i>
-                                  </a>
-                                </div>
-                                <h6 className="amazon-review-box-title">
-                                  Mega offer for LG TV Monitor
-                                </h6>
-                                <p className="amazon-review-content">
-                                  IMPRESSIVE SOUND QUALITY IS THE ULTIOAL &amp;
-                                  assive noise isolating, NOT active noise
-                                  cancellation(ANC).
-                                </p>
-                                <div className="price">
-                                  <strong>$90 - $220</strong>
-                                </div>
-                                <a
-                                  href="product-details.html"
-                                  className="btn btn-primary amazon-details"
-                                >
-                                  Details{" "}
-                                  <i
-                                    className="fa fa-arrow-right"
-                                    aria-hidden="true"
-                                  ></i>
-                                </a>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                    </div>
+                    )}
                     </div>
                   </div>
                 </div>
@@ -2488,201 +2262,6 @@ class HomePage extends React.Component {
                       className="col-sm-6 col-12 col-md-4 col-lg-3 col-xl-2 wow fadeIn animated"
                       data-wow-delay="900ms"
                     >
-                      {/* <div className="recent-product-box">
-                  <div className="recent-product-img">
-                    <a href="product-details.html">
-                      <img
-                        src="img/product-img/product-img-16.jpg"
-                        className="img-fluid"
-                        alt="recent-product img"
-                      />
-                    </a>
-                    <span className="badge badge-secondary wd-badge text-uppercase">
-                      New
-                    </span>
-                    <div className="recent-product-info">
-                      <div className="d-flex justify-content-between">
-                        <div className="recent-price">$20.00 - $25.30</div>
-                        <div className="recente-product-categories">Camera</div>
-                      </div>
-                      <div className="recente-product-content">
-                        Visual Coolpix 6D and Scorebox review example
-                      </div>
-
-                      <div className="recent-product-meta-link">
-                        <a href="#">
-                          <i
-                            className="fa fa-star active-color"
-                            aria-hidden="true"
-                          ></i>
-                          <strong>4.5</strong>
-                        </a>
-                        <a href="#">
-                          <img src="img/product-img/compare.png" alt="" />
-                          <img
-                            className="compare-white"
-                            src="img/product-img/compare-white.png"
-                            alt=""
-                          />
-                        </a>
-                        <a href="#">
-                          <i className="fa fa-comments-o" aria-hidden="true"></i>
-                          145
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div
-                className="col-sm-6 col-12 col-md-4 col-lg-3 col-xl-2 wow fadeIn animated"
-                data-wow-delay="1000ms"
-              >
-                <div className="recent-product-box">
-                  <div className="recent-product-img">
-                    <a href="product-details.html">
-                      <img
-                        src="img/product-img/product-img-12.jpg"
-                        className="img-fluid"
-                        alt="recent-product img"
-                      />
-                    </a>
-                    <span className="badge badge-secondary wd-badge text-uppercase">
-                      New
-                    </span>
-                    <div className="recent-product-info">
-                      <div className="d-flex justify-content-between">
-                        <div className="recent-price">$15.00 - $45.00</div>
-                        <div className="recente-product-categories">Camera</div>
-                      </div>
-                      <div className="recente-product-content">
-                        Phone 550 and Scorebox review example
-                      </div>
-
-                      <div className="recent-product-meta-link">
-                        <a href="#">
-                          <i
-                            className="fa fa-star active-color"
-                            aria-hidden="true"
-                          ></i>
-                          <strong>4.5</strong>
-                        </a>
-                        <a href="#">
-                          <img src="img/product-img/compare.png" alt="" />
-                          <img
-                            className="compare-white"
-                            src="img/product-img/compare-white.png"
-                            alt=""
-                          />
-                        </a>
-                        <a href="#">
-                          <i className="fa fa-comments-o" aria-hidden="true"></i>
-                          145
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div
-                className="col-sm-6 col-12 col-md-4 col-lg-3 col-xl-2 wow fadeIn animated"
-                data-wow-delay="1200ms"
-              >
-                <div className="recent-product-box">
-                  <div className="recent-product-img">
-                    <a href="product-details.html">
-                      <img
-                        src="img/product-img/product-img-17.jpg"
-                        className="img-fluid"
-                        alt="recent-product img"
-                      />
-                    </a>
-                    <span className="badge badge-secondary wd-badge text-uppercase">
-                      New
-                    </span>
-                    <div className="recent-product-info">
-                      <div className="d-flex justify-content-between">
-                        <div className="recent-price">$52.00 - $72.00</div>
-                        <div className="recente-product-categories">Camera</div>
-                      </div>
-                      <div className="recente-product-content">
-                        Phone 550 and Scorebox review example
-                      </div>
-
-                      <div className="recent-product-meta-link">
-                        <a href="#">
-                          <i
-                            className="fa fa-star active-color"
-                            aria-hidden="true"
-                          ></i>
-                          <strong>4.5</strong>
-                        </a>
-                        <a href="#">
-                          <img src="img/product-img/compare.png" alt="" />
-                          <img
-                            className="compare-white"
-                            src="img/product-img/compare-white.png"
-                            alt=""
-                          />
-                        </a>
-                        <a href="#">
-                          <i className="fa fa-comments-o" aria-hidden="true"></i>
-                          145
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div
-                className="col-sm-6 col-12 col-md-4 col-lg-3 col-xl-2 wow fadeIn animated"
-                data-wow-delay="1400ms"
-              >
-                <div className="recent-product-box">
-                  <div className="recent-product-img">
-                    <a href="product-details.html">
-                      <img
-                        src="img/product-img/product-img-13.jpg"
-                        className="img-fluid"
-                        alt="recent-product img"
-                      />
-                    </a>
-                    <span className="badge badge-secondary wd-badge text-uppercase">
-                      New
-                    </span>
-                    <div className="recent-product-info">
-                      <div className="d-flex justify-content-between">
-                        <div className="recent-price">$45.00 - $25.00</div>
-                        <div className="recente-product-categories">Phones</div>
-                      </div>
-                      <div className="recente-product-content">
-                        Phone 550 and Scorebox review example
-                      </div>
-
-                      <div className="recent-product-meta-link">
-                        <a href="#">
-                          <i
-                            className="fa fa-star active-color"
-                            aria-hidden="true"
-                          ></i>
-                          <strong>4.5</strong>
-                        </a>
-                        <a href="#">
-                          <img src="img/product-img/compare.png" alt="" />
-                          <img
-                            className="compare-white"
-                            src="img/product-img/compare-white.png"
-                            alt=""
-                          />
-                        </a>
-                        <a href="#">
-                          <i className="fa fa-comments-o" aria-hidden="true"></i>
-                          145
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>*/}
                     </div>
                   </div>
                 </div>
