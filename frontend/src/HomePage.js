@@ -20,8 +20,8 @@ class HomePage extends React.Component {
     })
       .then((res) => res.json())
       .then((res) => {
-        this.setState({ products: res.data.slice(1200,1206)})
-        console.log(this.state.products)
+        this.setState({ products: res.data.slice(1200,1206),  popular: res.data.slice(1400,1408)})
+        console.log(this.state.popular)
       })
       .then((res) => {
         this.setState({ loading: false })
@@ -31,7 +31,7 @@ class HomePage extends React.Component {
   render() {
 
     let listOfProducts =  this.state.products;
-
+    let popularProducts = this.state.popular;
     return (
       <AuthContext.Consumer>
         {(context) => {
@@ -1744,13 +1744,14 @@ class HomePage extends React.Component {
                           Be a effective buyer using
                           <strong> Easy Price</strong> application
                         </div>
-                        <div className="message-content">
+                        {/* <div className="message-content">
                           Getting your products with cheapiest price
-                        </div>
+                        </div> */}
                       </div>
                       <div className="message-bar-chart">
                         <img
-                          src={require("./img/message-bar-chart.png")}
+                          src={require("./img/logo.png")}
+                          style={{ width: "180px", height: "180px" }}
                           className="img-fluid"
                           alt="message-bar-chart"
                         />
@@ -1784,15 +1785,18 @@ class HomePage extends React.Component {
                         Popular Product Comparison
                       </h2>
                     </div>
+                    {popularProducts.map(p=>
                     <div
                       className="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 wow fadeIn animated"
                       data-wow-delay="100ms"
+                      key={p._id}
                     >
                       <div className="recent-product-box">
                         <div className="recent-product-img">
                           <a href="product-details.html">
                             <img
-                              src={require("./img/product-img/product-img-12.jpg")}
+                              src={p.data[0].image}
+                              style={{ width: "240px", height: "280px" }}
                               className="img-fluid"
                               alt="recent-product img"
                             />
@@ -1803,14 +1807,14 @@ class HomePage extends React.Component {
                           <div className="recent-product-info">
                             <div className="d-flex justify-content-between">
                               <div className="recent-price">
-                                $40.30 - $40.30
+                              {p.data[0].price}
                               </div>
                               <div className="recente-product-categories">
-                                Phones
+                                {p.category}
                               </div>
                             </div>
                             <div className="recente-product-content">
-                              Phone 550 and Scorebox review example
+                              {p.name}
                             </div>
                             <div className="recent-product-meta-link">
                               <a href="#">
@@ -1836,433 +1840,14 @@ class HomePage extends React.Component {
                                   className="fa fa-comments-o"
                                   aria-hidden="true"
                                 ></i>
-                                145
+                                0
                               </a>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                    <div
-                      className="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 wow fadeIn animated"
-                      data-wow-delay="200ms"
-                    >
-                      <div className="recent-product-box">
-                        <div className="recent-product-img">
-                          <a href="product-details.html">
-                            <img
-                              src={require("./img/product-img/product-img-13.jpg")}
-                              className="img-fluid"
-                              alt="recent-product img"
-                            />
-                          </a>
-                          <span className="badge badge-secondary wd-badge green-bg text-uppercase">
-                            Hot
-                          </span>
-                          <div className="recent-product-info">
-                            <div className="d-flex justify-content-between">
-                              <div className="recent-price">
-                                $15.45 - $50.00
-                              </div>
-                              <div className="recente-product-categories">
-                                Camera
-                              </div>
-                            </div>
-                            <div className="recente-product-content">
-                              Visual camera and Scorebox review example
-                            </div>
+                    </div>)}
 
-                            <div className="recent-product-meta-link">
-                              <a href="#">
-                                <i
-                                  className="fa fa-star active-color"
-                                  aria-hidden="true"
-                                ></i>
-                                <strong>4.5</strong>
-                              </a>
-                              <a href="#">
-                                <img
-                                  src={require("./img/product-img/compare.png")}
-                                  alt=""
-                                />
-                                <img
-                                  className="compare-white"
-                                  src={require("./img/product-img/compare-white.png")}
-                                  alt=""
-                                />
-                              </a>
-                              <a href="#">
-                                <i
-                                  className="fa fa-comments-o"
-                                  aria-hidden="true"
-                                ></i>
-                                145
-                              </a>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div
-                      className="col-sm-6 col-12 col-md-4 col-lg-3 col-xl-2 wow fadeIn animated"
-                      data-wow-delay="300ms"
-                    >
-                      <div className="recent-product-box">
-                        <div className="recent-product-img">
-                          <a href="product-details.html">
-                            <img
-                              src={require("./img/product-img/product-img-12.jpg")}
-                              className="img-fluid"
-                              alt="recent-product img"
-                            />
-                          </a>
-                          <span className="badge badge-secondary wd-badge text-uppercase">
-                            New
-                          </span>
-                          <div className="recent-product-info">
-                            <div className="d-flex justify-content-between">
-                              <div className="recent-price">
-                                $40.30 - $40.30
-                              </div>
-                              <div className="recente-product-categories">
-                                Phones
-                              </div>
-                            </div>
-                            <div className="recente-product-content">
-                              Phone 550 and Scorebox review example
-                            </div>
-                            <div className="recent-product-meta-link">
-                              <a href="#">
-                                <i
-                                  className="fa fa-star active-color"
-                                  aria-hidden="true"
-                                ></i>
-                                <strong>4.5</strong>
-                              </a>
-                              <a href="#">
-                                <img
-                                  src={require("./img/product-img/compare.png")}
-                                  alt=""
-                                />
-                                <img
-                                  className="compare-white"
-                                  src={require("./img/product-img/compare-white.png")}
-                                  alt=""
-                                />
-                              </a>
-                              <a href="#">
-                                <i
-                                  className="fa fa-comments-o"
-                                  aria-hidden="true"
-                                ></i>
-                                145
-                              </a>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div
-                      className="col-sm-6 col-12 col-md-4 col-lg-3 col-xl-2 wow fadeIn animated"
-                      data-wow-delay="400ms"
-                    >
-                      <div className="recent-product-box">
-                        <div className="recent-product-img">
-                          <a href="product-details.html">
-                            <img
-                              src={require("./img/product-img/product-img-12.jpg")}
-                              className="img-fluid"
-                              alt="recent-product img"
-                            />
-                          </a>
-                          <span className="badge badge-secondary wd-badge text-uppercase">
-                            New
-                          </span>
-                          <div className="recent-product-info">
-                            <div className="d-flex justify-content-between">
-                              <div className="recent-price">
-                                $40.30 - $40.30
-                              </div>
-                              <div className="recente-product-categories">
-                                Phones
-                              </div>
-                            </div>
-                            <div className="recente-product-content">
-                              Phone 550 and Scorebox review example
-                            </div>
-                            <div className="recent-product-meta-link">
-                              <a href="#">
-                                <i
-                                  className="fa fa-star active-color"
-                                  aria-hidden="true"
-                                ></i>
-                                <strong>4.5</strong>
-                              </a>
-                              <a href="#">
-                                <img
-                                  src={require("./img/product-img/compare.png")}
-                                  alt=""
-                                />
-                                <img
-                                  className="compare-white"
-                                  src={require("./img/product-img/compare-white.png")}
-                                  alt=""
-                                />
-                              </a>
-                              <a href="#">
-                                <i
-                                  className="fa fa-comments-o"
-                                  aria-hidden="true"
-                                ></i>
-                                145
-                              </a>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div
-                      className="col-sm-6 col-12 col-md-4 col-lg-3 col-xl-2 wow fadeIn animated"
-                      data-wow-delay="500ms"
-                    >
-                      <div className="recent-product-box">
-                        <div className="recent-product-img">
-                          <a href="product-details.html">
-                            <img
-                              src={require("./img/product-img/product-img-12.jpg")}
-                              className="img-fluid"
-                              alt="recent-product img"
-                            />
-                          </a>
-                          <span className="badge badge-secondary wd-badge text-uppercase">
-                            New
-                          </span>
-                          <div className="recent-product-info">
-                            <div className="d-flex justify-content-between">
-                              <div className="recent-price">
-                                $40.30 - $40.30
-                              </div>
-                              <div className="recente-product-categories">
-                                Phones
-                              </div>
-                            </div>
-                            <div className="recente-product-content">
-                              Phone 550 and Scorebox review example
-                            </div>
-                            <div className="recent-product-meta-link">
-                              <a href="#">
-                                <i
-                                  className="fa fa-star active-color"
-                                  aria-hidden="true"
-                                ></i>
-                                <strong>4.5</strong>
-                              </a>
-                              <a href="#">
-                                <img
-                                  src={require("./img/product-img/compare.png")}
-                                  alt=""
-                                />
-                                <img
-                                  className="compare-white"
-                                  src={require("./img/product-img/compare-white.png")}
-                                  alt=""
-                                />
-                              </a>
-                              <a href="#">
-                                <i
-                                  className="fa fa-comments-o"
-                                  aria-hidden="true"
-                                ></i>
-                                145
-                              </a>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div
-                      className="col-sm-6 col-12 col-md-4 col-lg-3 col-xl-2 wow fadeIn animated"
-                      data-wow-delay="600ms"
-                    >
-                      <div className="recent-product-box">
-                        <div className="recent-product-img">
-                          <a href="product-details.html">
-                            <img
-                              src={require("./img/product-img/product-img-12.jpg")}
-                              className="img-fluid"
-                              alt="recent-product img"
-                            />
-                          </a>
-                          <span className="badge badge-secondary wd-badge text-uppercase">
-                            New
-                          </span>
-                          <div className="recent-product-info">
-                            <div className="d-flex justify-content-between">
-                              <div className="recent-price">
-                                $40.30 - $40.30
-                              </div>
-                              <div className="recente-product-categories">
-                                Phones
-                              </div>
-                            </div>
-                            <div className="recente-product-content">
-                              Phone 550 and Scorebox review example
-                            </div>
-                            <div className="recent-product-meta-link">
-                              <a href="#">
-                                <i
-                                  className="fa fa-star active-color"
-                                  aria-hidden="true"
-                                ></i>
-                                <strong>4.5</strong>
-                              </a>
-                              <a href="#">
-                                <img
-                                  src={require("./img/product-img/compare.png")}
-                                  alt=""
-                                />
-                                <img
-                                  className="compare-white"
-                                  src={require("./img/product-img/compare-white.png")}
-                                  alt=""
-                                />
-                              </a>
-                              <a href="#">
-                                <i
-                                  className="fa fa-comments-o"
-                                  aria-hidden="true"
-                                ></i>
-                                145
-                              </a>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div
-                      className="col-sm-6 col-12 col-md-4 col-lg-3 col-xl-2 wow fadeIn animated"
-                      data-wow-delay="700ms"
-                    >
-                      <div className="recent-product-box">
-                        <div className="recent-product-img">
-                          <a href="product-details.html">
-                            <img
-                              src={require("./img/product-img/product-img-12.jpg")}
-                              className="img-fluid"
-                              alt="recent-product img"
-                            />
-                          </a>
-                          <span className="badge badge-secondary wd-badge text-uppercase">
-                            New
-                          </span>
-                          <div className="recent-product-info">
-                            <div className="d-flex justify-content-between">
-                              <div className="recent-price">
-                                $40.30 - $40.30
-                              </div>
-                              <div className="recente-product-categories">
-                                Phones
-                              </div>
-                            </div>
-                            <div className="recente-product-content">
-                              Phone 550 and Scorebox review example
-                            </div>
-                            <div className="recent-product-meta-link">
-                              <a href="#">
-                                <i
-                                  className="fa fa-star active-color"
-                                  aria-hidden="true"
-                                ></i>
-                                <strong>4.5</strong>
-                              </a>
-                              <a href="#">
-                                <img
-                                  src={require("./img/product-img/compare.png")}
-                                  alt=""
-                                />
-                                <img
-                                  className="compare-white"
-                                  src={require("./img/product-img/compare-white.png")}
-                                  alt=""
-                                />
-                              </a>
-                              <a href="#">
-                                <i
-                                  className="fa fa-comments-o"
-                                  aria-hidden="true"
-                                ></i>
-                                145
-                              </a>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div
-                      className="col-sm-6 col-12 col-md-4 col-lg-3 col-xl-2 wow fadeIn animated"
-                      data-wow-delay="700ms"
-                    >
-                      <div className="recent-product-box">
-                        <div className="recent-product-img">
-                          <a href="product-details.html">
-                            <img
-                              src={require("./img/product-img/product-img-12.jpg")}
-                              className="img-fluid"
-                              alt="recent-product img"
-                            />
-                          </a>
-                          <span className="badge badge-secondary wd-badge text-uppercase">
-                            New
-                          </span>
-                          <div className="recent-product-info">
-                            <div className="d-flex justify-content-between">
-                              <div className="recent-price">
-                                $40.30 - $40.30
-                              </div>
-                              <div className="recente-product-categories">
-                                Phones
-                              </div>
-                            </div>
-                            <div className="recente-product-content">
-                              Phone 550 and Scorebox review example
-                            </div>
-                            <div className="recent-product-meta-link">
-                              <a href="#">
-                                <i
-                                  className="fa fa-star active-color"
-                                  aria-hidden="true"
-                                ></i>
-                                <strong>4.5</strong>
-                              </a>
-                              <a href="#">
-                                <img
-                                  src={require("./img/product-img/compare.png")}
-                                  alt=""
-                                />
-                                <img
-                                  className="compare-white"
-                                  src={require("./img/product-img/compare-white.png")}
-                                  alt=""
-                                />
-                              </a>
-                              <a href="#">
-                                <i
-                                  className="fa fa-comments-o"
-                                  aria-hidden="true"
-                                ></i>
-                                145
-                              </a>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div
-                      className="col-sm-6 col-12 col-md-4 col-lg-3 col-xl-2 wow fadeIn animated"
-                      data-wow-delay="900ms"
-                    >
-                    </div>
                   </div>
                 </div>
               </section>
