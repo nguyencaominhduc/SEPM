@@ -1,13 +1,13 @@
 import React, { Component } from "react";
-import {useHistory , Link, Redirect } from 'react-router-dom'
+import {Link, Redirect } from 'react-router-dom'
 import AuthContext from "./auth-context.js";
-
+import NumberFormat from 'react-number-format';
 
 
 class HomePage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { products: [], loading: true , popular:[]};
+    this.state = { products: [], popular:[]};
     // this.products = this.products.bind(this);
   }
 
@@ -23,9 +23,6 @@ class HomePage extends React.Component {
       .then((res) => {
         this.setState({ products: res.data.slice(1200,1206),  popular: res.data.slice(1400,1408)})
         console.log(this.state.popular)
-      })
-      .then((res) => {
-        this.setState({ loading: false })
       })
   }
   render() {
@@ -528,11 +525,11 @@ class HomePage extends React.Component {
                             alt="department img"
                           />
                         </div>
-                        <div id="department-list" className="department-list">
+                        <div id="department-list" className="department-list" >
                           <ul className="list-group">
                             <li className="list-group-item">
-                              <a href="#!">
-                                <div className="department-list-logo">
+                              <a href="#!" style={{display: 'flex',  justifyContent:'left', alignItems:'left', marginLeft:'30px'}}>
+                                <div className="department-list-logo" >
                                   <img
                                     src={require("./img/department-img/department-img-1.png")}
                                     alt="department"
@@ -541,194 +538,10 @@ class HomePage extends React.Component {
                                 <span className="sub-list-main-menu">
                                   Furniture
                                 </span>{" "}
-                                <i
-                                  className="fa fa-angle-right"
-                                  aria-hidden="true"
-                                ></i>
                               </a>
-                              <div className="wd-sub-list">
-                                <div className="container">
-                                  <div className="row">
-                                    <div className="col-md-4">
-                                      <h6 className="black-color wd-sub-list-title">
-                                        Cameras and photos
-                                      </h6>
-                                      <ul className="wd-sub-menu">
-                                        <li>
-                                          <a href="shop-left-sidebar.html">
-                                            Camera Electronice
-                                          </a>
-                                        </li>
-                                        <li>
-                                          <a href="shop-left-sidebar.html">
-                                            Camera Appereances
-                                          </a>
-                                        </li>
-                                        <li>
-                                          <a href="shop-left-sidebar.html">
-                                            DSLR
-                                          </a>
-                                        </li>
-                                        <li>
-                                          <a href="shop-left-sidebar.html">
-                                            Video cameras
-                                          </a>
-                                        </li>
-                                        <li>
-                                          <a href="shop-left-sidebar.html">
-                                            Top Cameras
-                                          </a>
-                                        </li>
-                                        <li>
-                                          <a href="shop-left-sidebar.html">
-                                            Cheap Cameras
-                                          </a>
-                                        </li>
-                                        <li>
-                                          <a href="shop-left-sidebar.html">
-                                            Best Cameras
-                                          </a>
-                                        </li>
-                                        <li>
-                                          <a href="shop-left-sidebar.html">
-                                            Luxury Cameras
-                                          </a>
-                                        </li>
-                                        <li>
-                                          <a href="shop-left-sidebar.html">
-                                            Simple Cameras
-                                          </a>
-                                        </li>
-                                      </ul>
-                                    </div>
-                                    <div className="col-md-4">
-                                      <h6 className="black-color wd-sub-list-title">
-                                        Cameras and photos
-                                      </h6>
-                                      <ul className="wd-sub-menu">
-                                        <li>
-                                          <a href="shop-left-sidebar.html">
-                                            Camera Electronice
-                                          </a>
-                                        </li>
-                                        <li>
-                                          <a href="shop-left-sidebar.html">
-                                            Camera Appereances
-                                          </a>
-                                        </li>
-                                        <li>
-                                          <a href="shop-left-sidebar.html">
-                                            DSLR
-                                          </a>
-                                        </li>
-                                        <li>
-                                          <a href="shop-left-sidebar.html">
-                                            Video cameras
-                                          </a>
-                                        </li>
-                                        <li>
-                                          <a href="shop-left-sidebar.html">
-                                            Top Cameras
-                                          </a>
-                                        </li>
-                                        <li>
-                                          <a href="shop-left-sidebar.html">
-                                            Cheap Cameras
-                                          </a>
-                                        </li>
-                                        <li>
-                                          <a href="shop-left-sidebar.html">
-                                            Best Cameras
-                                          </a>
-                                        </li>
-                                        <li>
-                                          <a href="shop-left-sidebar.html">
-                                            Luxury Cameras
-                                          </a>
-                                        </li>
-                                        <li>
-                                          <a href="shop-left-sidebar.html">
-                                            Simple Cameras
-                                          </a>
-                                        </li>
-                                      </ul>
-                                    </div>
-                                    <div className="col-md-4">
-                                      <h6 className="black-color wd-sub-list-title">
-                                        Cameras and photos
-                                      </h6>
-                                      <ul className="wd-sub-menu">
-                                        <li>
-                                          <a href="shop-left-sidebar.html">
-                                            Camera Electronice
-                                          </a>
-                                        </li>
-                                        <li>
-                                          <a href="shop-left-sidebar.html">
-                                            Camera Appereances
-                                          </a>
-                                        </li>
-                                        <li>
-                                          <a href="shop-left-sidebar.html">
-                                            DSLR
-                                          </a>
-                                        </li>
-                                        <li>
-                                          <a href="shop-left-sidebar.html">
-                                            Video cameras
-                                          </a>
-                                        </li>
-                                        <li>
-                                          <a href="shop-left-sidebar.html">
-                                            Top Cameras
-                                          </a>
-                                        </li>
-                                        <li>
-                                          <a href="shop-left-sidebar.html">
-                                            Cheap Cameras
-                                          </a>
-                                        </li>
-                                        <li>
-                                          <a href="shop-left-sidebar.html">
-                                            Best Cameras
-                                          </a>
-                                        </li>
-                                        <li>
-                                          <a href="shop-left-sidebar.html">
-                                            Luxury Cameras
-                                          </a>
-                                        </li>
-                                        <li>
-                                          <a href="shop-left-sidebar.html">
-                                            Simple Cameras
-                                          </a>
-                                        </li>
-                                      </ul>
-                                    </div>
-                                    <div className="col-md-6">
-                                      <a href="product-details-scroll.html">
-                                        <img
-                                          src="img/department-img/department-sub-list-img-1.jpg"
-                                          className="department-sub-list-img"
-                                          alt="department-sub-list-img"
-                                        />
-                                      </a>
-                                    </div>
-                                    <div className="col-md-6">
-                                      <a href="product-details-scroll.html">
-                                        <img
-                                          src="img/department-img/department-sub-list-img-2.jpg"
-                                          className="department-sub-list-img"
-                                          alt="department-sub-list-img"
-                                        />
-                                      </a>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
                             </li>
                             <li className="list-group-item">
-                              <a href="product-details-scroll.html">
+                              <a href="#"  style={{display: 'flex',  justifyContent:'left', alignItems:'left', marginLeft:'30px'}}>
                                 <div className="department-list-logo">
                                   <img
                                     src={require("./img/department-img/department-img-2.png")}
@@ -741,7 +554,7 @@ class HomePage extends React.Component {
                               </a>
                             </li>
                             <li className="list-group-item">
-                              <a href="product-details-scroll.html">
+                              <a href="#"  style={{display: 'flex',  justifyContent:'left', alignItems:'left', marginLeft:'30px'}}>
                                 <div className="department-list-logo">
                                   <img
                                     src={require("./img/department-img/department-img-3.png")}
@@ -754,7 +567,7 @@ class HomePage extends React.Component {
                               </a>
                             </li>
                             <li className="list-group-item">
-                              <a href="product-details-scroll.html">
+                              <a href="#"  style={{display: 'flex',  justifyContent:'left', alignItems:'left', marginLeft:'30px'}}>
                                 <div className="department-list-logo">
                                   <img
                                     src={require("./img/department-img/department-img-4.png")}
@@ -767,7 +580,7 @@ class HomePage extends React.Component {
                               </a>
                             </li>
                             <li className="list-group-item">
-                              <a href="product-details-scroll.html">
+                              <a href="#"  style={{display: 'flex',  justifyContent:'left', alignItems:'left', marginLeft:'30px'}}>
                                 <div className="department-list-logo">
                                   <img
                                     src={require("./img/department-img/department-img-5.png")}
@@ -780,7 +593,7 @@ class HomePage extends React.Component {
                               </a>
                             </li>
                             <li className="list-group-item">
-                              <a href="product-details-scroll.html">
+                              <a href="#"  style={{display: 'flex',  justifyContent:'left', alignItems:'left', marginLeft:'30px'}}>
                                 <div className="department-list-logo">
                                   <img
                                     src={require("./img/department-img/department-img-6.png")}
@@ -793,7 +606,7 @@ class HomePage extends React.Component {
                               </a>
                             </li>
                             <li className="list-group-item">
-                              <a href="product-details-scroll.html">
+                              <a href="#"  style={{display: 'flex',  justifyContent:'left', alignItems:'left', marginLeft:'30px'}}>
                                 <div className="department-list-logo">
                                   <img
                                     src={require("./img/department-img/department-img-7.png")}
@@ -806,7 +619,7 @@ class HomePage extends React.Component {
                               </a>
                             </li>
                             <li className="list-group-item">
-                              <a href="product-details-scroll.html">
+                              <a href="#"  style={{display: 'flex',  justifyContent:'left', alignItems:'left', marginLeft:'30px'}}>
                                 <div className="department-list-logo">
                                   <img
                                     src={require("./img/department-img/department-img-8.png")}
@@ -819,7 +632,7 @@ class HomePage extends React.Component {
                               </a>
                             </li>
                             <li className="list-group-item">
-                              <a href="product-details-scroll.html">
+                              <a href="#"  style={{display: 'flex',  justifyContent:'left', alignItems:'left', marginLeft:'30px'}}>
                                 <div className="department-list-logo">
                                   <img
                                     src={require("./img/department-img/department-img-9.png")}
@@ -832,7 +645,7 @@ class HomePage extends React.Component {
                               </a>
                             </li>
                             <li className="list-group-item">
-                              <a href="product-details-scroll.html">
+                              <a href="#"  style={{display: 'flex',  justifyContent:'left', alignItems:'left', marginLeft:'30px'}}>
                                 <div className="department-list-logo">
                                   <img
                                     src={require("./img/department-img/department-img-10.png")}
@@ -1528,7 +1341,9 @@ class HomePage extends React.Component {
                               {s.category}
                               </p>
                               <div className="price">
-                                <strong>{s.data[0].price} VND</strong>
+                                <strong>
+                                <NumberFormat value={s.data[0].price} displayType={'text'} thousandSeparator={true} prefix={'VND '} />
+                                </strong>
                               </div>
                               <a
                                 href="/ProductDetail"
@@ -1626,7 +1441,8 @@ class HomePage extends React.Component {
                           <div className="recent-product-info">
                             <div className="d-flex justify-content-between">
                               <div className="recent-price">
-                              {p.data[0].price}
+                              {/* {p.data[0].price} */}
+                              <NumberFormat value={p.data[0].price} displayType={'text'} thousandSeparator={true} prefix={'VND '} />
                               </div>
                               <div className="recente-product-categories">
                                 {p.category}
