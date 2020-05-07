@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {Link, Redirect } from 'react-router-dom'
+import {Link , withRouter} from 'react-router-dom';
 import AuthContext from "./auth-context.js";
 import NumberFormat from 'react-number-format';
 
@@ -8,7 +8,6 @@ class HomePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = { products: [], popular:[]};
-    // this.products = this.products.bind(this);
   }
 
   // load project after call the component
@@ -25,8 +24,16 @@ class HomePage extends React.Component {
         console.log(this.state.popular)
       })
   }
-  render() {
 
+  viewDetail(products){
+    this.props.dispatch({
+      type: "VIEW_PRODUCT",
+      payload: products
+    });
+  this.props.history.push('/ProductDetail');
+  }
+
+  render() {
     let listOfProducts =  this.state.products;
     let popularProducts = this.state.popular;
     return (
@@ -34,7 +41,6 @@ class HomePage extends React.Component {
         {(context) => {
           return (
             <div>
-              {/* <div className="preloader"></div>  */}
               {/* <!-- =========================Header Section============================== --> */}
               <section id="wd-header">
                 <div className="container-fluid custom-width">
@@ -77,7 +83,6 @@ class HomePage extends React.Component {
                       ) : (
                           ""
                         )}
-
                       <div
                         className="modal fade bd-example-modal-lg2"
                         tabindex="-1"
@@ -120,335 +125,6 @@ class HomePage extends React.Component {
                                         </a>
                                       </li>
                                     </ul>
-                                    <div
-                                      className="tab-content"
-                                      id="myTabContent"
-                                    >
-                                      <div
-                                        className="tab-pane fade show active"
-                                        id="login"
-                                        role="tabpanel"
-                                        aria-labelledby="login-tab"
-                                      >
-                                        <div className="row">
-                                          <div className="col-md-6 p0 brand-description-area">
-                                            <img
-                                              src={require("./img/login-img-1.jpg")}
-                                              className="img-fluid"
-                                              alt=""
-                                            />
-                                            <div className="brand-description">
-                                              <div className="brand-logo">
-                                                <img
-                                                  src={require("./img/logo.png")}
-                                                  alt="Logo"
-                                                />
-                                              </div>
-                                              <div className="modal-description">
-                                                <p>
-                                                  Lorem ipsum dolor sit amet,
-                                                  consectetur adipisicing elit,
-                                                  sed do eiusmod
-                                                  teoccaecvoluptatem.
-                                                </p>
-                                              </div>
-                                              <ul className="list-unstyled">
-                                                <li className="media">
-                                                  <i
-                                                    className="fa fa-check"
-                                                    aria-hidden="true"
-                                                  ></i>
-                                                  <div className="media-div">
-                                                    Lorem ipsum dolor sit amet,
-                                                    consecadipisicing elit, sed
-                                                    do eiusmod
-                                                    teoccaecvoluptatem.
-                                                  </div>
-                                                </li>
-                                                <li className="media my-4">
-                                                  <i
-                                                    className="fa fa-check"
-                                                    aria-hidden="true"
-                                                  ></i>
-                                                  <div className="media-body">
-                                                    Lorem ipsum dolor sit amet,
-                                                    consecadipisicing elit, sed
-                                                    do eiusmod
-                                                    teoccaecvoluptatem.
-                                                  </div>
-                                                </li>
-                                                <li className="media">
-                                                  <i
-                                                    className="fa fa-check"
-                                                    aria-hidden="true"
-                                                  ></i>
-                                                  <div className="media-body">
-                                                    Lorem ipsum dolor sit amet,
-                                                    consecadipisicing elit, sed
-                                                    do eiusmod
-                                                    teoccaecvoluptatem.
-                                                  </div>
-                                                </li>
-                                              </ul>
-                                            </div>
-                                          </div>
-                                          <div className="col-md-12 col-lg-6 p0">
-                                            <div className="login-section text-center">
-                                              <div className="social-media">
-                                                <a
-                                                  href="#"
-                                                  className="facebook-bg"
-                                                >
-                                                  <i
-                                                    className="fa fa-facebook"
-                                                    aria-hidden="true"
-                                                  ></i>{" "}
-                                                  Login
-                                                </a>
-                                                <a
-                                                  href="#"
-                                                  className="twitter-bg"
-                                                >
-                                                  <i
-                                                    className="fa fa-twitter"
-                                                    aria-hidden="true"
-                                                  ></i>{" "}
-                                                  Login
-                                                </a>
-                                                <a
-                                                  href="#"
-                                                  className="google-bg"
-                                                >
-                                                  <i
-                                                    className="fa fa-google-plus"
-                                                    aria-hidden="true"
-                                                  ></i>{" "}
-                                                  Login
-                                                </a>
-                                              </div>
-                                              <div className="login-form text-left">
-                                                <form>
-                                                  <div className="form-group">
-                                                    <label for="exampleInputEmaillogin">
-                                                      User name
-                                                    </label>
-                                                    <input
-                                                      type="text"
-                                                      className="form-control"
-                                                      id="exampleInputEmaillogin"
-                                                      placeholder="John mist |"
-                                                    />
-                                                  </div>
-                                                  <div className="form-group">
-                                                    <label for="exampleInputPasswordlogin">
-                                                      Password
-                                                    </label>
-                                                    <input
-                                                      type="password"
-                                                      className="form-control"
-                                                      id="exampleInputPasswordlogin"
-                                                      placeholder="*** *** ***"
-                                                    />
-                                                  </div>
-                                                  <button
-                                                    type="submit"
-                                                    className="btn btn-primary wd-login-btn"
-                                                  >
-                                                    LOGIN
-                                                  </button>
-
-                                                  <div className="form-check">
-                                                    <label className="form-check-label">
-                                                      <input
-                                                        type="checkbox"
-                                                        className="form-check-input"
-                                                      />
-                                                      Save this password
-                                                    </label>
-                                                  </div>
-
-                                                  <div className="wd-policy">
-                                                    <p>
-                                                      By Continuing. I conferm
-                                                      that i have read and
-                                                      userstand the{" "}
-                                                      <a href="#">
-                                                        terms of uses
-                                                      </a>{" "}
-                                                      and{" "}
-                                                      <a href="#">
-                                                        Privacy Policy
-                                                      </a>
-                                                      . Don’t have an account?{" "}
-                                                      <a
-                                                        href="#"
-                                                        className="black-color"
-                                                      >
-                                                        <strong>
-                                                          <u>Sign up</u>
-                                                        </strong>
-                                                      </a>
-                                                    </p>
-                                                  </div>
-                                                </form>
-                                              </div>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </div>
-                                      <div
-                                        className="tab-pane fade"
-                                        id="sign-up"
-                                        role="tabpanel"
-                                        aria-labelledby="sign-up-tab"
-                                      >
-                                        <div className="row">
-                                          <div className="col-md-6 p0 brand-login-section">
-                                            <img
-                                              src={require("./img/login-img-2.jpg")}
-                                              className="img-fluid"
-                                              alt=""
-                                            />
-                                            <div className="brand-description">
-                                              <div className="brand-logo">
-                                                <img
-                                                  src={require("./img/logo.png")}
-                                                  alt="Logo"
-                                                />
-                                              </div>
-                                              <div className="modal-description">
-                                                <p>
-                                                  Lorem ipsum dolor sit amet,
-                                                  consectetur adipisicing elit,
-                                                  sed do eiusmod
-                                                  teoccaecvoluptatem.
-                                                </p>
-                                              </div>
-                                              <ul className="list-unstyled">
-                                                <li className="media">
-                                                  <i
-                                                    className="fa fa-check"
-                                                    aria-hidden="true"
-                                                  ></i>
-                                                  <div className="media-body">
-                                                    Lorem ipsum dolor sit amet,
-                                                    consecadipisicing elit, sed
-                                                    do eiusmod
-                                                    teoccaecvoluptatem.
-                                                  </div>
-                                                </li>
-                                                <li className="media my-4">
-                                                  <i
-                                                    className="fa fa-check"
-                                                    aria-hidden="true"
-                                                  ></i>
-                                                  <div className="media-body">
-                                                    Lorem ipsum dolor sit amet,
-                                                    consecadipisicing elit, sed
-                                                    do eiusmod
-                                                    teoccaecvoluptatem.
-                                                  </div>
-                                                </li>
-                                                <li className="media">
-                                                  <i
-                                                    className="fa fa-check"
-                                                    aria-hidden="true"
-                                                  ></i>
-                                                  <div className="media-body">
-                                                    Lorem ipsum dolor sit amet,
-                                                    consecadipisicing elit, sed
-                                                    do eiusmod
-                                                    teoccaecvoluptatem.
-                                                  </div>
-                                                </li>
-                                              </ul>
-                                            </div>
-                                          </div>
-                                          <div className="col-md-6 p0">
-                                            <div className="sign-up-section text-center">
-                                              <div className="login-form text-left">
-                                                <form>
-                                                  <div className="form-group">
-                                                    <label for="exampleInputname-sign-up">
-                                                      First name
-                                                    </label>
-                                                    <input
-                                                      type="text"
-                                                      className="form-control"
-                                                      id="exampleInputname-sign-up"
-                                                      placeholder="First Name"
-                                                    />
-                                                  </div>
-                                                  <div className="form-group">
-                                                    <label for="exampleInputname2-sign-up">
-                                                      Last name
-                                                    </label>
-                                                    <input
-                                                      type="text"
-                                                      className="form-control"
-                                                      id="exampleInputname2-sign-up"
-                                                      placeholder="Last Name"
-                                                    />
-                                                  </div>
-                                                  <div className="form-group">
-                                                    <label for="exampleInputEmailsign-up">
-                                                      Email
-                                                    </label>
-                                                    <input
-                                                      type="text"
-                                                      className="form-control"
-                                                      id="exampleInputEmailsign-up"
-                                                      placeholder="Enter you email ..."
-                                                    />
-                                                  </div>
-                                                  <div className="form-group">
-                                                    <label for="exampleInputPasswordsign-up">
-                                                      Password
-                                                    </label>
-                                                    <input
-                                                      type="password"
-                                                      className="form-control"
-                                                      id="exampleInputPasswordsign-up"
-                                                      placeholder="*** *** ***"
-                                                    />
-                                                  </div>
-                                                  <button
-                                                    type="submit"
-                                                    className="btn btn-primary wd-login-btn"
-                                                  >
-                                                    Sign Up
-                                                  </button>
-
-                                                  <div className="wd-policy">
-                                                    <p>
-                                                      By Continuing. I conferm
-                                                      that i have read and
-                                                      userstand the{" "}
-                                                      <a href="#">
-                                                        terms of uses
-                                                      </a>{" "}
-                                                      and{" "}
-                                                      <a href="#">
-                                                        Privacy Policy
-                                                      </a>
-                                                      . Don’t have an account?{" "}
-                                                      <a
-                                                        href="#"
-                                                        className="black-color"
-                                                      >
-                                                        <strong>
-                                                          <u>Sign up</u>
-                                                        </strong>
-                                                      </a>
-                                                    </p>
-                                                  </div>
-                                                </form>
-                                              </div>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
                                   </div>
                                 </div>
                               </div>
@@ -721,171 +397,6 @@ class HomePage extends React.Component {
                         <button className="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg2">
                           <i className="fa fa-sign-in" aria-hidden="true" /><span>{context.token ? <a type="button" onClick={context.logout}>Logout</a> : <Link to="/Login">Log in</Link>}</span>
                         </button>
-                        <div className="modal fade bd-example-modal-lg2" tabIndex={-1} role="dialog" aria-hidden="true">
-                          <div className="modal-dialog modal-lg">
-                            <div className="modal-content">
-                              <div className="container">
-                                <div className="row text-left">
-                                  <div className="col-md-12 p0">
-                                    <div className="modal-tab-section wd-modal-tabs">
-                                      <ul className="nav nav-tabs wd-modal-tab-menu text-center" id="myTab" role="tablist">
-                                        <li className="nav-item">
-                                          <a className="nav-link active" id="login-tab" data-toggle="tab" href="#login" role="tab" aria-controls="login" aria-expanded="true">Login</a>
-                                        </li>
-                                        <li className="nav-item">
-                                          <a className="nav-link" id="sign-up-tab" data-toggle="tab" href="#sign-up" role="tab" aria-controls="sign-up">Sign up</a>
-                                        </li>
-                                      </ul>
-                                      <div className="tab-content" id="myTabContent">
-                                        <div className="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="login-tab">
-                                          <div className="row">
-                                            <div className="col-md-6 p0 brand-description-area">
-                                              <img src="img/login-img-1.jpg" className="img-fluid" alt="" />
-                                              <div className="brand-description">
-                                                <div className="brand-logo">
-                                                  <img src="img/logo.png" alt="Logo" />
-                                                </div>
-                                                <div className="modal-description">
-                                                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod teoccaecvoluptatem.</p>
-                                                </div>
-                                                <ul className="list-unstyled">
-                                                  <li className="media">
-                                                    <i className="fa fa-check" aria-hidden="true" />
-                                                    <div className="media-body">
-                                                      Lorem ipsum dolor sit amet, consecadipisicing
-                                                      elit, sed do eiusmod teoccaecvoluptatem.
-                                          </div>
-                                                  </li>
-                                                  <li className="media my-4">
-                                                    <i className="fa fa-check" aria-hidden="true" />
-                                                    <div className="media-body">
-                                                      Lorem ipsum dolor sit amet, consecadipisicing
-                                                      elit, sed do eiusmod teoccaecvoluptatem.
-                                          </div>
-                                                  </li>
-                                                  <li className="media">
-                                                    <i className="fa fa-check" aria-hidden="true" />
-                                                    <div className="media-body">
-                                                      Lorem ipsum dolor sit amet, consecadipisicing
-                                                      elit, sed do eiusmod teoccaecvoluptatem.
-                                          </div>
-                                                  </li>
-                                                </ul>
-                                              </div>
-                                            </div>
-                                            <div className="col-md-12 col-lg-6 p0">
-                                              <div className="login-section text-center">
-                                                <div className="social-media">
-                                                  <a href="#" className="facebook-bg"><i className="fa fa-facebook" aria-hidden="true" /> Login</a>
-                                                  <a href="#" className="twitter-bg"><i className="fa fa-twitter" aria-hidden="true" /> Login</a>
-                                                  <a href="#" className="google-bg"><i className="fa fa-google-plus" aria-hidden="true" /> Login</a>
-                                                </div>
-                                                <div className="login-form text-left">
-                                                  <form>
-                                                    <div className="form-group">
-                                                      <label htmlFor="exampleInputEmail-login">User name</label>
-                                                      <input type="text" className="form-control" id="exampleInputEmail-login" placeholder="John mist |" />
-                                                    </div>
-                                                    <div className="form-group">
-                                                      <label htmlFor="exampleInputPassword-login-pass-2">Password</label>
-                                                      <input type="password" className="form-control" id="exampleInputPassword-login-pass-2" placeholder="*** *** ***" />
-                                                    </div>
-                                                    <button type="submit" className="btn btn-primary wd-login-btn">LOGIN</button>
-                                                    <div className="form-check">
-                                                      <label className="form-check-label">
-                                                        <input type="checkbox" className="form-check-input" />
-                                              Save this password
-                                            </label>
-                                                    </div>
-                                                    <div className="wd-policy">
-                                                      <p>
-                                                        By Continuing. I conferm that i have read and userstand the <a href="#">terms of uses</a> and <a href="#">Privacy Policy</a>.
-                                              Don’t have an account? <a href="#" className="black-color"><strong><u>Sign up</u></strong></a>
-                                                      </p>
-                                                    </div>
-                                                  </form>
-                                                </div>
-                                              </div>
-                                            </div>
-                                          </div>
-                                        </div>
-                                        <div className="tab-pane fade" id="sign-up" role="tabpanel" aria-labelledby="sign-up-tab">
-                                          <div className="row">
-                                            <div className="col-md-6 p0 brand-login-section">
-                                              <img src="img/login-img-2.jpg" className="img-fluid" alt="" />
-                                              <div className="brand-description">
-                                                <div className="brand-logo">
-                                                  <img src="img/logo.png" alt="Logo" />
-                                                </div>
-                                                <div className="modal-description">
-                                                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod teoccaecvoluptatem.</p>
-                                                </div>
-                                                <ul className="list-unstyled">
-                                                  <li className="media">
-                                                    <i className="fa fa-check" aria-hidden="true" />
-                                                    <div className="media-body">
-                                                      Lorem ipsum dolor sit amet, consecadipisicing
-                                                      elit, sed do eiusmod teoccaecvoluptatem.
-                                          </div>
-                                                  </li>
-                                                  <li className="media my-4">
-                                                    <i className="fa fa-check" aria-hidden="true" />
-                                                    <div className="media-body">
-                                                      Lorem ipsum dolor sit amet, consecadipisicing
-                                                      elit, sed do eiusmod teoccaecvoluptatem.
-                                          </div>
-                                                  </li>
-                                                  <li className="media">
-                                                    <i className="fa fa-check" aria-hidden="true" />
-                                                    <div className="media-body">
-                                                      Lorem ipsum dolor sit amet, consecadipisicing
-                                                      elit, sed do eiusmod teoccaecvoluptatem.
-                                          </div>
-                                                  </li>
-                                                </ul>
-                                              </div>
-                                            </div>
-                                            <div className="col-md-6 p0">
-                                              <div className="sign-up-section text-center">
-                                                <div className="login-form text-left">
-                                                  <form>
-                                                    <div className="form-group">
-                                                      <label htmlFor="exampleInputname1">First name</label>
-                                                      <input type="text" className="form-control" id="exampleInputname1" placeholder="First Name" />
-                                                    </div>
-                                                    <div className="form-group">
-                                                      <label htmlFor="exampleInputname2">Last name</label>
-                                                      <input type="text" className="form-control" id="exampleInputname2" placeholder="Last Name" />
-                                                    </div>
-                                                    <div className="form-group">
-                                                      <label htmlFor="exampleInputEmail-sign-up">Email</label>
-                                                      <input type="text" className="form-control" id="exampleInputEmail-sign-up" placeholder="Enter you email ..." />
-                                                    </div>
-                                                    <div className="form-group">
-                                                      <label htmlFor="exampleInputPassword-login-pass">Password</label>
-                                                      <input type="password" className="form-control" id="exampleInputPassword-login-pass" placeholder="*** *** ***" />
-                                                    </div>
-                                                    <button type="submit" className="btn btn-primary wd-login-btn">Sign Up</button>
-                                                    <div className="wd-policy">
-                                                      <p>
-                                                        By Continuing. I conferm that i have read and userstand the <a href="#">terms of uses</a> and <a href="#">Privacy Policy</a>.
-                                              Don’t have an account? <a href="#" className="black-color"><strong><u>Sign up</u></strong></a>
-                                                      </p>
-                                                    </div>
-                                                  </form>
-                                                </div>
-                                              </div>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
                       </div>
                       {/* <!-- =========================Cart Out ============================== --> */}
 
@@ -1345,8 +856,8 @@ class HomePage extends React.Component {
                                 <NumberFormat value={s.data[0].price} displayType={'text'} thousandSeparator={true} prefix={'VND '} />
                                 </strong>
                               </div>
-                              <a
-                                href="/ProductDetail"
+                              <button
+                                onClick={this.viewDetail.bind(this, s)}
                                 className="btn btn-primary amazon-details"
                               >
                                 Details{" "}
@@ -1354,7 +865,7 @@ class HomePage extends React.Component {
                                   className="fa fa-arrow-right"
                                   aria-hidden="true"
                                 ></i>
-                              </a>
+                              </button>
                             </div>
                           </div>
                         </div>
@@ -1409,7 +920,7 @@ class HomePage extends React.Component {
                   </div>
                 </div>
               </section>
-
+              
               {/* <!-- =========================Ppopular Product Section============================== --> */}
               <section id="recent-product" className="recent-pro-2">
                 <div className="container-fluid custom-width">
@@ -1424,6 +935,7 @@ class HomePage extends React.Component {
                       className="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 wow fadeIn animated"
                       data-wow-delay="100ms"
                       key={p._id}
+                      onClick={this.viewDetail.bind(this, p)}
                     >
                       <div className="recent-product-box">
                         <div className="recent-product-img">
@@ -1441,7 +953,6 @@ class HomePage extends React.Component {
                           <div className="recent-product-info">
                             <div className="d-flex justify-content-between">
                               <div className="recent-price">
-                              {/* {p.data[0].price} */}
                               <NumberFormat value={p.data[0].price} displayType={'text'} thousandSeparator={true} prefix={'VND '} />
                               </div>
                               <div className="recente-product-categories">
@@ -1482,7 +993,6 @@ class HomePage extends React.Component {
                         </div>
                       </div>
                     </div>)}
-
                   </div>
                 </div>
               </section>
@@ -1529,9 +1039,7 @@ class HomePage extends React.Component {
                       </div>
                     </div>
                     <div className="col-6 col-md-3 col-lg-2 footer-nav">
-                      {/* <!-- ===========================
-    						Festival Deals
-    					 =========================== --> */}
+                      {/* <!-- ===========================Festival Deals=========================== --> */}
                       <h6 className="footer-subtitle">Festival Deals</h6>
                       <ul>
                         <li>
@@ -1554,9 +1062,7 @@ class HomePage extends React.Component {
                       </ul>
                     </div>
                     <div className="col-6 col-md-3 col-lg-2 footer-nav">
-                      {/* <!-- ===========================
-    						Top Stores
-    					 =========================== --> */}
+                      {/* <!-- ===========================Top Stores=========================== --> */}
                       <div className="stores-list">
                         <h6 className="footer-subtitle">Top Stores</h6>
                         <ul>
@@ -1594,9 +1100,7 @@ class HomePage extends React.Component {
                       </div>
                     </div>
                     <div className="col-6 col-md-3 col-lg-2 footer-nav">
-                      {/* <!-- ===========================
-    						Need Help ?
-    					 =========================== --> */}
+                      {/* <!-- ===========================Need Help ?=========================== --> */}
                       <h6 className="footer-subtitle">Need Help ?</h6>
                       <ul>
                         <li>
@@ -1629,9 +1133,7 @@ class HomePage extends React.Component {
                       </ul>
                     </div>
                     <div className="col-6 col-md-3 col-lg-2 footer-nav">
-                      {/* <!-- ===========================
-    						About
-    					 =========================== --> */}
+                      {/* <!-- ===========================About=========================== --> */}
                       <h6 className="footer-subtitle">About</h6>
                       <ul>
                         <li>
@@ -1676,9 +1178,7 @@ class HomePage extends React.Component {
                 </div>
               </footer>
 
-              {/* <!-- =========================
-          CopyRight
-      ============================== --> */}
+              {/* <!-- =========================CopyRight============================== --> */}
               <section
                 className="copyright wow fadeInUp animated copyright-2"
                 data-wow-delay="1500ms"
@@ -1735,29 +1235,6 @@ class HomePage extends React.Component {
                   </div>
                 </div>
               </section>
-
-              {/* <!-- =========================
-          Main Loding JS Script
-      ============================== --> */}
-              <script src="js/jquery.min.js"></script>
-              <script src="js/jquery-ui.js"></script>
-              <script src="js/popper.js"></script>
-              <script src="js/bootstrap.min.js"></script>
-              <script src="js/jquery.counterup.min.js"></script>
-              <script src="js/jquery.nav.js"></script>
-              {/* <!-- <script src="js/jquery.nicescroll.js"></script> --> */}
-              <script src="js/jquery.rateyo.js"></script>
-              <script src="js/jquery.scrollUp.min.js"></script>
-              <script src="js/jquery.sticky.js"></script>
-              <script src="js/mobile.js"></script>
-              <script src="js/lightslider.min.js"></script>
-              <script src="js/owl.carousel.min.js"></script>
-              <script src="js/circle-progress.min.js"></script>
-              <script src="js/waypoints.min.js"></script>
-
-              <script src="js/simplePlayer.js"></script>
-
-              <script src="js/main.js"></script>
             </div>
           );
         }}
@@ -1766,4 +1243,4 @@ class HomePage extends React.Component {
   }
 }
 
-export default HomePage;
+export default withRouter(HomePage);

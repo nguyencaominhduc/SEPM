@@ -1,36 +1,36 @@
-import React from 'react';
-import './css/App.css';
-import Navbar from './Navbar.js'
-import AuthContext from './auth-context.js'
-import Login from './Login.jsx'
-import Register from './Register.jsx'
-import SearchResult from './SearchResult.js';
-import Review from './Review.js';
-import ProductDetail from './ProductDetail.js';
-import HomePage from './HomePage.js';
+import React from "react";
+import "./css/App.css";
+import Navbar from "./Navbar.js";
+import AuthContext from "./auth-context.js";
+import Login from "./Login.jsx";
+import Register from "./Register.jsx";
+import SearchResult from "./SearchResult.js";
+import Review from "./Review.js";
+import ProductDetail from "./ProductDetail.js";
+import HomePage from "./HomePage.js";
 import { connect } from "react-redux";
-import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap/js/dist/dropdown';
-import './css/App.css';
-import './css/animate.css';
-import './css/animate.min.css';
-import './css/bootstrap.min.css';
-import './css/fakeLoader.css';
-import './css/flexslider.css';
-import './css/font-awesome.min.css';
-import './css/jquery-ui.css';
-import './css/jquery-ui.min.css';
-import './css/jquery.fancybox.min.css';
-import './css/lightslider.min.css';
-import './css/megamenu.css';
-import './css/nouislider.min.css';
-import './css/owl.carousel.min.css';
-import './css/owl.theme.default.min.css';
-import './css/range.css';
-import './css/rangeslider.css';
-import './css/rateyo.css';
-import './css/style.css';
+import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap/js/dist/dropdown";
+import "./css/App.css";
+import "./css/animate.css";
+import "./css/animate.min.css";
+import "./css/bootstrap.min.css";
+import "./css/fakeLoader.css";
+import "./css/flexslider.css";
+import "./css/font-awesome.min.css";
+import "./css/jquery-ui.css";
+import "./css/jquery-ui.min.css";
+import "./css/jquery.fancybox.min.css";
+import "./css/lightslider.min.css";
+import "./css/megamenu.css";
+import "./css/nouislider.min.css";
+import "./css/owl.carousel.min.css";
+import "./css/owl.theme.default.min.css";
+import "./css/range.css";
+import "./css/rangeslider.css";
+import "./css/rateyo.css";
+import "./css/style.css";
 // import HeaderTop from './components/HeaderTop.js';
 // import LoginUser from './components/LoginUser.js';
 
@@ -42,7 +42,7 @@ class App extends React.Component {
     script.async = true;
 
     document.body.appendChild(script);
-  }
+  };
   componentDidMount() {
     const script = document.createElement("script");
     this.useScript("./js/modernizr.js", script);
@@ -66,37 +66,48 @@ class App extends React.Component {
 
   state = {
     token: null,
-    userID: null
-  }
+    userID: null,
+  };
   login = (token, userID, tokenExpiration) => {
-    this.setState({ token: token, userID: userID })
-  }
+    this.setState({ token: token, userID: userID });
+  };
   logout = () => {
-    this.setState({ token: null, userID: null })
-  }
+    this.setState({ token: null, userID: null });
+  };
 
   render() {
     return (
       <div className="App">
         <BrowserRouter>
           <React.Fragment>
-            <AuthContext.Provider value={{
-              token: this.state.token,
-              userID: this.state.userID,
-              login: this.login,
-              logout: this.logout
-            }}>
+            <AuthContext.Provider
+              value={{
+                token: this.state.token,
+                userID: this.state.userID,
+                login: this.login,
+                logout: this.logout,
+              }}
+            >
               <Navbar />
               <Switch>
-                <Route exact path="/" component={HomePage} />
-                <Route path='/Review' render={() => <Review />} />
-                <Route path='/ProductDetail' render={() => <ProductDetail />} />
-                {/* <Route path='/Header' render={()=><HeaderTop/>}/> */}
-                <Route path='/HomePage' render={() => <HomePage />} />
-                {this.state.token && <Redirect from='/login' to='/HomePage' exact />}
-                <Route path='/Login' render={() => <Login />} />
-                <Route path='/Register' render={() => <Register />} />
-                <Route path='/SearchResult' render={() => <SearchResult />} />
+                <Route exact path="/" render={() => <HomePage dispatch={this.props.dispatch}/>} />
+                <Route path="/Review" render={() => <Review />} />
+                <Route
+                  path="/ProductDetail"
+                  render={() => (
+                    <ProductDetail
+                      dispatch={this.props.dispatch}
+                      products={this.props.products}
+                    />
+                  )}
+                />
+                <Route path="/HomePage" render={() => <HomePage dispatch={this.props.dispatch}/>} />
+                {this.state.token && (
+                  <Redirect from="/login" to="/HomePage" exact />
+                )}
+                <Route path="/Login" render={() => <Login />} />
+                <Route path="/Register" render={() => <Register />} />
+                <Route path="/SearchResult" render={() => < SearchResult dispatch={this.props.dispatch}/>} />
               </Switch>
             </AuthContext.Provider>
           </React.Fragment>
@@ -108,7 +119,8 @@ class App extends React.Component {
 
 function mapStateToProps(centralState) {
   return {
-    product: centralState.product
-}}
+    products: centralState.products,
+  };
+}
 
 export default connect(mapStateToProps)(App);
