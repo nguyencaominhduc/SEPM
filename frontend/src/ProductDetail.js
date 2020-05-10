@@ -29,7 +29,7 @@ class ProductDetail extends React.Component {
     }
     fetch(url)
       .then((res) => res.json())
-      .then((json) => that.setState({ product: json.data, detailProduct: json.data.data }));
+      .then((json) => that.setState({ product: json.data, detailProduct: json.data.data}));
   }
 
   render() {
@@ -2089,20 +2089,21 @@ class ProductDetail extends React.Component {
                       </div>
                     </div>
                     
-                    {/* {ProductInfo.map(s =>
-                    <div className="product-store row" key={s.data}>
-                      <div className="col-12 product-store-box">
+                    
+                    <div className="product-store row">
+                    {FullDetails.map(s =>
+                      <div className="col-12 product-store-box" key={product._id}>
                         <div className="row">
                           <div className="col-3 p0 store-border-img">
                             <img
-                              src={s.data.data[0].image}
+                              src={s.image}
                               className="figure-img img-fluid"
                               alt="Product Img"
                             />
                           </div>
                           <div className="col-5 store-border-price text-center">
                             <div className="price">
-                              <p>{s.data.data[0].price}</p>
+                              <p>{s.price}</p>
                             </div>
                           </div>
                           <div className="col-4 store-border-button">
@@ -2114,107 +2115,8 @@ class ProductDetail extends React.Component {
                             </a>
                           </div>
                         </div>
-                      </div>
-                      <div className="col-12 product-store-box">
-                        <div className="row">
-                          <div className="col-3 p0 store-border-img">
-                            <img
-                              src={s.data.data[1].image}
-                              className="figure-img img-fluid"
-                              alt="Product Img"
-                            />
-                          </div>
-                          <div className="col-5 store-border-price text-center">
-                            <div className="price">
-                              <p>{s.data.data[1].price}</p>
-                            </div>
-                          </div>
-                          <div className="col-4 store-border-button">
-                            <a
-                              href="#"
-                              className="btn btn-primary wd-shop-btn pull-right red-bg"
-                            >
-                              Buy it now
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-12 product-store-box">
-                        <div className="row">
-                          <div className="col-3 p0 store-border-img">
-                            <img
-                              src={s.data.data[2].image}
-                              className="figure-img img-fluid"
-                              alt="Product Img"
-                            />
-                          </div>
-                          <div className="col-5 store-border-price">
-                            <span className="badge badge-secondary wd-badge text-uppercase">
-                              Best
-                            </span>
-                            <div className="price text-center">
-                              <p>{s.data.data[2].price}</p>
-                            </div>
-                          </div>
-                          <div className="col-4 store-border-button">
-                            <a
-                              href="#"
-                              className="btn btn-primary wd-shop-btn pull-right orange-bg"
-                            >
-                              Buy it now
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-12 product-store-box">
-                        <div className="row">
-                          <div className="col-3 p0 store-border-img">
-                            <img
-                              src={s.data.data[3].image}
-                              className="figure-img img-fluid"
-                              alt="Product Img"
-                            />
-                          </div>
-                          <div className="col-5 store-border-price text-center">
-                            <div className="price">
-                              <p>{s.data.data[3].price}</p>
-                            </div>
-                          </div>
-                          <div className="col-4 store-border-button">
-                            <a
-                              href="#"
-                              className="btn btn-primary wd-shop-btn pull-right green-bg"
-                            >
-                              Buy it now
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-12 product-store-box">
-                        <div className="row">
-                          <div className="col-3 p0 store-border-img">
-                            <img
-                              src={require("./img/product-store/product-store-img5.jpg")}
-                              className="figure-img img-fluid"
-                              alt="Product Img"
-                            />
-                          </div>
-                          <div className="col-5 store-border-price text-center">
-                            <div className="price">
-                              <p>$234</p>
-                            </div>
-                          </div>
-                          <div className="col-4 store-border-button">
-                            <a
-                              href="#"
-                              className="btn btn-primary wd-shop-btn pull-right blue-bg"
-                            >
-                              Buy it now
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                    </div> )} */}
+                      </div> )}
+                    </div>
                   </div>
                 </div>
               </div>
