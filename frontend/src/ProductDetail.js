@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import axios from "axios";
 
 class ProductDetail extends React.Component {
@@ -8,6 +8,7 @@ class ProductDetail extends React.Component {
       error: null,
       isLoaded: false,
       product: [],
+      detailProduct: [],
       id: {},
     };
   }
@@ -16,6 +17,7 @@ class ProductDetail extends React.Component {
     console.log("RECEIVE PROP: ", this.props.products);
     this.fetchData();
     window.scrollTo(0, 0);
+
   }
   fetchData() {
     const that = this;
@@ -27,21 +29,26 @@ class ProductDetail extends React.Component {
     }
     fetch(url)
       .then((res) => res.json())
-      .then((json) => that.setState({ product: json.data }));
+      .then((json) => that.setState({ product: json.data, detailProduct: json.data.data }));
   }
 
   render() {
-    // const {match:{params}} = this.props;
     const { product } = this.state;
-    console.log(product.name);
+    let ProductInfo = this.state.product;
+    let FullDetails=this.state.detailProduct;
+    console.log(product.data);
+    console.log(product);
+    console.log(typeof product);
+   console.log(typeof FullDetails);
+   let result = Object.values(FullDetails);
+   console.log(result[0]);
+    // var Details = Object.keys(obj).map(function(key){
+    //   return [Number(key, obj[key])];
+    // });
+    // console.log(Details);
 
-    //   const obj = Object.create(this.state.products);
-    //   var lookup = {};
-    //   for (var i = 0, len=obj.length; i<len; i++){
-    //       lookup[obj[i].productId] = obj[i];
-    //   }
-    //   console.log(lookup[params.productId])
-    return (
+    return ( 
+
       <div>
         {/* <div className="preloader" /> */}
         {/* =========================
@@ -2081,19 +2088,21 @@ class ProductDetail extends React.Component {
                         </p>
                       </div>
                     </div>
-                    <div className="product-store row">
+                    
+                    {/* {ProductInfo.map(s =>
+                    <div className="product-store row" key={s.data}>
                       <div className="col-12 product-store-box">
                         <div className="row">
                           <div className="col-3 p0 store-border-img">
                             <img
-                              src={require("./img/product-store/product-store-img1.jpg")}
+                              src={s.data.data[0].image}
                               className="figure-img img-fluid"
                               alt="Product Img"
                             />
                           </div>
                           <div className="col-5 store-border-price text-center">
                             <div className="price">
-                              <p>$234</p>
+                              <p>{s.data.data[0].price}</p>
                             </div>
                           </div>
                           <div className="col-4 store-border-button">
@@ -2110,14 +2119,14 @@ class ProductDetail extends React.Component {
                         <div className="row">
                           <div className="col-3 p0 store-border-img">
                             <img
-                              src={require("./img/product-store/product-store-img2.jpg")}
+                              src={s.data.data[1].image}
                               className="figure-img img-fluid"
                               alt="Product Img"
                             />
                           </div>
                           <div className="col-5 store-border-price text-center">
                             <div className="price">
-                              <p>$535</p>
+                              <p>{s.data.data[1].price}</p>
                             </div>
                           </div>
                           <div className="col-4 store-border-button">
@@ -2134,7 +2143,7 @@ class ProductDetail extends React.Component {
                         <div className="row">
                           <div className="col-3 p0 store-border-img">
                             <img
-                              src={require("./img/product-store/product-store-img3.jpg")}
+                              src={s.data.data[2].image}
                               className="figure-img img-fluid"
                               alt="Product Img"
                             />
@@ -2144,7 +2153,7 @@ class ProductDetail extends React.Component {
                               Best
                             </span>
                             <div className="price text-center">
-                              <p>$198</p>
+                              <p>{s.data.data[2].price}</p>
                             </div>
                           </div>
                           <div className="col-4 store-border-button">
@@ -2161,14 +2170,14 @@ class ProductDetail extends React.Component {
                         <div className="row">
                           <div className="col-3 p0 store-border-img">
                             <img
-                              src={require("./img/product-store/product-store-img4.jpg")}
+                              src={s.data.data[3].image}
                               className="figure-img img-fluid"
                               alt="Product Img"
                             />
                           </div>
                           <div className="col-5 store-border-price text-center">
                             <div className="price">
-                              <p>$634</p>
+                              <p>{s.data.data[3].price}</p>
                             </div>
                           </div>
                           <div className="col-4 store-border-button">
@@ -2205,7 +2214,7 @@ class ProductDetail extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> )} */}
                   </div>
                 </div>
               </div>
