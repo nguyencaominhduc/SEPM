@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-
+import Navbar from './Navbar.js'
 class ProductDetail extends React.Component {
   constructor(props) {
     super(props);
@@ -474,10 +474,11 @@ class ProductDetail extends React.Component {
 					 Login and My Acount 
 				============================== */}
               <div className="order-3 order-sm-3 col-10 col-sm-6 col-lg-4 col-md-4 col-xl-5">
+                
                 {/* =========================
 						 User Account Section
 					============================== */}
-                <div className="acc-header-wraper">
+                {/* <div className="acc-header-wraper">
                   <div className="account-section">
                     <button
                       className="btn btn-primary"
@@ -866,11 +867,11 @@ class ProductDetail extends React.Component {
                         <i className="fa fa-search" />
                       </a>
                     </div>
-                  </div>
+                  </div> */}
                   {/* =========================
 							 Cart Out 
 						============================== */}
-                  <div className="header-cart">
+                  {/* <div className="header-cart">
                     <a href="coupon.html" className="coupon-save">
                       <i className="fa fa-star-o" aria-hidden="true" />
                       <span className="count">5</span>
@@ -1137,18 +1138,19 @@ class ProductDetail extends React.Component {
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
             {/*Row End*/}
           </div>
           {/*Container End*/}
         </section>
+        <Navbar/>
         {/*Section End*/}
         {/* =========================
   Main Menu Section
     ============================== */}
-        <section id="main-menu" className="sticker-nav">
+        {/* <section id="main-menu" className="sticker-nav">
           <div className="container">
             <div className="row">
               <div className="col-2 col-md-6 col-lg-12 ">
@@ -1902,7 +1904,7 @@ class ProductDetail extends React.Component {
                                                 </div>
                                                 <button
                                                   type="submit"
-                                                  className="btn btn-primary wd-login-btn"
+                                                  className="btn btn-primary wd-R-btn"
                                                 >
                                                   Sign Up
                                                 </button>
@@ -1948,7 +1950,7 @@ class ProductDetail extends React.Component {
               </div>
             </div>
           </div>
-        </section>
+        </section> */}
         {/* =========================
   Product Details Section
     ============================== */}

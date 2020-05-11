@@ -62,14 +62,15 @@ class HomePage extends React.Component {
                           className="form-control input-search-box"
                           placeholder="Enter your search key ..."
                         />
-                        <a className="input-group-btn" href='/SearchResult'>
+                        <Link to='/SearchResult' className="input-group-btn">
+                          {/* <a className="input-group-btn" href='/SearchResult'> */}
                           <button
                             className="btn btn-secondary wd-search-btn"
                             type="button"
                           >
                             <i className="fa fa-search" aria-hidden="true"></i>
                           </button>
-                        </a>
+                        </Link>
                       </div>
                     </div>
                     <div className="col-md-6 col-lg-3 col-xl-3 text-right">
@@ -287,15 +288,15 @@ class HomePage extends React.Component {
                         </div>
                       </div>
                     </div>
-                    <Navbar/>
+                    <Navbar />
                     {/* <div className="col-md-6 col-lg-10 col-xl-7 header-search-box d-none d-lg-block">
                       <div
                         id="main-menu-2"
                         className="main-menu-desktop no-border main-menu-sh"
                       >
                         <div className="menu-container wd-megamenu text-left"> */}
-                          {/* Menu bar */}
-                          {/* <div className="menu">
+                    {/* Menu bar */}
+                    {/* <div className="menu">
                             <ul className="wd-megamenu-ul">
                               <li>
                                 <a href="/" className="main-menu-list">
@@ -344,16 +345,16 @@ class HomePage extends React.Component {
                       </div>
                     </div> */}
                     {/* <div className="col-10 col-sm-6 col-md-4 col-lg-2 col-xl-2 text-right"> */}
-                      {/* <div className="account-section">
+                    {/* <div className="account-section">
                         <button className="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg2">
                           <i className="fa fa-sign-in" aria-hidden="true" />
                           <span>{context.token ? <a type="button" onClick={context.logout}>Logout</a> : <Link to="/Login">Log in/Register</Link>}</span>
                         </button>
                       </div> */}
-                      {/* <!-- =========================Cart Out ============================== --> */}
+                    {/* <!-- =========================Cart Out ============================== --> */}
 
-                      {/* <div className="header-cart"> */}
-                        {/* <div className="account-section d-md-block d-lg-none">
+                    {/* <div className="header-cart"> */}
+                    {/* <div className="account-section d-md-block d-lg-none">
                           <button
                             className="btn btn-primary"
                             data-toggle="modal"
@@ -363,7 +364,7 @@ class HomePage extends React.Component {
                             <span>Login/Register</span>
                           </button>
                         </div> */}
-                        {/* <div className="serch-wrapper">
+                    {/* <div className="serch-wrapper">
                           <div className="search">
                             <input
                               className="search-input"
@@ -375,16 +376,16 @@ class HomePage extends React.Component {
                             </a>
                           </div>
                         </div> */}
-                        {/* <a href="coupon.html" className="coupon-save">
+                    {/* <a href="coupon.html" className="coupon-save">
                           <i className="fa fa-star-o" aria-hidden="true"></i>
                           <span className="count">5</span>
                         </a> */}
 
-                        {/* <a className="header-wishlist" href="wishlist.html">
+                    {/* <a className="header-wishlist" href="wishlist.html">
                           <i className="fa fa-heart-o" aria-hidden="true"></i>
                           <span className="count">8</span>
                         </a> */}
-                        {/* <div className="dropdown wd-compare-btn">
+                    {/* <div className="dropdown wd-compare-btn">
                           <button
                             className="btn btn-secondary dropdown-toggle compare-btn"
                             type="button"
@@ -641,7 +642,7 @@ class HomePage extends React.Component {
                             </div>
                           </div>
                         </div> */}
-                      {/* </div>
+                    {/* </div>
                     </div> */}
                   </div>
                 </div>
