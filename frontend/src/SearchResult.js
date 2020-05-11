@@ -614,7 +614,11 @@ class SearchResult extends React.Component {
                                     <div className="order-1 order-sm-2  col-12 col-sm-4 col-md-4 col-lg-2 col-xl-2">
                                         <div className="blrub-logo">
                                             <a href="index.html">
-                                                <img src={require("./img/social-media-img/brand-logo-1.jpg")} alt="Logo" />
+                                                <img
+                                                    src={require("./img/logo.png")}
+                                                    alt=""
+                                                    style={{ width: "80px", height: "80px" }}
+                                                />
                                             </a>
                                         </div>
                                     </div>
