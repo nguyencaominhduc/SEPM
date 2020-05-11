@@ -20,11 +20,14 @@ class ProductDetail extends React.Component {
   fetchData() {
     const that = this;
     var url = "";
-    if (this.props.products.length !== 0) {
-      url = `http://localhost:5000/api/v1/products/${this.props.products._id}`;
-    } else {
-      url = `http://localhost:5000/api/v1/products/5e99d314b9128112d755c9fd`;
-    }
+    // if (this.props.products.length !== 0) {//length is undefined
+    //   url = `http://localhost:5000/api/v1/products/${this.props.products._id}`;
+    // } else {
+    //   url = `http://localhost:5000/api/v1/products/5e99d314b9128112d755c9fd`;
+    // }
+    if(this.props.product_id){
+      url=`http://localhost:5000/api/v1/products/${this.props.product_id}`
+    } else url=`http://localhost:5000/api/v1/products/5e99d314b9128112d755c9fd`
     fetch(url)
       .then((res) => res.json())
       .then((json) => that.setState({ product: json.data }));
@@ -217,7 +220,7 @@ class ProductDetail extends React.Component {
                       </div>
                       <ul className="submenu font-sky">
                         <li>
-                          <a href="compare-products.html">Comparison Product</a>
+                          <a href="compare-products.html" >Comparison Product</a>
                         </li>
                         <li>
                           <a href="compare-products-single.html">
@@ -1180,7 +1183,7 @@ class ProductDetail extends React.Component {
                       </li>
                       <li>
                         <a
-                          href="compare-products.html"
+                          href="http://localhost:3000/SearchResult"
                           className="main-menu-list"
                         >
                           Comparison Product{" "}
