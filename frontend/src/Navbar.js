@@ -13,7 +13,8 @@ const Navbar = props => (
         {/* <li><Link to='/Header'>Header Top</Link></li>*/}
         <li><Link to='/Login'>Login</Link></li> 
         <li><Link to='/HomePage'>Home Page</Link></li>
-        <li><Link to='/SearchResult'>Search Result</Link></li>
+        {/* <li><Link to='/SearchResult'>Search Result</Link></li> */}
+        <li><a href="http://localhost:3000/SearchResult">Search Result</a></li>
       </ul>
         )
     }}
