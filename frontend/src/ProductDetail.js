@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useCallback } from "react";
 import axios from "axios";
-import Navbar from './Navbar.js'
+
 class ProductDetail extends React.Component {
   constructor(props) {
     super(props);
@@ -8,6 +8,7 @@ class ProductDetail extends React.Component {
       error: null,
       isLoaded: false,
       product: [],
+      detailProduct: [],
       id: {},
     };
   }
@@ -16,35 +17,39 @@ class ProductDetail extends React.Component {
     console.log("RECEIVE PROP: ", this.props.products);
     this.fetchData();
     window.scrollTo(0, 0);
+
   }
   fetchData() {
     const that = this;
     var url = "";
-    // if (this.props.products.length !== 0) {//length is undefined
-    //   url = `http://localhost:5000/api/v1/products/${this.props.products._id}`;
-    // } else {
-    //   url = `http://localhost:5000/api/v1/products/5e99d314b9128112d755c9fd`;
-    // }
-    if(this.props.product_id){
-      url=`http://localhost:5000/api/v1/products/${this.props.product_id}`
-    } else url=`http://localhost:5000/api/v1/products/5e99d314b9128112d755c9fd`
+    if (this.props.products.length !== 0) {
+      url = `http://localhost:5000/api/v1/products/${this.props.products._id}`;
+    } else {
+      url = `http://localhost:5000/api/v1/products/5e99d314b9128112d755c9fd`;
+    }
     fetch(url)
       .then((res) => res.json())
-      .then((json) => that.setState({ product: json.data }));
+      .then((json) => that.setState({ product: json.data, detailProduct: json.data.data}));
   }
 
   render() {
-    // const {match:{params}} = this.props;
     const { product } = this.state;
-    console.log(product.name);
+    let ProductInfo = this.state.product;
+    let FullDetails=this.state.detailProduct;
+    console.log(product.data);
+    console.log(product);
+    console.log(typeof product);
+   console.log(typeof FullDetails);
+   console.log(product.image);
+   let result = Object.values(FullDetails);
+   console.log(result[0]);
+    // var Details = Object.keys(obj).map(function(key){
+    //   return [Number(key, obj[key])];
+    // });
+    // console.log(Details);
 
-    //   const obj = Object.create(this.state.products);
-    //   var lookup = {};
-    //   for (var i = 0, len=obj.length; i<len; i++){
-    //       lookup[obj[i].productId] = obj[i];
-    //   }
-    //   console.log(lookup[params.productId])
-    return (
+    return ( 
+
       <div>
         {/* <div className="preloader" /> */}
         {/* =========================
@@ -220,7 +225,7 @@ class ProductDetail extends React.Component {
                       </div>
                       <ul className="submenu font-sky">
                         <li>
-                          <a href="compare-products.html" >Comparison Product</a>
+                          <a href="compare-products.html">Comparison Product</a>
                         </li>
                         <li>
                           <a href="compare-products-single.html">
@@ -474,11 +479,10 @@ class ProductDetail extends React.Component {
 					 Login and My Acount 
 				============================== */}
               <div className="order-3 order-sm-3 col-10 col-sm-6 col-lg-4 col-md-4 col-xl-5">
-                
                 {/* =========================
 						 User Account Section
 					============================== */}
-                {/* <div className="acc-header-wraper">
+                <div className="acc-header-wraper">
                   <div className="account-section">
                     <button
                       className="btn btn-primary"
@@ -867,11 +871,11 @@ class ProductDetail extends React.Component {
                         <i className="fa fa-search" />
                       </a>
                     </div>
-                  </div> */}
+                  </div>
                   {/* =========================
 							 Cart Out 
 						============================== */}
-                  {/* <div className="header-cart">
+                  <div className="header-cart">
                     <a href="coupon.html" className="coupon-save">
                       <i className="fa fa-star-o" aria-hidden="true" />
                       <span className="count">5</span>
@@ -1138,19 +1142,18 @@ class ProductDetail extends React.Component {
                       </div>
                     </div>
                   </div>
-                </div> */}
+                </div>
               </div>
             </div>
             {/*Row End*/}
           </div>
           {/*Container End*/}
         </section>
-        <Navbar/>
         {/*Section End*/}
         {/* =========================
   Main Menu Section
     ============================== */}
-        {/* <section id="main-menu" className="sticker-nav">
+        <section id="main-menu" className="sticker-nav">
           <div className="container">
             <div className="row">
               <div className="col-2 col-md-6 col-lg-12 ">
@@ -1185,7 +1188,7 @@ class ProductDetail extends React.Component {
                       </li>
                       <li>
                         <a
-                          href="http://localhost:3000/SearchResult"
+                          href="compare-products.html"
                           className="main-menu-list"
                         >
                           Comparison Product{" "}
@@ -1904,7 +1907,7 @@ class ProductDetail extends React.Component {
                                                 </div>
                                                 <button
                                                   type="submit"
-                                                  className="btn btn-primary wd-R-btn"
+                                                  className="btn btn-primary wd-login-btn"
                                                 >
                                                   Sign Up
                                                 </button>
@@ -1950,7 +1953,7 @@ class ProductDetail extends React.Component {
               </div>
             </div>
           </div>
-        </section> */}
+        </section>
         {/* =========================
   Product Details Section
     ============================== */}
@@ -1991,11 +1994,11 @@ class ProductDetail extends React.Component {
                       <div className="col-md-12 product-slier-details">
                         <ul id="lightSlider">
                           <li
-                            data-thumb={require("./img/product-img/product-description-1.jpg")}
+                            data-thumb="https://www.wigglestatic.com/product-media/104844151/Al-Women-s-Graphics-PRR-Green-Road-Shorts-Bib-Shorts-Cyclamen-Fluro-Yello-SS20-L20124638-01.jpg?w=1200&h=1200&a=7"
                           >
                             <img
                               className="figure-img img-fluid"
-                              src={require("./img/product-img/product-description-1.jpg")}
+                              src="https://www.wigglestatic.com/product-media/104844151/Al-Women-s-Graphics-PRR-Green-Road-Shorts-Bib-Shorts-Cyclamen-Fluro-Yello-SS20-L20124638-01.jpg?w=1200&h=1200&a=7"
                               alt="product-img"
                             />
                           </li>
@@ -2086,19 +2089,22 @@ class ProductDetail extends React.Component {
                         </p>
                       </div>
                     </div>
+                    
+                    
                     <div className="product-store row">
-                      <div className="col-12 product-store-box">
+                    {FullDetails.map(s =>
+                      <div className="col-12 product-store-box" key={product._id}>
                         <div className="row">
                           <div className="col-3 p0 store-border-img">
                             <img
-                              src={require("./img/product-store/product-store-img1.jpg")}
+                              src={s.image}
                               className="figure-img img-fluid"
                               alt="Product Img"
                             />
                           </div>
                           <div className="col-5 store-border-price text-center">
                             <div className="price">
-                              <p>$234</p>
+                              <p>{s.price}</p>
                             </div>
                           </div>
                           <div className="col-4 store-border-button">
@@ -2110,106 +2116,7 @@ class ProductDetail extends React.Component {
                             </a>
                           </div>
                         </div>
-                      </div>
-                      <div className="col-12 product-store-box">
-                        <div className="row">
-                          <div className="col-3 p0 store-border-img">
-                            <img
-                              src={require("./img/product-store/product-store-img2.jpg")}
-                              className="figure-img img-fluid"
-                              alt="Product Img"
-                            />
-                          </div>
-                          <div className="col-5 store-border-price text-center">
-                            <div className="price">
-                              <p>$535</p>
-                            </div>
-                          </div>
-                          <div className="col-4 store-border-button">
-                            <a
-                              href="#"
-                              className="btn btn-primary wd-shop-btn pull-right red-bg"
-                            >
-                              Buy it now
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-12 product-store-box">
-                        <div className="row">
-                          <div className="col-3 p0 store-border-img">
-                            <img
-                              src={require("./img/product-store/product-store-img3.jpg")}
-                              className="figure-img img-fluid"
-                              alt="Product Img"
-                            />
-                          </div>
-                          <div className="col-5 store-border-price">
-                            <span className="badge badge-secondary wd-badge text-uppercase">
-                              Best
-                            </span>
-                            <div className="price text-center">
-                              <p>$198</p>
-                            </div>
-                          </div>
-                          <div className="col-4 store-border-button">
-                            <a
-                              href="#"
-                              className="btn btn-primary wd-shop-btn pull-right orange-bg"
-                            >
-                              Buy it now
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-12 product-store-box">
-                        <div className="row">
-                          <div className="col-3 p0 store-border-img">
-                            <img
-                              src={require("./img/product-store/product-store-img4.jpg")}
-                              className="figure-img img-fluid"
-                              alt="Product Img"
-                            />
-                          </div>
-                          <div className="col-5 store-border-price text-center">
-                            <div className="price">
-                              <p>$634</p>
-                            </div>
-                          </div>
-                          <div className="col-4 store-border-button">
-                            <a
-                              href="#"
-                              className="btn btn-primary wd-shop-btn pull-right green-bg"
-                            >
-                              Buy it now
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-12 product-store-box">
-                        <div className="row">
-                          <div className="col-3 p0 store-border-img">
-                            <img
-                              src={require("./img/product-store/product-store-img5.jpg")}
-                              className="figure-img img-fluid"
-                              alt="Product Img"
-                            />
-                          </div>
-                          <div className="col-5 store-border-price text-center">
-                            <div className="price">
-                              <p>$234</p>
-                            </div>
-                          </div>
-                          <div className="col-4 store-border-button">
-                            <a
-                              href="#"
-                              className="btn btn-primary wd-shop-btn pull-right blue-bg"
-                            >
-                              Buy it now
-                            </a>
-                          </div>
-                        </div>
-                      </div>
+                      </div> )}
                     </div>
                   </div>
                 </div>
@@ -2225,10 +2132,10 @@ class ProductDetail extends React.Component {
                       </h6>
                       <div className="row tab-rating-bar-section">
                         <div className="col-8 col-md-4 col-lg-4">
-                          <img
-                            src={require("./img/review-bg.png")}
+                          {/* <img
+                            src={require("./img/icon/icon review.png")}
                             alt="review-bg"
-                          />
+                          /> */}
                           <div className="review-rating text-center">
                             <h1 className="rating">4.5</h1>
                             <p>4 Ratings &amp; 0 Reviews</p>
@@ -2380,28 +2287,28 @@ class ProductDetail extends React.Component {
                         <div className="col-6 col-md-3">
                           <img
                             className="figure-img img-fluid"
-                            src={require("./img/product-img/tab-img-1.jpg")}
+                            src={require("./img/product-img/1.jpg")}
                             alt="features"
                           />
                         </div>
                         <div className="col-6 col-md-3">
                           <img
                             className="figure-img img-fluid"
-                            src={require("./img/product-img/tab-img-2.jpg")}
+                            src={require("./img/product-img/1.jpg")}
                             alt="features"
                           />
                         </div>
                         <div className="col-6 col-md-3">
                           <img
                             className="figure-img img-fluid"
-                            src={require("./img/product-img/tab-img-3.jpg")}
+                            src={require("./img/product-img/1.jpg")}
                             alt="features"
                           />
                         </div>
                         <div className="col-6 col-md-3">
                           <img
                             className="figure-img img-fluid"
-                            src={require("./img/product-img/tab-img-4.jpg")}
+                            src={require("./img/product-img/1.jpg")}
                             alt="features"
                           />
                         </div>
@@ -2512,7 +2419,7 @@ class ProductDetail extends React.Component {
                         <div className="col-12 col-md-12 col-lg-6">
                           <img
                             className="figure-img img-fluid"
-                            src={require("./img/product-img/tab-img-5.jpg")}
+                            src={require("./img/product-img/3.jpg")}
                             alt="Features"
                           />
                         </div>
@@ -2523,7 +2430,7 @@ class ProductDetail extends React.Component {
                       <div className="col-12 col-md-12 col-lg-6">
                         <img
                           className="figure-img img-fluid"
-                          src={require("./img/product-img/tab-img-6.jpg")}
+                          src={require("./img/product-img/5.jpg")}
                           alt="Features"
                         />
                       </div>
