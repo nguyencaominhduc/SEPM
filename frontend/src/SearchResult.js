@@ -63,14 +63,26 @@ class SearchResult extends React.Component {
                         sellers_0=[...new Set(sellers_0)]
                         // console.log("Sellers_0: "+sellers_0)
                     }
-                    var newObj_0 = {
-                        id: import_0.data[i]._id,
-                        name: import_0.data[i].name,
-                        category: import_0.data[i].category,
-                        image: import_0.data[i].data[0].image,
-                        lowestPrice: temp_low_price,
-                        highestPrice: temp_high_price,
-                        sellers: sellers_0
+                    if(json.data[i].data[0].image === undefined){
+                        var newObj_0 = {
+                            id: import_0.data[i]._id,
+                            name: import_0.data[i].name,
+                            category: import_0.data[i].category,
+                            image: "",
+                            lowestPrice: temp_low_price,
+                            highestPrice: temp_high_price,
+                            sellers: sellers_0
+                        }
+                    } else {
+                        var newObj_0 = {
+                            id: import_0.data[i]._id,
+                            name: import_0.data[i].name,
+                            category: import_0.data[i].category,
+                            image: import_0.data[i].data[0].image,
+                            lowestPrice: temp_low_price,
+                            highestPrice: temp_high_price,
+                            sellers: sellers_0
+                        }
                     }
                     filtered_price_productList.push(newObj_0)
                 }
