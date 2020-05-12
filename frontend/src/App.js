@@ -88,7 +88,7 @@ class App extends React.Component {
                 logout: this.logout,
               }}
             >
-              <Navbar />
+              {/* <Navbar /> */}
               <Switch>
                 <Route exact path="/" render={() => <HomePage dispatch={this.props.dispatch}/>} />
                 <Route path="/Review" render={() => <Review />} />

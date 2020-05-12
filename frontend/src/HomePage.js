@@ -1,13 +1,14 @@
 import React, { Component } from "react";
-import {Link , withRouter} from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import AuthContext from "./auth-context.js";
 import NumberFormat from 'react-number-format';
+import Navbar from './Navbar.js'
 
 
 class HomePage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { products: [], popular:[]};
+    this.state = { products: [], popular: [] };
   }
 
   // load project after call the component
@@ -20,21 +21,21 @@ class HomePage extends React.Component {
     })
       .then((res) => res.json())
       .then((res) => {
-        this.setState({ products: res.data.slice(1200,1206),  popular: res.data.slice(1400,1408)})
+        this.setState({ products: res.data.slice(1200, 1206), popular: res.data.slice(1400, 1408) })
         console.log(this.state.popular)
       })
   }
 
-  viewDetail(products){
+  viewDetail(products) {
     this.props.dispatch({
       type: "VIEW_PRODUCT",
       payload: products
     });
-  this.props.history.push('/ProductDetail');
+    this.props.history.push('/ProductDetail');
   }
 
   render() {
-    let listOfProducts =  this.state.products;
+    let listOfProducts = this.state.products;
     let popularProducts = this.state.popular;
     return (
       <AuthContext.Consumer>
@@ -61,77 +62,27 @@ class HomePage extends React.Component {
                           className="form-control input-search-box"
                           placeholder="Enter your search key ..."
                         />
-                        <a className="input-group-btn" href='/SearchResult'>
+                        <Link to='/SearchResult' className="input-group-btn">
+                          {/* <a className="input-group-btn" href='/SearchResult'> */}
                           <button
                             className="btn btn-secondary wd-search-btn"
                             type="button"
                           >
                             <i className="fa fa-search" aria-hidden="true"></i>
                           </button>
-                        </a>
+                        </Link>
                       </div>
                     </div>
-                    <div className="col-md-6 col-lg-3  col-xl-3 text-right">
+                    <div className="col-md-6 col-lg-3 col-xl-3 text-right">
                       {context.token ? (
                         <button
                           className="btn btn-primary my-account d-none d-lg-block"
-                          data-toggle="modal"
-                          data-target=".bd-example-modal-lg2"
                         >
-                          <i className="fa fa-user" aria-hidden="true"></i> Welcome {context.userID}
+                          <i className="fa fa-user"></i> Welcome {context.userID}
                         </button>
                       ) : (
                           ""
                         )}
-                      <div
-                        className="modal fade bd-example-modal-lg2"
-                        tabindex="-1"
-                        aria-hidden="true"
-                      >
-                        <div className="modal-dialog modal-lg">
-                          <div className="modal-content">
-                            <div className="container">
-                              <div className="row text-left">
-                                <div className="col-md-12 p0">
-                                  <div className="modal-tab-section wd-modal-tabs">
-                                    <ul
-                                      className="nav nav-tabs wd-modal-tab-menu text-center"
-                                      id="myTab"
-                                      role="tablist"
-                                    >
-                                      <li className="nav-item">
-                                        <a
-                                          className="nav-link active"
-                                          id="login-tab"
-                                          data-toggle="tab"
-                                          href="#login"
-                                          role="tab"
-                                          aria-controls="login"
-                                          aria-expanded="true"
-                                        >
-                                          Login
-                                        </a>
-                                      </li>
-                                      <li className="nav-item">
-                                        <a
-                                          className="nav-link"
-                                          id="sign-up-tab"
-                                          data-toggle="tab"
-                                          href="#sign-up"
-                                          role="tab"
-                                          aria-controls="sign-up"
-                                        >
-                                          Sign up
-                                        </a>
-                                      </li>
-                                    </ul>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -204,7 +155,7 @@ class HomePage extends React.Component {
                         <div id="department-list" className="department-list" >
                           <ul className="list-group">
                             <li className="list-group-item">
-                              <a href="#!" style={{display: 'flex',  justifyContent:'left', alignItems:'left', marginLeft:'30px'}}>
+                              <a href="#!" style={{ display: 'flex', justifyContent: 'left', alignItems: 'left', marginLeft: '30px' }}>
                                 <div className="department-list-logo" >
                                   <img
                                     src={require("./img/department-img/department-img-1.png")}
@@ -217,7 +168,7 @@ class HomePage extends React.Component {
                               </a>
                             </li>
                             <li className="list-group-item">
-                              <a href="#"  style={{display: 'flex',  justifyContent:'left', alignItems:'left', marginLeft:'30px'}}>
+                              <a href="#" style={{ display: 'flex', justifyContent: 'left', alignItems: 'left', marginLeft: '30px' }}>
                                 <div className="department-list-logo">
                                   <img
                                     src={require("./img/department-img/department-img-2.png")}
@@ -230,7 +181,7 @@ class HomePage extends React.Component {
                               </a>
                             </li>
                             <li className="list-group-item">
-                              <a href="#"  style={{display: 'flex',  justifyContent:'left', alignItems:'left', marginLeft:'30px'}}>
+                              <a href="#" style={{ display: 'flex', justifyContent: 'left', alignItems: 'left', marginLeft: '30px' }}>
                                 <div className="department-list-logo">
                                   <img
                                     src={require("./img/department-img/department-img-3.png")}
@@ -243,7 +194,7 @@ class HomePage extends React.Component {
                               </a>
                             </li>
                             <li className="list-group-item">
-                              <a href="#"  style={{display: 'flex',  justifyContent:'left', alignItems:'left', marginLeft:'30px'}}>
+                              <a href="#" style={{ display: 'flex', justifyContent: 'left', alignItems: 'left', marginLeft: '30px' }}>
                                 <div className="department-list-logo">
                                   <img
                                     src={require("./img/department-img/department-img-4.png")}
@@ -256,7 +207,7 @@ class HomePage extends React.Component {
                               </a>
                             </li>
                             <li className="list-group-item">
-                              <a href="#"  style={{display: 'flex',  justifyContent:'left', alignItems:'left', marginLeft:'30px'}}>
+                              <a href="#" style={{ display: 'flex', justifyContent: 'left', alignItems: 'left', marginLeft: '30px' }}>
                                 <div className="department-list-logo">
                                   <img
                                     src={require("./img/department-img/department-img-5.png")}
@@ -269,7 +220,7 @@ class HomePage extends React.Component {
                               </a>
                             </li>
                             <li className="list-group-item">
-                              <a href="#"  style={{display: 'flex',  justifyContent:'left', alignItems:'left', marginLeft:'30px'}}>
+                              <a href="#" style={{ display: 'flex', justifyContent: 'left', alignItems: 'left', marginLeft: '30px' }}>
                                 <div className="department-list-logo">
                                   <img
                                     src={require("./img/department-img/department-img-6.png")}
@@ -282,7 +233,7 @@ class HomePage extends React.Component {
                               </a>
                             </li>
                             <li className="list-group-item">
-                              <a href="#"  style={{display: 'flex',  justifyContent:'left', alignItems:'left', marginLeft:'30px'}}>
+                              <a href="#" style={{ display: 'flex', justifyContent: 'left', alignItems: 'left', marginLeft: '30px' }}>
                                 <div className="department-list-logo">
                                   <img
                                     src={require("./img/department-img/department-img-7.png")}
@@ -295,7 +246,7 @@ class HomePage extends React.Component {
                               </a>
                             </li>
                             <li className="list-group-item">
-                              <a href="#"  style={{display: 'flex',  justifyContent:'left', alignItems:'left', marginLeft:'30px'}}>
+                              <a href="#" style={{ display: 'flex', justifyContent: 'left', alignItems: 'left', marginLeft: '30px' }}>
                                 <div className="department-list-logo">
                                   <img
                                     src={require("./img/department-img/department-img-8.png")}
@@ -308,7 +259,7 @@ class HomePage extends React.Component {
                               </a>
                             </li>
                             <li className="list-group-item">
-                              <a href="#"  style={{display: 'flex',  justifyContent:'left', alignItems:'left', marginLeft:'30px'}}>
+                              <a href="#" style={{ display: 'flex', justifyContent: 'left', alignItems: 'left', marginLeft: '30px' }}>
                                 <div className="department-list-logo">
                                   <img
                                     src={require("./img/department-img/department-img-9.png")}
@@ -321,7 +272,7 @@ class HomePage extends React.Component {
                               </a>
                             </li>
                             <li className="list-group-item">
-                              <a href="#"  style={{display: 'flex',  justifyContent:'left', alignItems:'left', marginLeft:'30px'}}>
+                              <a href="#" style={{ display: 'flex', justifyContent: 'left', alignItems: 'left', marginLeft: '30px' }}>
                                 <div className="department-list-logo">
                                   <img
                                     src={require("./img/department-img/department-img-10.png")}
@@ -337,14 +288,15 @@ class HomePage extends React.Component {
                         </div>
                       </div>
                     </div>
-                    <div className="col-md-6 col-lg-10 col-xl-7 header-search-box d-none d-lg-block">
+                    <Navbar />
+                    {/* <div className="col-md-6 col-lg-10 col-xl-7 header-search-box d-none d-lg-block">
                       <div
                         id="main-menu-2"
                         className="main-menu-desktop no-border main-menu-sh"
                       >
-                        <div className="menu-container wd-megamenu text-left">
-                          {/* Menu bar */}
-                          <div className="menu">
+                        <div className="menu-container wd-megamenu text-left"> */}
+                    {/* Menu bar */}
+                    {/* <div className="menu">
                             <ul className="wd-megamenu-ul">
                               <li>
                                 <a href="/" className="main-menu-list">
@@ -391,17 +343,18 @@ class HomePage extends React.Component {
                           </div>
                         </div>
                       </div>
-                    </div>
-                    <div className="col-10 col-sm-6 col-md-4 col-lg-2 col-xl-2 text-right">
-                      <div className="account-section">
+                    </div> */}
+                    {/* <div className="col-10 col-sm-6 col-md-4 col-lg-2 col-xl-2 text-right"> */}
+                    {/* <div className="account-section">
                         <button className="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg2">
-                          <i className="fa fa-sign-in" aria-hidden="true" /><span>{context.token ? <a type="button" onClick={context.logout}>Logout</a> : <Link to="/Login">Log in</Link>}</span>
+                          <i className="fa fa-sign-in" aria-hidden="true" />
+                          <span>{context.token ? <a type="button" onClick={context.logout}>Logout</a> : <Link to="/Login">Log in/Register</Link>}</span>
                         </button>
-                      </div>
-                      {/* <!-- =========================Cart Out ============================== --> */}
+                      </div> */}
+                    {/* <!-- =========================Cart Out ============================== --> */}
 
-                      <div className="header-cart">
-                        <div className="account-section d-md-block d-lg-none">
+                    {/* <div className="header-cart"> */}
+                    {/* <div className="account-section d-md-block d-lg-none">
                           <button
                             className="btn btn-primary"
                             data-toggle="modal"
@@ -410,8 +363,8 @@ class HomePage extends React.Component {
                             <i className="fa fa-sign-in" aria-hidden="true"></i>
                             <span>Login/Register</span>
                           </button>
-                        </div>
-                        <div className="serch-wrapper">
+                        </div> */}
+                    {/* <div className="serch-wrapper">
                           <div className="search">
                             <input
                               className="search-input"
@@ -422,17 +375,17 @@ class HomePage extends React.Component {
                               <i className="fa fa-search"></i>
                             </a>
                           </div>
-                        </div>
-                        <a href="coupon.html" className="coupon-save">
+                        </div> */}
+                    {/* <a href="coupon.html" className="coupon-save">
                           <i className="fa fa-star-o" aria-hidden="true"></i>
                           <span className="count">5</span>
-                        </a>
+                        </a> */}
 
-                        <a className="header-wishlist" href="wishlist.html">
+                    {/* <a className="header-wishlist" href="wishlist.html">
                           <i className="fa fa-heart-o" aria-hidden="true"></i>
                           <span className="count">8</span>
-                        </a>
-                        <div className="dropdown wd-compare-btn">
+                        </a> */}
+                    {/* <div className="dropdown wd-compare-btn">
                           <button
                             className="btn btn-secondary dropdown-toggle compare-btn"
                             type="button"
@@ -688,9 +641,9 @@ class HomePage extends React.Component {
                               </a>
                             </div>
                           </div>
-                        </div>
-                      </div>
-                    </div>
+                        </div> */}
+                    {/* </div>
+                    </div> */}
                   </div>
                 </div>
               </section>
@@ -795,83 +748,83 @@ class HomePage extends React.Component {
                         </div>
                       </div>
                       {/* content loop*/}
-                      {listOfProducts.map(s=>
-                      <div
-                      className="col-12 col-md-6 col-lg-4 p0 amazon-review-box wow fadeIn animated"
-                      data-wow-delay="0.2s"
-                      key={s._id}
-                    >
-                      <div className="media">
-                        <div className="row">
-                          <div className="col-sm-4 col-md-5">
-                            <img
-                              className="img-fluid"
-                              src={s.data[0].image}
-                              style={{ width: "240px", height: "280px" }}
-                              alt="Generic placeholder image"
-                            />
-                          </div>
-                          <div className="col-sm-8 col-md-7 p0 d-flex align-items-center">
-                            <div className="amazon-review-box-content">
-                              <div className="rating">
-                                <a href="#">
-                                  <i
-                                    className="fa fa-star active-color"
-                                    aria-hidden="true"
-                                  ></i>
-                                </a>
-                                <a href="#">
-                                  <i
-                                    className="fa fa-star active-color"
-                                    aria-hidden="true"
-                                  ></i>
-                                </a>
-                                <a href="#">
-                                  <i
-                                    className="fa fa-star active-color"
-                                    aria-hidden="true"
-                                  ></i>
-                                </a>
-                                <a href="#">
-                                  <i
-                                    className="fa fa-star active-color"
-                                    aria-hidden="true"
-                                  ></i>
-                                </a>
-                                <a href="#">
-                                  <i
-                                    className="fa fa-star active-color"
-                                    aria-hidden="true"
-                                  ></i>
-                                </a>
+                      {listOfProducts.map(s =>
+                        <div
+                          className="col-12 col-md-6 col-lg-4 p0 amazon-review-box wow fadeIn animated"
+                          data-wow-delay="0.2s"
+                          key={s._id}
+                        >
+                          <div className="media">
+                            <div className="row">
+                              <div className="col-sm-4 col-md-5">
+                                <img
+                                  className="img-fluid"
+                                  src={s.data[0].image}
+                                  style={{ width: "240px", height: "280px" }}
+                                  alt="Generic placeholder image"
+                                />
                               </div>
-                              <h6 className="amazon-review-box-title">
-                              {s.name}
-                              </h6>
-                              <p className="amazon-review-content">
-                              {s.category}
-                              </p>
-                              <div className="price">
-                                <strong>
-                                <NumberFormat value={s.data[0].price} displayType={'text'} thousandSeparator={true} prefix={'VND '} />
-                                </strong>
+                              <div className="col-sm-8 col-md-7 p0 d-flex align-items-center">
+                                <div className="amazon-review-box-content">
+                                  <div className="rating">
+                                    <a href="#">
+                                      <i
+                                        className="fa fa-star active-color"
+                                        aria-hidden="true"
+                                      ></i>
+                                    </a>
+                                    <a href="#">
+                                      <i
+                                        className="fa fa-star active-color"
+                                        aria-hidden="true"
+                                      ></i>
+                                    </a>
+                                    <a href="#">
+                                      <i
+                                        className="fa fa-star active-color"
+                                        aria-hidden="true"
+                                      ></i>
+                                    </a>
+                                    <a href="#">
+                                      <i
+                                        className="fa fa-star active-color"
+                                        aria-hidden="true"
+                                      ></i>
+                                    </a>
+                                    <a href="#">
+                                      <i
+                                        className="fa fa-star active-color"
+                                        aria-hidden="true"
+                                      ></i>
+                                    </a>
+                                  </div>
+                                  <h6 className="amazon-review-box-title">
+                                    {s.name}
+                                  </h6>
+                                  <p className="amazon-review-content">
+                                    {s.category}
+                                  </p>
+                                  <div className="price">
+                                    <strong>
+                                      <NumberFormat value={s.data[0].price} displayType={'text'} thousandSeparator={true} prefix={'VND '} />
+                                    </strong>
+                                  </div>
+                                  <button
+                                    onClick={this.viewDetail.bind(this, s)}
+                                    className="btn btn-primary amazon-details"
+                                  >
+                                    Details{" "}
+                                    <i
+                                      className="fa fa-arrow-right"
+                                      aria-hidden="true"
+                                    ></i>
+                                  </button>
+                                </div>
                               </div>
-                              <button
-                                onClick={this.viewDetail.bind(this, s)}
-                                className="btn btn-primary amazon-details"
-                              >
-                                Details{" "}
-                                <i
-                                  className="fa fa-arrow-right"
-                                  aria-hidden="true"
-                                ></i>
-                              </button>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    </div>
-                    )}
+                      )}
                     </div>
                   </div>
                 </div>
@@ -920,7 +873,7 @@ class HomePage extends React.Component {
                   </div>
                 </div>
               </section>
-              
+
               {/* <!-- =========================Ppopular Product Section============================== --> */}
               <section id="recent-product" className="recent-pro-2">
                 <div className="container-fluid custom-width">
@@ -930,69 +883,69 @@ class HomePage extends React.Component {
                         Popular Product Comparison
                       </h2>
                     </div>
-                    {popularProducts.map(p=>
-                    <div
-                      className="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 wow fadeIn animated"
-                      data-wow-delay="100ms"
-                      key={p._id}
-                      onClick={this.viewDetail.bind(this, p)}
-                    >
-                      <div className="recent-product-box">
-                        <div className="recent-product-img">
-                          <a href="/ProductDetail">
-                            <img
-                              src={p.data[0].image}
-                              style={{ width: "240px", height: "280px" }}
-                              className="img-fluid"
-                              alt="recent-product img"
-                            />
-                          </a>
-                          <span className="badge badge-secondary wd-badge text-uppercase">
-                            New
+                    {popularProducts.map(p =>
+                      <div
+                        className="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 wow fadeIn animated"
+                        data-wow-delay="100ms"
+                        key={p._id}
+                        onClick={this.viewDetail.bind(this, p)}
+                      >
+                        <div className="recent-product-box">
+                          <div className="recent-product-img">
+                            <a href="/ProductDetail">
+                              <img
+                                src={p.data[0].image}
+                                style={{ width: "240px", height: "280px" }}
+                                className="img-fluid"
+                                alt="recent-product img"
+                              />
+                            </a>
+                            <span className="badge badge-secondary wd-badge text-uppercase">
+                              New
                           </span>
-                          <div className="recent-product-info">
-                            <div className="d-flex justify-content-between">
-                              <div className="recent-price">
-                              <NumberFormat value={p.data[0].price} displayType={'text'} thousandSeparator={true} prefix={'VND '} />
+                            <div className="recent-product-info">
+                              <div className="d-flex justify-content-between">
+                                <div className="recent-price">
+                                  <NumberFormat value={p.data[0].price} displayType={'text'} thousandSeparator={true} prefix={'VND '} />
+                                </div>
+                                <div className="recente-product-categories">
+                                  {p.category}
+                                </div>
                               </div>
-                              <div className="recente-product-categories">
-                                {p.category}
+                              <div className="recente-product-content">
+                                {p.name}
                               </div>
-                            </div>
-                            <div className="recente-product-content">
-                              {p.name}
-                            </div>
-                            <div className="recent-product-meta-link">
-                              <a href="#">
-                                <i
-                                  className="fa fa-star active-color"
-                                  aria-hidden="true"
-                                ></i>
-                                <strong>4.5</strong>
-                              </a>
-                              <a href="#">
-                                <img
-                                  src={require("./img/product-img/compare.png")}
-                                  alt=""
-                                />
-                                <img
-                                  className="compare-white"
-                                  src={require("./img/product-img/compare-white.png")}
-                                  alt=""
-                                />
-                              </a>
-                              <a href="#">
-                                <i
-                                  className="fa fa-comments-o"
-                                  aria-hidden="true"
-                                ></i>
+                              <div className="recent-product-meta-link">
+                                <a href="#">
+                                  <i
+                                    className="fa fa-star active-color"
+                                    aria-hidden="true"
+                                  ></i>
+                                  <strong>4.5</strong>
+                                </a>
+                                <a href="#">
+                                  <img
+                                    src={require("./img/product-img/compare.png")}
+                                    alt=""
+                                  />
+                                  <img
+                                    className="compare-white"
+                                    src={require("./img/product-img/compare-white.png")}
+                                    alt=""
+                                  />
+                                </a>
+                                <a href="#">
+                                  <i
+                                    className="fa fa-comments-o"
+                                    aria-hidden="true"
+                                  ></i>
                                 0
                               </a>
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    </div>)}
+                      </div>)}
                   </div>
                 </div>
               </section>
