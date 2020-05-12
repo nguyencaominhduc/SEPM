@@ -1990,21 +1990,21 @@ class ProductDetail extends React.Component {
                     {/* ====================================
 						        Single Product Gallery Section
 						    ========================================= */}
-                    <div className="row">
+                {FullDetails.map(s =><div className="row" key={product._id}>
                       <div className="col-md-12 product-slier-details">
                         <ul id="lightSlider">
                           <li
-                            data-thumb="https://www.wigglestatic.com/product-media/104844151/Al-Women-s-Graphics-PRR-Green-Road-Shorts-Bib-Shorts-Cyclamen-Fluro-Yello-SS20-L20124638-01.jpg?w=1200&h=1200&a=7"
+                            data-thumb={s.image}
                           >
                             <img
                               className="figure-img img-fluid"
-                              src="https://www.wigglestatic.com/product-media/104844151/Al-Women-s-Graphics-PRR-Green-Road-Shorts-Bib-Shorts-Cyclamen-Fluro-Yello-SS20-L20124638-01.jpg?w=1200&h=1200&a=7"
+                              src={s.image}
                               alt="product-img"
                             />
                           </li>
                         </ul>
                       </div>
-                    </div>
+                    </div>)}
                   </div>
                   <div className="col-6 col-12 col-md-12 col-lg-6">
                     <div className="product-details-gallery">
