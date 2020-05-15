@@ -158,4 +158,61 @@ router.delete('/:username', checkAuth.checkHandler, (req, res, next) => {
         });
 })
 
+
+// bookmarking
+router.get('/bookmark/:username', checkAuth.checkHandler, (req, res, next) => {
+    User.find({ username: req.params.username }, { bookmark: 1, _id: 0 }, function (err, users) {
+        res.send(users)
+    })
+})
+
+router.post('/bookmark/:username&:itemId', checkAuth.checkHandler, (req, res, next) => {
+    User.find({ username: req.params.username })
+        .exec()
+        .then(user => {
+            if (user.length < 1) {
+                return res.status(409).json({
+                    message: 'No such user found'
+                })
+            } else {
+                User.find({ username: req.params.username }, { bookmark: 1, _id: 0 })
+                    .exec()
+                    .then(user => {
+                        if (user[0].bookmark.includes(req.params.itemId)) {
+                            return res.status(409).json({
+                                message: 'Item already bookmarked'
+                            })
+                        } else {
+                            User.findOneAndUpdate({ username: req.params.username }, {
+                                $push: {
+                                    bookmark: req.params.itemId
+                                }
+                            },{ 'new': true})
+                                .exec()
+                                .then(user => {
+                                    res.send(user)
+                                })
+                                .catch(err => {
+                                    console.log(err)
+                                    res.status(500).json({
+                                        error: err
+                                    })
+                                });
+                        }
+                    })
+            }
+        })
+})
+
+router.delete('/bookmark/:username&:itemId', checkAuth.checkHandler, async (req, res, next) => {
+    User.findOneAndUpdate({ username: req.params.username }, {
+        $pull: {
+            bookmark: req.params.itemId
+        }
+    }, { 'new': true },
+        function (err, result) {
+            res.send(result)
+        })
+})
+
 module.exports = router;
