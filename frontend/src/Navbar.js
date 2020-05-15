@@ -34,7 +34,7 @@ const Navbar = props => (
                     </li> */}
                     <li>
                       <a
-                        href="shop-left-sidebar.html"
+                        href="/WishList"
                         className="main-menu-list"
                       >
                         WishList{"  "}

@@ -50,6 +50,8 @@ export default class Auth extends Component {
                 if (resData.token) {
                     this.context.login(resData.token, resData.userID, resData.tokenExpiration)
                     console.log(resData)
+                    localStorage.setItem('token', resData.token);
+                    localStorage.setItem('username', resData.userID);
                 }
             })
             .catch(err => {

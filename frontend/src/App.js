@@ -3,6 +3,7 @@ import "./css/App.css";
 import Navbar from "./Navbar.js";
 import AuthContext from "./auth-context.js";
 import Login from "./Login.jsx";
+import WishList from "./WishList.jsx";
 import Register from "./Register.jsx";
 import SearchResult from "./SearchResult.js";
 import Review from "./Review.js";
@@ -73,6 +74,7 @@ class App extends React.Component {
   };
   logout = () => {
     this.setState({ token: null, userID: null });
+    localStorage.clear()
   };
 
   render() {
@@ -106,6 +108,7 @@ class App extends React.Component {
                   <Redirect from="/login" to="/HomePage" exact />
                 )}
                 <Route path="/Login" render={() => <Login />} />
+                <Route path="/WishList" render={() => <WishList dispatch={this.props.dispatch}/>} />
                 <Route path="/Register" render={() => <Register />} />
                 <Route path="/SearchResult" render={() => < SearchResult dispatch={this.props.dispatch}/>} />
               </Switch>
