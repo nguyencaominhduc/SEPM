@@ -15,7 +15,13 @@ class WishList extends React.Component {
 
   componentDidMount() {
     console.log(localStorage.getItem("username"));
-    this.loadBookmark();
+    var user = localStorage.getItem("username")
+    if (user==undefined){
+      this.props.history.push('/Login')
+    }
+    else{
+      this.loadBookmark();
+    }
   }
   loadBookmark() {
     var user = localStorage.getItem("username");

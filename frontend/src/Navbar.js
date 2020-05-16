@@ -33,12 +33,12 @@ const Navbar = props => (
                       </a>
                     </li> */}
                     <li>
-                      <a
-                        href="/WishList"
+                      <Link
+                        to="/WishList"
                         className="main-menu-list"
                       >
                         WishList{"  "}
-                      </a>
+                      </Link>
                     </li>
                     <li className="pos-inherit">
                       <a

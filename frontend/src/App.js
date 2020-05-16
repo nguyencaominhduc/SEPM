@@ -44,6 +44,13 @@ class App extends React.Component {
 
     document.body.appendChild(script);
   };
+  checkAuth(){
+    var token =localStorage.getItem('token')
+    var userID = localStorage.getItem('username')
+    if (token&&userID){
+      this.setState({ token: token, userID: userID });
+    }
+  }
   componentDidMount() {
     const script = document.createElement("script");
     this.useScript("./js/modernizr.js", script);
@@ -63,6 +70,7 @@ class App extends React.Component {
     this.useScript("./js/waypoints.min.js", script);
     this.useScript("./js/simplePlayer.js", script);
     this.useScript("./js/main.js", script);
+    this.checkAuth()
   }
 
   state = {
