@@ -34,11 +34,20 @@ class ProductDetail extends React.Component {
   fetchData() {
     const that = this;
     var url = "";
-    if (this.props.products.length !== 0) {
+    if (this.props.products.length !== 0) {//if this condition caught undefined error, please consider commentting out/not using the condition
       url = `https://api-easyprice.herokuapp.com/api/v1/products/${this.props.products._id}`;
     } else {
       url = `https://api-easyprice.herokuapp.com/api/v1/products/5e99d314b9128112d755c9fd`;
     }
+
+    //receive URL param from SearchResult component using Router to obtain product id
+    if(this.props.match.params.id !== undefined){
+      url=`https://api-easyprice.herokuapp.com/api/v1/products/${this.props.match.params.id}`;
+    } else{
+      url = `https://api-easyprice.herokuapp.com/api/v1/products/5e99d314b9128112d755c9fd`;
+    }
+    //URL updated with prod id
+
     fetch(url)
       .then((res) => res.json())
       .then((json) => that.setState({ product: json.data, detailProduct: json.data.data}));

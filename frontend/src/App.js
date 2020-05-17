@@ -102,12 +102,22 @@ class App extends React.Component {
               <Switch>
                 <Route exact path="/" render={() => <HomePage dispatch={this.props.dispatch}/>} />
                 <Route path="/Review" render={() => <Review />} />
-                <Route
+                {/* <Route
                   path="/ProductDetail"
                   render={() => (
                     <ProductDetail
                       dispatch={this.props.dispatch}
                       products={this.props.products}
+                    />
+                  )}
+                /> */}
+                <Route //change this route to pass URL param :id to ProductDetail component from SearchResult comp
+                  path="/ProductDetail/:id"
+                  render={(props) => (
+                    <ProductDetail
+                      dispatch={this.props.dispatch}
+                      products={this.props.products}
+                      {...props}
                     />
                   )}
                 />

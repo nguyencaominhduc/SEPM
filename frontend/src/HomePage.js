@@ -8,7 +8,7 @@ import Navbar from './Navbar.js'
 class HomePage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { products: [], popular: [] };
+    this.state = { products: [], popular: [], target:"" };
   }
 
   // load project after call the component
@@ -32,6 +32,10 @@ class HomePage extends React.Component {
       payload: products
     });
     this.props.history.push('/ProductDetail');
+  }
+
+  handleSearch(event) {
+    this.setState({ target: event.target.value })
   }
 
   render() {
@@ -61,8 +65,9 @@ class HomePage extends React.Component {
                           type="text"
                           className="form-control input-search-box"
                           placeholder="Enter your search key ..."
+                          onChange={this.handleSearch.bind(this)}
                         />
-                        <Link to='/SearchResult' className="input-group-btn">
+                        <Link to={{pathname:'/SearchResult', state: {search_target: this.state.target}}}className="input-group-btn">
                           {/* <a className="input-group-btn" href='/SearchResult'> */}
                           <button
                             className="btn btn-secondary wd-search-btn"

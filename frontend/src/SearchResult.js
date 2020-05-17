@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import AuthContext from "./auth-context.js";
 import NumberFormat from 'react-number-format';
 import ProductDetail from './ProductDetail.js';
@@ -27,7 +27,9 @@ class SearchResult extends React.Component {
             toggleViewMode: false, //value to change view mode on product list
             product_id: "",
             fromPrice: 0,
-            toPrice: 0
+            toPrice: 0,
+            products: {},
+            homesearch: this.props.location.state?this.props.location.state.search_target:""
         }
     }
 
@@ -64,15 +66,23 @@ class SearchResult extends React.Component {
                         sellers_0 = [...new Set(sellers_0)]
                         // console.log("Sellers_0: "+sellers_0)
                     }
+                    var undefiner = false
                     if(json.data[i].data[0].image === undefined){
+                        undefiner=true
+                    } else if(json.data[i].name === undefined){
+                        undefiner=true
+                    } else if(json.data[i].category === undefined){
+                        undefiner=true
+                    }
+                    if(undefiner==true){
                         var newObj_0 = {
                             id: import_0.data[i]._id,
-                            name: import_0.data[i].name,
-                            category: import_0.data[i].category,
+                            name: "",
+                            category: "",
                             image: "",
-                            lowestPrice: temp_low_price,
-                            highestPrice: temp_high_price,
-                            sellers: sellers_0
+                            lowestPrice: 0,
+                            highestPrice: 0,
+                            sellers: []
                         }
                     } else {
                         var newObj_0 = {
@@ -89,10 +99,21 @@ class SearchResult extends React.Component {
                 }
                 console.log(filtered_price_productList)
                 var filtered_search_productList = []
-                if (this.state.searchMode == true && this.state.target !== "") {
-                    for (var i = 0; i < filtered_price_productList.length; i++) {
-                        if (filtered_price_productList[i].name.toUpperCase().indexOf(this.state.target.toUpperCase()) > -1) {
-                            filtered_search_productList.push(filtered_price_productList[i])
+                if (this.state.searchMode == true && this.state.target !== ""||this.state.homesearch!=="") {
+                    if(this.state.searchMode==true){
+                        this.setState({homesearch:""})
+                    }
+                    if(this.state.homesearch!==""&&this.state.searchMode==false){
+                        for (var i = 0; i < filtered_price_productList.length; i++) {
+                            if (filtered_price_productList[i].name.toUpperCase().indexOf(this.state.homesearch.toUpperCase()) > -1) {
+                                filtered_search_productList.push(filtered_price_productList[i])
+                            }
+                        }
+                    } else {
+                        for (var i = 0; i < filtered_price_productList.length; i++) {
+                            if (filtered_price_productList[i].name.toUpperCase().indexOf(this.state.target.toUpperCase()) > -1) {
+                                filtered_search_productList.push(filtered_price_productList[i])
+                            }
                         }
                     }
                 }
@@ -140,8 +161,21 @@ class SearchResult extends React.Component {
                         this.setState({ sellers: sellers })
                     }
                     if (this.state.priceFilter == true) {
-                        var frP = parseFloat(this.state.fromPrice)
-                        var toP = parseFloat(this.state.toPrice)
+                        if(isNaN(frP)==true){
+                            var frP = parseFloat(this.state.fromPrice.toString().replace(/,/g, ''))
+                        }
+                        if(isNaN(toP)==true){
+                            var toP = parseFloat(this.state.toPrice.toString().replace(/,/g, ''))
+                        }
+                        console.log(frP)
+                        if(isNaN(frP)==true){
+                            frP=0
+                            this.setState({fromPrice:0})
+                        }
+                        if(isNaN(toP)==true){
+                            toP=0
+                            this.setState({toPrice:0})
+                        }
                         if (frP > 0 && toP == 0) {
                             var priceList = []
                             for (var i = 0; i < filtered_search_productList.length; i++) {
@@ -232,8 +266,20 @@ class SearchResult extends React.Component {
                             this.setState({ sellers: sellers })
                         }
                         if (this.state.priceFilter == true) {
-                            var frP = parseFloat(this.state.fromPrice)
-                            var toP = parseFloat(this.state.toPrice)
+                            if(isNaN(frP)==true){
+                                var frP = parseFloat(this.state.fromPrice.toString().replace(/,/g, ''))
+                            }
+                            if(isNaN(toP)==true){
+                                var toP = parseFloat(this.state.toPrice.toString().replace(/,/g, ''))
+                            }
+                            if(isNaN(frP)==true){
+                                frP=0
+                                this.setState({fromPrice:0})
+                            }
+                            if(isNaN(toP)==true){
+                                toP=0
+                                this.setState({toPrice:0})
+                            }
                             if (frP > 0 && toP == 0) {
                                 var priceList = []
                                 for (var i = 0; i < temp_arr_1.length; i++) {
@@ -318,8 +364,20 @@ class SearchResult extends React.Component {
                             }
                         } else this.setState({ sellers: [] })
                         if (this.state.priceFilter == true) {
-                            var frP = parseFloat(this.state.fromPrice)
-                            var toP = parseFloat(this.state.toPrice)
+                            if(isNaN(frP)==true){
+                                var frP = parseFloat(this.state.fromPrice.toString().replace(/,/g, ''))
+                            }
+                            if(isNaN(toP)==true){
+                                var toP = parseFloat(this.state.toPrice.toString().replace(/,/g, ''))
+                            }
+                            if(isNaN(frP)==true){
+                                frP=0
+                                this.setState({fromPrice:0})
+                            }
+                            if(isNaN(toP)==true){
+                                toP=0
+                                this.setState({toPrice:0})
+                            }
                             if (frP > 0 && toP == 0) {
                                 var priceList = []
                                 for (var i = 0; i < filtered_price_productList.length; i++) {
@@ -419,6 +477,11 @@ class SearchResult extends React.Component {
         if (this.state.target !== "") {
             this.setState({ target: "" })
         }
+        if(this.state.homesearch !== ""){
+            this.setState({homesearch:""})
+        }
+        this.setState({fromPrice:0})
+        this.setState({toPrice:0})
         this.setState({ currentCategory: c })
         this.setState({ activeBrands: [] })
         this.fetchProducts()
@@ -426,6 +489,8 @@ class SearchResult extends React.Component {
 
     gotoProductDetail(id) {
         this.setState({ product_id: id }, console.log(this.state.product_id))
+        let newObj = {_id:id}
+        this.setState({products:newObj})
     }
 
     handleChangeBrand(event) {
@@ -447,16 +512,23 @@ class SearchResult extends React.Component {
     }
 
     handleChangePrice1(e) {
-        this.setState({ fromPrice: e.target.value })
+        this.setState({ fromPrice: (Number(e.target.value.replace(/\D/g, '')) || '').toLocaleString() })
     }
 
     handleChangePrice2(e) {
-        this.setState({ toPrice: e.target.value })
+        this.setState({ toPrice: (Number(e.target.value.replace(/\D/g, '')) || '').toLocaleString() })
     }
 
     togglePriceFilter() {
         this.setState({ priceFilter: true })
         this.fetchProducts()
+    }
+
+    removeCommas(str) {
+        while (str.search(",") >= 0) {
+            str = (str + "").replace(',', '');
+        }
+        return str;
     }
 
     componentDidMount() {
@@ -469,6 +541,7 @@ class SearchResult extends React.Component {
         console.log(this.state.currentCategory)
         console.log(this.state.activeBrands)
         console.log(this.state.priceFilter)
+        console.log(typeof this.state.fromPrice)
     }
 
     render() {
@@ -500,7 +573,8 @@ class SearchResult extends React.Component {
                                 </div>
                             </p>
                             <div className="compare-btn" style={{ position: "absolute", bottom: 20 }}>
-                                <a className="btn btn-primary btn-sm" href="#" onClick={() => this.gotoProductDetail(p.id)}><i className="fa fa-exchange" aria-hidden="true" /> Compare Price</a>
+                                {/* <a className="btn btn-primary btn-sm" href="#" onClick={() => this.gotoProductDetail(p.id)}><i className="fa fa-exchange" aria-hidden="true" /> Compare Price</a> */}
+                                <Link to={`/ProductDetail/${p.id}`} className="btn btn-primary btn-sm"><i className="fa fa-exchange" aria-hidden="true" />Compare Price</Link>
                             </div>
                         </div>
                     </div>
@@ -552,8 +626,9 @@ class SearchResult extends React.Component {
             )
         })
         if (this.state.product_id !== "") {
+            // this.setState({product_id:""})
             return (
-                <ProductDetail product_id={this.state.product_id} />
+                <ProductDetail products={this.state.products} dispatch={this.props.dispatch} />
             )
         } else return (
             <AuthContext.Consumer>
@@ -639,12 +714,15 @@ class SearchResult extends React.Component {
                             ============================== */}
                                     <div className="col-12 order-lg-2 col-md-5 col-lg-6 col-xl-5 d-none d-lg-block">
                                         <div className="input-group wd-btn-group header-search-option">
-                                            <input style={{ height: 47 }} type="text" className="form-control blurb-search" onChange={this.handleSearch.bind(this)} placeholder="Search ..." aria-label="Search for..." />
+                                            <input style={{ height: 47 }} type="text" className="form-control blurb-search" value={this.state.target} onChange={this.handleSearch.bind(this)} placeholder="Search ..." aria-label="Search for..." />
                                             <span className="input-group-btn">
                                                 <button style={{ height: 47 }} className="btn btn-secondary wd-btn-search" onClick={() => {
                                                     this.setState({ activeBrands: [] })
                                                     this.setState({ currentCategory: "" })
                                                     this.setState({ searchMode: true })
+                                                    this.setState({homesearch:""})
+                                                    this.setState({fromPrice:0})
+                                                    this.setState({toPrice:0})
                                                     this.fetchProducts()
                                                 }} type="button">
                                                     <i className="fa fa-search" aria-hidden="true" />
@@ -1880,26 +1958,24 @@ class SearchResult extends React.Component {
                             <div className="container">
                                 <div className="row">
                                     <div className="col-12">
-                                        <div className="row">
-                                            <div className="col-4 col-md-2 client-img">
-                                                <img className="figure-img img-fluid" src={require("./img/client/client-img-1.jpg")} alt="" />
-                                            </div>
-                                            <div className="col-4 col-md-2 client-img">
-                                                <img className="figure-img img-fluid" src={require("./img/client/client-img-2.jpg")} alt="" />
-                                            </div>
-                                            <div className="col-4 col-md-2 client-img">
-                                                <img className="figure-img img-fluid" src={require("./img/client/client-img-3.jpg")} alt="" />
-                                            </div>
-                                            <div className="col-4 col-md-2 client-img">
-                                                <img className="figure-img img-fluid" src={require("./img/client/client-img-4.jpg")} alt="" />
-                                            </div>
-                                            <div className="col-4 col-md-2 client-img">
-                                                <img className="figure-img img-fluid" src={require("./img/client/client-img-5.jpg")} alt="" />
-                                            </div>
-                                            <div className="col-4 col-md-2 client-img">
-                                                <img className="figure-img img-fluid" src={require("./img/client/client-img-6.jpg")} alt="" />
-                                            </div>
-                                        </div>
+                                    <div className="col-4 col-md-2 client-img">
+                                        <img style={{width:195, height:100}} className="figure-img img-fluid" src={require("./img/client/client-img-1-10.jpg")} alt="" />
+                                    </div>
+                                    <div className="col-4 col-md-2 client-img">
+                                        <img style={{width:195, height:100}} className="figure-img img-fluid" src={require("./img/client/client-img-2-10.jpg")} alt="" />
+                                    </div>
+                                    <div className="col-4 col-md-2 client-img">
+                                        <img style={{width:195, height:100}} className="figure-img img-fluid" src={require("./img/client/client-img-3-10.jpg")} alt="" />
+                                    </div>
+                                    <div className="col-4 col-md-2 client-img">
+                                        <img style={{width:195, height:100}} className="figure-img img-fluid" src={require("./img/client/client-img-4-10.jpg")} alt="" />
+                                    </div>
+                                    <div className="col-4 col-md-2 client-img">
+                                        <img style={{width:195, height:100}} className="figure-img img-fluid" src={require("./img/client/client-img-5-10.jpg")} alt="" />
+                                    </div>
+                                    <div className="col-4 col-md-2 client-img">
+                                        <img style={{width:195, height:100}} className="figure-img img-fluid" src={require("./img/client/client-img-6-10.jpg")} alt="" />
+                                    </div>
                                     </div>
                                     <div className="col-12 p0 ">
                                         <div className="page-location">
@@ -1947,18 +2023,18 @@ class SearchResult extends React.Component {
                                         Category Option
                                 ============================== */}
                                         <div className="side-bar category category-md">
-                                            <h5 className="title">Category</h5>
-                                            <ul className="dropdown-list-menu mr-4">
-                                                <li>
-                                                    <a href="#" onClick={() => this.changeCategory("")}><i className="fa fa-angle-double-right btn" aria-hidden="true" />All</a>
+                                            <h5 className="title text-center">Category</h5>
+                                            <ul className="dropdown-list-menu">
+                                                <li className="text-left">
+                                                    <a href="#" onClick={() => this.changeCategory("")}><i className="fa fa-angle-double-right float-left mt-1" aria-hidden="true"></i>{` `}All</a>
                                                 </li>
                                                 {this.state.categories.slice(0, this.state.itemsToShow).map((c, i) =>
-                                                    <li key={i}>
-                                                        <a href="#" onClick={() => this.changeCategory(c)}><i className="fa fa-angle-double-right btn" aria-hidden="true" />{c}</a>
+                                                    <li className="text-left" key={i}>
+                                                        <a href="#" onClick={() => this.changeCategory(c)}><i className="fa fa-angle-double-right float-left mt-1" aria-hidden="true"></i>{` `}{c}</a>
                                                     </li>
                                                 )}
                                             </ul>
-                                            <a className="btn btn-dark text-white mt-3 mx-auto" onClick={this.showMore.bind(this)}>
+                                            <a className="btn btn-secondary btn-sm btn-block text-white mt-3 mx-auto" onClick={this.showMore.bind(this)}>
                                                 {this.state.expanded ? (
                                                     <span>Show less</span>
                                                 ) : (
@@ -1970,12 +2046,12 @@ class SearchResult extends React.Component {
                                         Check Box Option
                                 ============================== */}
                                         <div className="side-bar check-box">
-                                            <h5 className="title">Choose Brand/Retailer</h5>
-                                            <ul>
+                                            <h5 className="title">Choose Brand</h5>
+                                            <ul style={{marginLeft: 67}}>
                                                 {this.state.sellers.map((sl, i) =>
-                                                    <li key={i}>
-                                                        <input type="checkbox" className="form-check-input" defaultChecked={false} value={sl} onChange={this.handleChangeBrand.bind(this)} />
-                                                        <label className="form-check-label">{sl}</label>
+                                                    <li key={i} className="text-left">
+                                                        <input id={i} type="checkbox" className="form-check-input" defaultChecked={false} value={sl} onChange={this.handleChangeBrand.bind(this)} />
+                                                        <label for={i} style={{dislay:"inline-block"}} className="form-check-label">{sl}</label>
                                                     </li>
                                                 )}
                                             </ul>
@@ -1995,22 +2071,22 @@ class SearchResult extends React.Component {
                                             <h5 className="title">Price Range</h5>
                                             <div className="mb-5">
                                                 From:
-                            <input type="float" name="fromPrice" className="form-control"
+                            <input type="float" name="fromPrice" className="form-control-sm"
                                                     value={this.state.fromPrice}
                                                     onChange={this.handleChangePrice1.bind(this)} />
                             To:
-                            <input type="float" name="toPrice" className="form-control"
+                            <input type="float" name="toPrice" className="form-control-sm"
                                                     value={this.state.toPrice}
                                                     onChange={this.handleChangePrice2.bind(this)} />
-                                                <button className="btn btn-secondary text-white mx-auto text-center mt-3" onClick={this.togglePriceFilter.bind(this)}>Filter</button>
+                                                <button className="btn btn-secondary btn-sm btn-block text-white mx-auto text-center mt-3" onClick={this.togglePriceFilter.bind(this)}>Filter</button>
                                             </div>
                                             <h5 className="title">Color Option</h5>
-                                            <ul>
-                                                <li><a href="#"><i className="fa fa-square color-black" aria-hidden="true" /> Black </a></li>
-                                                <li><a href="#"><i className="fa fa-square color-red" aria-hidden="true" /> Red</a></li>
-                                                <li><a href="#"><i className="fa fa-square color-purple" aria-hidden="true" /> Purple</a></li>
-                                                <li><a href="#"><i className="fa fa-square color-yellow" aria-hidden="true" /> Yellow</a></li>
-                                                <li><a href="#"><i className="fa fa-square color-cyan" aria-hidden="true" /> Cyan</a></li>
+                                            <ul className="text-left" style={{marginLeft: 53}}>
+                                                <li><i className="fa fa-square color-black float-left" style={{marginTop: 3}} aria-hidden="true" /><a href="#" style={{marginRight: 50}}> Black </a></li>
+                                                <li><i className="fa fa-square color-red float-left" style={{marginTop: 3}} aria-hidden="true" /><a href="#" style={{marginRight: 50}}> Red</a></li>
+                                                <li><i className="fa fa-square color-purple float-left" style={{marginTop: 3}} aria-hidden="true" /><a href="#" style={{marginRight: 50}}> Purple</a></li>
+                                                <li><i className="fa fa-square color-yellow float-left" style={{marginTop: 3}} aria-hidden="true" /><a href="#" style={{marginRight: 50}}> Yellow</a></li>
+                                                <li><i className="fa fa-square color-cyan float-left" style={{marginTop: 3}} aria-hidden="true" /><a href="#" style={{marginRight: 50}}> Cyan</a></li>
                                             </ul>
                                         </div>
                                         {/* =========================
@@ -3242,8 +3318,8 @@ class SearchResult extends React.Component {
                                         <div className="row">
                                             <div className="col-sm-3 p0 text-center">
                                                 <div className="details-img">
-                                                    <img className="img-fluid main-hover-icon-compare" src={require("./img/details-img/compare-icon.png")} alt="compare-icon" />
-                                                    <img className="img-fluid hover-icon-compare" src={require("./img/details-img/compare.png")} alt="compare-icon" />
+                                                    <img style={{width:45, height:45}} className="img-fluid main-hover-icon-compare" src={require("./img/details-img/compare-icon-1.png")} alt="compare-icon" />
+                                                    <img style={{width:45, height:45}} className="img-fluid hover-icon-compare" src={require("./img/details-img/compare-1.png")} alt="compare-icon" />
                                                 </div>
                                             </div>
                                             <div className="col-sm-9 p0 details-description">
@@ -3252,15 +3328,15 @@ class SearchResult extends React.Component {
                                             </div>
                                         </div>
                                         <div className="arow">
-                                            <img src={require("./img/details-img/angle2.png")} alt="" />
+                                            <img style={{width:30, height:128}} src={require("./img/details-img/angle2-1.png")} alt="" />
                                         </div>
                                     </div>
                                     <div className="col-10 col-sm-8 col-lg-3 details-box">
                                         <div className="row">
                                             <div className="col-sm-3 p0 text-center">
                                                 <div className="details-img">
-                                                    <img className="img-fluid main-hover-icon-user" src={require("./img/details-img/review-icon.png")} alt="review-icon" />
-                                                    <img className="img-fluid hover-icon-user" src={require("./img/details-img/user-2.png")} alt="review-icon" />
+                                                    <img style={{width:45, height:45}} className="img-fluid main-hover-icon-user" src={require("./img/details-img/review-icon-1.png")} alt="review-icon" />
+                                                    <img style={{width:45, height:45}} className="img-fluid hover-icon-user" src={require("./img/details-img/user-2-1.png")} alt="review-icon" />
                                                 </div>
                                             </div>
                                             <div className="col-sm-9 p0 details-description">
@@ -3269,15 +3345,15 @@ class SearchResult extends React.Component {
                                             </div>
                                         </div>
                                         <div className="arow">
-                                            <img src={require("./img/details-img/angle2.png")} alt="" />
+                                            <img style={{width:30, height:128}} src={require("./img/details-img/angle2-1.png")} alt="" />
                                         </div>
                                     </div>
                                     <div className="col-10 col-sm-8 col-lg-3 details-box">
                                         <div className="row">
                                             <div className="col-sm-3 p0 text-center">
                                                 <div className="details-img">
-                                                    <img className="img-fluid main-hover-icon-vendor" src={require("./img/details-img/shop.png")} alt="vendor-icon" />
-                                                    <img className="img-fluid hover-icon-vendor" src={require("./img/details-img/vendor-icon.png")} alt="vendor-icon" />
+                                                    <img style={{width:45, height:45}} className="img-fluid main-hover-icon-vendor" src={require("./img/details-img/shop-1.png")} alt="vendor-icon" />
+                                                    <img style={{width:45, height:45}} className="img-fluid hover-icon-vendor" src={require("./img/details-img/vendor-icon-1.png")} alt="vendor-icon" />
                                                 </div>
                                             </div>
                                             <div className="col-sm-9 p0 details-description">
@@ -3286,12 +3362,12 @@ class SearchResult extends React.Component {
                                             </div>
                                         </div>
                                         <div className="arow">
-                                            <img src={require("./img/details-img/angle2.png")} alt="" />
+                                            <img style={{width:30, height:128}} src={require("./img/details-img/angle2-1.png")} alt="" />
                                         </div>
                                     </div>
                                     <div className="col-10 col-sm-8 col-lg-3 details-box details-active">
                                         <div className="text-center">
-                                            <img className="img-fluid" src={require("./img/details-img/gift-icon.png")} alt="gift-icon" />
+                                        <img style={{width:"auto", height:48}} className="img-fluid" src={require("./img/details-img/gift-icon-1.png")} alt="gift-icon" />
                                             <h3 className="details-active-title">Enjoy Result</h3>
                                         </div>
                                     </div>
@@ -3425,19 +3501,19 @@ class SearchResult extends React.Component {
                                     <div className="col-md-6">
                                         <div className="brand-logo">
                                             <a href="#">
-                                                <img src={require("./img/social-media-img/brand-logo-1.jpg")} className="img-fluid" alt="Brand Logo" />
+                                                <img style={{width:56, height:35}} src={require("./img/social-media-img/brand-logo-1-10.jpg")} className="img-fluid" alt="Brand Logo" />
                                             </a>
                                             <a href="#">
-                                                <img src={require("./img/social-media-img/brand-logo-2.jpg")} className="img-fluid" alt="Brand Logo" />
+                                                <img style={{width:56, height:35}} src={require("./img/social-media-img/brand-logo-2-10.jpg")} className="img-fluid" alt="Brand Logo" />
                                             </a>
                                             <a href="#">
-                                                <img src={require("./img/social-media-img/brand-logo-3.jpg")} className="img-fluid" alt="Brand Logo" />
+                                                <img style={{width:56, height:35}} src={require("./img/social-media-img/brand-logo-3-10.jpg")} className="img-fluid" alt="Brand Logo" />
                                             </a>
                                             <a href="#">
-                                                <img src={require("./img/social-media-img/brand-logo-4.jpg")} className="img-fluid" alt="Brand Logo" />
+                                                <img style={{width:56, height:35}} src={require("./img/social-media-img/brand-logo-4-10.jpg")} className="img-fluid" alt="Brand Logo" />
                                             </a>
                                             <a href="#">
-                                                <img src={require("./img/social-media-img/brand-logo-5.jpg")} className="img-fluid" alt="Brand Logo" />
+                                                <img style={{width:56, height:35}} src={require("./img/social-media-img/brand-logo-5-10.jpg")} className="img-fluid" alt="Brand Logo" />
                                             </a>
                                         </div>
                                     </div>
