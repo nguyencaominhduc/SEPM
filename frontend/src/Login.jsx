@@ -28,7 +28,7 @@ export default class Auth extends Component {
             return;
         }
 
-        fetch('https://api-easyprice.herokuapp.com/api/v1/users/login', {
+        fetch('https://phamhang.com/api/v1/users/login', {
             method: 'POST',
             body: JSON.stringify({
                 username: username,

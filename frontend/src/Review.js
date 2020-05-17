@@ -26,7 +26,7 @@ export default class ReviewNew extends Component {
               name: this.state.name,
               opinion: this.state.opinion
           }
-          const url = 'https://api-easyprice.herokuapp.com/api/v1/reviews';
+          const url = 'https://phamhang.com/api/v1/reviews';
           axios.post(url,obj)
             .then(res =>console.log(res.data))
             this.setState({
@@ -61,7 +61,7 @@ export default class ReviewNew extends Component {
         window.scrollTo(0, 0);
       }
       fetchReviews(){
-        var url = "https://api-easyprice.herokuapp.com/api/v1/reviews/5ea7ae2a2cf49d2070ad8dd8";
+        var url = "https://phamhang.com/api/v1/reviews/5ea7ae2a2cf49d2070ad8dd8";
         const that = this;
         
         fetch(url)
