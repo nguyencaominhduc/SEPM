@@ -1,13 +1,84 @@
-import React from 'react';
-import { Link } from 'react-router-dom'
+import React, { Component } from 'react'
 import AuthContext from "./auth-context.js";
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 
-const Review = props => (
-    <AuthContext.Consumer>
-        {(context) => {
-            return (
+export default class ReviewNew extends Component {
+    constructor(props) {
+        super(props);
+        this.onChangeName = this.onChangeName.bind(this);
+        this.onChangePros = this.onChangePros.bind(this);
+        this.onChangeCons = this.onChangeCons.bind(this);
+        this.onChangeEmail = this.onChangeEmail.bind(this);
+
+        this.state = {
+          reviews: [],
+          comments: [],
+          name:'',
+          pros:'',
+          email:'',
+          cons: '',  
+        };
+      }
+      onSubmit(e){
+          e.preventDefault();
+          const obj ={
+              name: this.state.name,
+              opinion: this.state.opinion
+          }
+          const url = 'http://localhost:5000/api/v1/reviews';
+          axios.post(url,obj)
+            .then(res =>console.log(res.data))
+            this.setState({
+                name:'',
+                pros:'',
+                email:'',
+                cons: '',
+            })
+      }
+      onChangeName(e){
+          this.setState({
+              name: e.target.value
+          });
+      }
+      onChangePros(e){
+          this.setState({
+              pros: e.target.value
+          })
+      }
+      onChangeEmail(e){
+        this.setState({
+            email: e.target.value
+        });
+    }
+    onChangeCons(e){
+        this.setState({
+            cons: e.target.value
+        });
+    }
+      componentDidMount() {
+        this.fetchReviews();
+        window.scrollTo(0, 0);
+      }
+      fetchReviews(){
+        var url = "http://localhost:5000/api/v1/reviews/5ea7ae2a2cf49d2070ad8dd8";
+        const that = this;
+        
+        fetch(url)
+          .then((res) => res.json())
+          .then((json) => that.setState({ reviews: json, comments: json.reviews}));
+        
+      }
+      render() {
+        let Reviews = this.state.reviews;
+        let Comments = this.state.reviews;
+        console.log(Reviews);
+        return (
+          <AuthContext.Consumer>
+            {(context) => {
+              return (
                 <div>
-                    {/* <div className="preloader" /> */}
+                        {/* <div className="preloader" /> */}
                     {/* =========================
                 Header Top Section
                     ============================== */}
@@ -267,10 +338,10 @@ const Review = props => (
                                                                                                 <form>
                                                                                                     <div className="form-group">
                                                                                                         <label htmlFor="exampleInputEmail-login">User name</label>
-                                                                                                        <input type="text" className="form-control" id="exampleInputEmail-login" placeholder="John mist |" />
+                                                                                                        <input type="text" className="form-control" id="exampleEmail-login" placeholder="John mist |" />
                                                                                                     </div>
                                                                                                     <div className="form-group">
-                                                                                                        <label htmlFor="exampleInputPassword-login-pass-2">Password</label>
+                                                                                                        <label htmlFor="examplePassword-login-pass-2">Password</label>
                                                                                                         <input type="password" className="form-control" id="exampleInputPassword-login-pass-2" placeholder="*** *** ***" />
                                                                                                     </div>
                                                                                                     <button type="submit" className="btn btn-primary wd-login-btn">LOGIN</button>
@@ -1312,30 +1383,30 @@ const Review = props => (
                                                                     <div className="reviews-title leave-opinion">
                                                                         <h3>Leave your Opinion here</h3>
                                                                     </div>
-                                                                    <form>
+                                                                    <form onSubmit={this.onSubmit}>
                                                                         <div className="row">
                                                                             <div className="col-md-6">
                                                                                 <div className="form-group">
                                                                                     <label htmlFor="first" className="color-black">Name *</label>
-                                                                                    <input type="text" className="form-control" placeholder id="first" />
+                                                                                    <input type="text" className="form-control" placeholder id="first" onChange={this.onChangeName} value={this.state.name} />
                                                                                 </div>
                                                                             </div>
                                                                             <div className="col-md-6">
                                                                                 <div className="form-group">
                                                                                     <label htmlFor="last" className="color-black">Email *</label>
-                                                                                    <input type="email" className="form-control" placeholder id="last" />
+                                                                                    <input type="email" className="form-control" placeholder id="last" onChange={this.onChangeEmail} value={this.state.email} />
                                                                                 </div>
                                                                             </div>
                                                                             <div className="col-md-6">
                                                                                 <div className="form-group">
                                                                                     <label htmlFor="last" className="color-green">Prons</label>
-                                                                                    <textarea className="form-control col-md-12" id="exampleFormControlTextarea1" placeholder="Write your Opinion here ... " defaultValue={""} />
+                                                                                    <textarea className="form-control col-md-12" id="exampleFormControlTextarea1" placeholder="Write your Opinion here ... " defaultValue={""} onChange={this.onChangePros} value={this.state.pros} />
                                                                                 </div>
                                                                             </div>
                                                                             <div className="col-md-6">
                                                                                 <div className="form-group">
                                                                                     <label htmlFor="exampleFormControlTextarea2" className="color-red">Cons</label>
-                                                                                    <textarea className="form-control col-12" id="exampleFormControlTextarea2" placeholder="Write your Opinion here ... " defaultValue={""} />
+                                                                                    <textarea className="form-control col-12" id="exampleFormControlTextarea2" placeholder="Write your Opinion here ... " defaultValue={""} onChange={this.onChangeCons} value={this.state.cons} />
                                                                                 </div>
                                                                             </div>
                                                                             <div className="col-12 col-md-12 product-rating-area">
@@ -2104,10 +2175,10 @@ const Review = props => (
                             </div>
                         </div>
                     </section>
-                </div>
-            )
-        }}
-    </AuthContext.Consumer>
-);
-
-export default Review;
+                    </div>
+              );
+            }}
+          </AuthContext.Consumer>
+        );
+      }
+    }
