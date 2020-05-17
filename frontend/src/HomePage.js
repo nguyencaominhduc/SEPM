@@ -13,7 +13,7 @@ class HomePage extends React.Component {
 
   // load project after call the component
   componentDidMount() {
-    fetch(`https://phamhang.com/api/v1/products`, {
+    fetch(`https://api-easyprice.herokuapp.com/api/v1/products`, {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",

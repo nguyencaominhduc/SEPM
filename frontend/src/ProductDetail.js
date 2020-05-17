@@ -23,7 +23,7 @@ class ProductDetail extends React.Component {
   }
 
   fetchReviews(){
-    var url = "https://phamhang.com/api/v1/reviews/5ea7ae2a2cf49d2070ad8dd8";
+    var url = "https://api-easyprice.herokuapp.com/api/v1/reviews/5ea7ae2a2cf49d2070ad8dd8";
     const that = this;
     
     fetch(url)
@@ -35,9 +35,9 @@ class ProductDetail extends React.Component {
     const that = this;
     var url = "";
     if (this.props.products.length !== 0) {
-      url = `https://phamhang.com/api/v1/products/${this.props.products._id}`;
+      url = `https://api-easyprice.herokuapp.com/api/v1/products/${this.props.products._id}`;
     } else {
-      url = `https://phamhang.com/api/v1/products/5e99d314b9128112d755c9fd`;
+      url = `https://api-easyprice.herokuapp.com/api/v1/products/5e99d314b9128112d755c9fd`;
     }
     fetch(url)
       .then((res) => res.json())

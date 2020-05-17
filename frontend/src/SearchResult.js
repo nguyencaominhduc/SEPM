@@ -6,7 +6,7 @@ import ProductDetail from './ProductDetail.js';
 import Navbar from './Navbar.js'
 //There should be a quick go back button on product detail to direct user back to their current searching page session
 //after fix on search logic, after inputting search query and clicking on one of the categories, please re-type the search query before proceeding to use search again
-const url = 'https://phamhang.com/api/v1/products'
+const url = 'https://api-easyprice.herokuapp.com/api/v1/products'
 class SearchResult extends React.Component {
     constructor(props) {
         super(props)
