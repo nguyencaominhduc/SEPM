@@ -10,14 +10,26 @@ class ProductDetail extends React.Component {
       product: [],
       detailProduct: [],
       id: {},
+      reviews: [],
+      comments: [],
     };
   }
 
   componentDidMount() {
     console.log("RECEIVE PROP: ", this.props.products);
     this.fetchData();
+    this.fetchReviews();
     window.scrollTo(0, 0);
+  }
 
+  fetchReviews(){
+    var url = "http://localhost:5000/api/v1/reviews/5ea7ae2a2cf49d2070ad8dd8";
+    const that = this;
+    
+    fetch(url)
+      .then((res) => res.json())
+      .then((json) => that.setState({ reviews: json, comments: json.reviews}));
+    
   }
   fetchData() {
     const that = this;
@@ -36,17 +48,10 @@ class ProductDetail extends React.Component {
     const { product } = this.state;
     let ProductInfo = this.state.product;
     let FullDetails=this.state.detailProduct;
-    console.log(product.data);
-    console.log(product);
-    console.log(typeof product);
-   console.log(typeof FullDetails);
-   console.log(product.image);
-   let result = Object.values(FullDetails);
-   console.log(result[0]);
-    // var Details = Object.keys(obj).map(function(key){
-    //   return [Number(key, obj[key])];
-    // });
-    // console.log(Details);
+    let Reviews = this.state.reviews;
+    let Comments = this.state.comments;
+    console.log(Reviews);
+    console.log(Comments);
 
     return ( 
 
@@ -1993,9 +1998,7 @@ class ProductDetail extends React.Component {
                 {FullDetails.map(s =><div className="row" key={product._id}>
                       <div className="col-md-12 product-slier-details">
                         <ul id="lightSlider">
-                          <li
-                            data-thumb={s.image}
-                          >
+                          <li data-thumb={s.image}>
                             <img
                               className="figure-img img-fluid"
                               src={s.image}
@@ -2104,7 +2107,7 @@ class ProductDetail extends React.Component {
                           </div>
                           <div className="col-5 store-border-price text-center">
                             <div className="price">
-                              <p>{s.price}</p>
+                              <p>{s.price} VND</p>
                             </div>
                           </div>
                           <div className="col-4 store-border-button">
@@ -2232,10 +2235,10 @@ class ProductDetail extends React.Component {
                     </div>
                     <div className="product-tab-content">
                       <h4 className="description-title">{product.name}</h4>
-                      <h6 className="description-subtitle">
+                      <h6 className="description-subtitle" style={{textAlign: "left"}}>
                         Battery and Power
                       </h6>
-                      <p className="description-subcontent">
+                      <p className="description-subcontent" style={{textAlign: "left"}}>
                         Those looking forward to an excellent trimmer at an
                         affordable price will say they have found their ultimate
                         solution in Kamei KM-2013 Trimmer. This Electric Hair
@@ -2246,10 +2249,10 @@ class ProductDetail extends React.Component {
                         50Hz power source. The technology and design assure a
                         great trimming experience.
                       </p>
-                      <h6 className="description-subtitle">
+                      <h6 className="description-subtitle"style={{textAlign: "left"}}>
                         Quality of Body and Combs
                       </h6>
-                      <p className="description-subcontent">
+                      <p className="description-subcontent" style={{textAlign: "left"}}>
                         High Hardness Alloy Steel Blade. The attachment includes
                         stubble comb which can suffice various applications. The
                         device also comes with Superior lift cut technology
@@ -2258,8 +2261,8 @@ class ProductDetail extends React.Component {
                         mm. The number of combs is one, and the number of trim
                         settings are{" "}
                       </p>
-                      <h6 className="description-subtitle">Usability</h6>
-                      <p className="description-subcontent">
+                      <h6 className="description-subtitle"style={{textAlign: "left"}}>Usability</h6>
+                      <p className="description-subcontent"style={{textAlign: "left"}}>
                         There are no additional epilator settings. Brush
                         cleaning is facilitated to clean after every use. The
                         device can be used in cordless fashion for extra
@@ -2269,10 +2272,10 @@ class ProductDetail extends React.Component {
                         trimmer as well. The different technical specifications
                         make it highly convenient to use.
                       </p>
-                      <h6 className="description-subtitle">
+                      <h6 className="description-subtitle"style={{textAlign: "left"}}>
                         Additional features
                       </h6>
-                      <p className="description-subcontent">
+                      <p className="description-subcontent"style={{textAlign: "left"}}>
                         The device features a LED display. here are no
                         additional epilator settings. Brush cleaning is
                         facilitated to clean after every use. The device can be
@@ -2313,8 +2316,8 @@ class ProductDetail extends React.Component {
                           />
                         </div>
                       </div>
-                      <h6 className="description-subtitle">Features</h6>
-                      <p className="description-subcontent">
+                      <h6 className="description-subtitle"style={{textAlign: "left"}}>Features</h6>
+                      <p className="description-subcontent"style={{textAlign: "left"}}>
                         Redefine your workday with the Palm Treo Pro smartphone.
                         Perfectly balanced, you can respond to business and
                         personal email, stay on top of appointments and
@@ -2628,295 +2631,295 @@ class ProductDetail extends React.Component {
                           Price start from{" "}
                           <strong className="active-color">
                             <u>$80.00</u> - <u>$75.00</u>
-                          </strong>
-                        </p>
+                            </strong>
+                          </p>
+                        </div>
+                        <div className="content-excerpt">
+                          <p>Cras in nunc non ipsum duo cursus ultrices est</p>
+                        </div>
+                        <div className="rating">
+                          <a className="active-color" href="#">
+                            <i className="fa fa-star" aria-hidden="true" />
+                          </a>
+                          <a className="active-color" href="#">
+                            <i className="fa fa-star" aria-hidden="true" />
+                          </a>
+                          <a className="active-color" href="#">
+                            <i className="fa fa-star" aria-hidden="true" />
+                          </a>
+                          <a href="#">
+                            <i className="fa fa-star-o" aria-hidden="true" />
+                          </a>
+                          <a href="#">
+                            <i className="fa fa-star-o" aria-hidden="true" />
+                          </a>
+                        </div>
+                        <div className="compare-btn">
+                          <a className="btn btn-primary btn-sm" href="#">
+                            <i className="fa fa-exchange" aria-hidden="true" />{" "}
+                            Add to compare
+                          </a>
+                        </div>
+                      </figcaption>
+                    </figure>
+                  </div>
+                  <div className="col-12">
+                    <figure className="figure product-box">
+                      <div className="product-box-img">
+                        <img
+                          src={require("./img/product-img/product-img-4.jpg")}
+                          className="figure-img img-fluid"
+                          alt="Product Img"
+                        />
                       </div>
-                      <div className="content-excerpt">
-                        <p>Cras in nunc non ipsum duo cursus ultrices est</p>
+                      <div className="quick-view-btn">
+                        <div className="compare-btn">
+                          <a className="btn btn-primary btn-sm" href="#">
+                            <i className="fa fa-eye" aria-hidden="true" /> Quick
+                            view
+                          </a>
+                        </div>
                       </div>
-                      <div className="rating">
-                        <a className="active-color" href="#">
-                          <i className="fa fa-star" aria-hidden="true" />
-                        </a>
-                        <a className="active-color" href="#">
-                          <i className="fa fa-star" aria-hidden="true" />
-                        </a>
-                        <a className="active-color" href="#">
-                          <i className="fa fa-star" aria-hidden="true" />
-                        </a>
-                        <a href="#">
-                          <i className="fa fa-star-o" aria-hidden="true" />
-                        </a>
-                        <a href="#">
-                          <i className="fa fa-star-o" aria-hidden="true" />
-                        </a>
+                      <figcaption className="figure-caption text-center">
+                        <span className="badge badge-secondary wd-badge text-uppercase">
+                          New
+                        </span>
+                        <div className="wishlist">
+                          <i className="fa fa-heart" aria-hidden="true" />
+                        </div>
+                        <div className="price-start">
+                          <p>
+                            Price start from{" "}
+                            <strong className="active-color">
+                              <u>$80.00</u> - <u>$75.00</u>
+                            </strong>
+                          </p>
+                        </div>
+                        <div className="content-excerpt">
+                          <p>Cras in nunc non ipsum duo cursus ultrices est</p>
+                        </div>
+                        <div className="rating">
+                          <a className="active-color" href="#">
+                            <i className="fa fa-star" aria-hidden="true" />
+                          </a>
+                          <a className="active-color" href="#">
+                            <i className="fa fa-star" aria-hidden="true" />
+                          </a>
+                          <a className="active-color" href="#">
+                            <i className="fa fa-star" aria-hidden="true" />
+                          </a>
+                          <a href="#">
+                            <i className="fa fa-star-o" aria-hidden="true" />
+                          </a>
+                          <a href="#">
+                            <i className="fa fa-star-o" aria-hidden="true" />
+                          </a>
+                        </div>
+                        <div className="compare-btn">
+                          <a className="btn btn-primary btn-sm" href="#">
+                            <i className="fa fa-exchange" aria-hidden="true" />{" "}
+                            Add to compare
+                          </a>
+                        </div>
+                      </figcaption>
+                    </figure>
+                  </div>
+                  <div className="col-12">
+                    <figure className="figure product-box">
+                      <div className="product-box-img">
+                        <img
+                          src={require("./img/product-img/product-img-5.jpg")}
+                          className="figure-img img-fluid"
+                          alt="Product Img"
+                        />
                       </div>
-                      <div className="compare-btn">
-                        <a className="btn btn-primary btn-sm" href="#">
-                          <i className="fa fa-exchange" aria-hidden="true" />{" "}
-                          Add to compare
-                        </a>
+                      <div className="quick-view-btn">
+                        <div className="compare-btn">
+                          <a className="btn btn-primary btn-sm" href="#">
+                            <i className="fa fa-eye" aria-hidden="true" /> Quick
+                            view
+                          </a>
+                        </div>
                       </div>
-                    </figcaption>
-                  </figure>
-                </div>
-                <div className="col-12">
-                  <figure className="figure product-box">
-                    <div className="product-box-img">
-                      <img
-                        src={require("./img/product-img/product-img-4.jpg")}
-                        className="figure-img img-fluid"
-                        alt="Product Img"
-                      />
-                    </div>
-                    <div className="quick-view-btn">
-                      <div className="compare-btn">
-                        <a className="btn btn-primary btn-sm" href="#">
-                          <i className="fa fa-eye" aria-hidden="true" /> Quick
-                          view
-                        </a>
-                      </div>
-                    </div>
-                    <figcaption className="figure-caption text-center">
-                      <span className="badge badge-secondary wd-badge text-uppercase">
-                        New
-                      </span>
-                      <div className="wishlist">
-                        <i className="fa fa-heart" aria-hidden="true" />
-                      </div>
-                      <div className="price-start">
-                        <p>
-                          Price start from{" "}
-                          <strong className="active-color">
-                            <u>$80.00</u> - <u>$75.00</u>
-                          </strong>
-                        </p>
-                      </div>
-                      <div className="content-excerpt">
-                        <p>Cras in nunc non ipsum duo cursus ultrices est</p>
-                      </div>
-                      <div className="rating">
-                        <a className="active-color" href="#">
-                          <i className="fa fa-star" aria-hidden="true" />
-                        </a>
-                        <a className="active-color" href="#">
-                          <i className="fa fa-star" aria-hidden="true" />
-                        </a>
-                        <a className="active-color" href="#">
-                          <i className="fa fa-star" aria-hidden="true" />
-                        </a>
-                        <a href="#">
-                          <i className="fa fa-star-o" aria-hidden="true" />
-                        </a>
-                        <a href="#">
-                          <i className="fa fa-star-o" aria-hidden="true" />
-                        </a>
-                      </div>
-                      <div className="compare-btn">
-                        <a className="btn btn-primary btn-sm" href="#">
-                          <i className="fa fa-exchange" aria-hidden="true" />{" "}
-                          Add to compare
-                        </a>
-                      </div>
-                    </figcaption>
-                  </figure>
-                </div>
-                <div className="col-12">
-                  <figure className="figure product-box">
-                    <div className="product-box-img">
-                      <img
-                        src={require("./img/product-img/product-img-5.jpg")}
-                        className="figure-img img-fluid"
-                        alt="Product Img"
-                      />
-                    </div>
-                    <div className="quick-view-btn">
-                      <div className="compare-btn">
-                        <a className="btn btn-primary btn-sm" href="#">
-                          <i className="fa fa-eye" aria-hidden="true" /> Quick
-                          view
-                        </a>
-                      </div>
-                    </div>
-                    <figcaption className="figure-caption text-center">
-                      <span className="badge badge-secondary wd-badge text-uppercase">
-                        New
-                      </span>
-                      <div className="wishlist">
-                        <i className="fa fa-heart" aria-hidden="true" />
-                      </div>
-                      <div className="price-start">
-                        <p>
-                          Price start from{" "}
-                          <strong className="active-color">
-                            <u>$80.00</u> - <u>$75.00</u>
-                          </strong>
-                        </p>
-                      </div>
-                      <div className="content-excerpt">
-                        <p>Cras in nunc non ipsum duo cursus ultrices est</p>
-                      </div>
-                      <div className="rating">
-                        <a className="active-color" href="#">
-                          <i className="fa fa-star" aria-hidden="true" />
-                        </a>
-                        <a className="active-color" href="#">
-                          <i className="fa fa-star" aria-hidden="true" />
-                        </a>
-                        <a className="active-color" href="#">
-                          <i className="fa fa-star" aria-hidden="true" />
-                        </a>
-                        <a href="#">
-                          <i className="fa fa-star-o" aria-hidden="true" />
-                        </a>
-                        <a href="#">
-                          <i className="fa fa-star-o" aria-hidden="true" />
-                        </a>
-                      </div>
-                      <div className="compare-btn">
-                        <a className="btn btn-primary btn-sm" href="#">
-                          <i className="fa fa-exchange" aria-hidden="true" />{" "}
-                          Add to compare
-                        </a>
-                      </div>
-                    </figcaption>
-                  </figure>
+                      <figcaption className="figure-caption text-center">
+                        <span className="badge badge-secondary wd-badge text-uppercase">
+                          New
+                        </span>
+                        <div className="wishlist">
+                          <i className="fa fa-heart" aria-hidden="true" />
+                        </div>
+                        <div className="price-start">
+                          <p>
+                            Price start from{" "}
+                            <strong className="active-color">
+                              <u>$80.00</u> - <u>$75.00</u>
+                            </strong>
+                          </p>
+                        </div>
+                        <div className="content-excerpt">
+                          <p>Cras in nunc non ipsum duo cursus ultrices est</p>
+                        </div>
+                        <div className="rating">
+                          <a className="active-color" href="#">
+                            <i className="fa fa-star" aria-hidden="true" />
+                          </a>
+                          <a className="active-color" href="#">
+                            <i className="fa fa-star" aria-hidden="true" />
+                          </a>
+                          <a className="active-color" href="#">
+                            <i className="fa fa-star" aria-hidden="true" />
+                          </a>
+                          <a href="#">
+                            <i className="fa fa-star-o" aria-hidden="true" />
+                          </a>
+                          <a href="#">
+                            <i className="fa fa-star-o" aria-hidden="true" />
+                          </a>
+                        </div>
+                        <div className="compare-btn">
+                          <a className="btn btn-primary btn-sm" href="#">
+                            <i className="fa fa-exchange" aria-hidden="true" />{" "}
+                            Add to compare
+                          </a>
+                        </div>
+                      </figcaption>
+                    </figure>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </section>
-        {/* =========================
-  Call To Action Section
-    ============================== */}
-        <section id="call-to-action" className="d-flex align-items-center">
-          <div className="container ">
-            <div className="row ">
-              <div className="col-12 col-md-6">
-                <h2 className="call-to-action-message">
-                  The most happy <span className="bold-font">Comparison</span>{" "}
-                  theme to Build with great{" "}
-                  <span className="bold-font">Features.</span>
-                </h2>
-              </div>
-              <div className="col-12 col-md-6 text-right">
-                <div className="call-to-action-buy-now">
-                  {/* By Theme */}
-                  <a
-                    href="https://themeforest.net/item/blurb-price-comparison-affiliate-website-multivendor-store-and-product-review-html5-template/20880845"
-                    className="btn btn-primary wd-shop-btn"
-                  >
-                    Purchase Theme{" "}
-                    <i className="fa fa-arrow-right" aria-hidden="true" />
-                  </a>
+          </section>
+          {/* =========================
+    Call To Action Section
+      ============================== */}
+          {/* <section id="call-to-action" className="d-flex align-items-center">
+            <div className="container ">
+              <div className="row ">
+                <div className="col-12 col-md-6">
+                  <h2 className="call-to-action-message">
+                    The most happy <span className="bold-font">Comparison</span>{" "}
+                    theme to Build with great{" "}
+                    <span className="bold-font">Features.</span>
+                  </h2>
                 </div>
-              </div>
-            </div>
-          </div>
-        </section>
-        {/* =========================
-  Details Section
-    ============================== */}
-        <section id="details">
-          <div className="container">
-            <div
-              className="row wow fadeInLeft animated justify-content-center"
-              data-wow-delay="600ms"
-            >
-              <div className="col-10 col-sm-8 col-lg-3 details-box">
-                <div className="row">
-                  <div className="col-sm-3 p0 text-center">
-                    <div className="details-img">
-                      <img
-                        className="img-fluid main-hover-icon-compare"
-                        src={require("./img/details-img/compare-icon.png")}
-                        alt="compare-icon"
-                      />
-                      <img
-                        className="img-fluid hover-icon-compare"
-                        src={require("./img/details-img/compare.png")}
-                        alt="compare-icon"
-                      />
-                    </div>
+                <div className="col-12 col-md-6 text-right">
+                  <div className="call-to-action-buy-now">
+                    By Theme
+                    <a
+                      href=""
+                      className="btn btn-primary wd-shop-btn"
+                    >
+                      Purchase Theme{" "}
+                      <i className="fa fa-arrow-right" aria-hidden="true" />
+                    </a>
                   </div>
-                  <div className="col-sm-9 p0 details-description">
-                    <h6 className="details-title">Lets Compare</h6>
-                    <p>
-                      Choose your product with price comparisons make your best
-                      deal today
-                    </p>
-                  </div>
-                </div>
-                <div className="arow">
-                  <img src={require("./img/details-img/angle2.png")} alt="" />
-                </div>
-              </div>
-              <div className="col-10 col-sm-8 col-lg-3 details-box">
-                <div className="row">
-                  <div className="col-sm-3 p0 text-center">
-                    <div className="details-img">
-                      <img
-                        className="img-fluid main-hover-icon-user"
-                        src={require("./img/details-img/review-icon.png")}
-                        alt="review-icon"
-                      />
-                      <img
-                        className="img-fluid hover-icon-user"
-                        src={require("./img/details-img/user-2.png")}
-                        alt="review-icon"
-                      />
-                    </div>
-                  </div>
-                  <div className="col-sm-9 p0 details-description">
-                    <h6 className="details-title">Take Review</h6>
-                    <p>Take your selected product review choose best one</p>
-                  </div>
-                </div>
-                <div className="arow">
-                  <img src="img/details-img/angle2.png" alt="" />
-                </div>
-              </div>
-              <div className="col-10 col-sm-8 col-lg-3 details-box">
-                <div className="row">
-                  <div className="col-sm-3 p0 text-center">
-                    <div className="details-img">
-                      <img
-                        className="img-fluid main-hover-icon-vendor"
-                        src={require("./img/details-img/shop.png")}
-                        alt="vendor-icon"
-                      />
-                      <img
-                        className="img-fluid hover-icon-vendor"
-                        src={require("./img/details-img/vendor-icon.png")}
-                        alt="vendor-icon"
-                      />
-                    </div>
-                  </div>
-                  <div className="col-sm-9 p0 details-description">
-                    <h6 className="details-title">Choose Multi-Vendor Store</h6>
-                    <p>
-                      Lets check your product from multivendor store get
-                      satisfy.
-                    </p>
-                  </div>
-                </div>
-                <div className="arow">
-                  <img src="img/details-img/angle2.png" alt="" />
-                </div>
-              </div>
-              <div className="col-10 col-sm-8 col-lg-3 details-box details-active">
-                <div className="text-center">
-                  <img
-                    className="img-fluid"
-                    src={require("./img/details-img/gift-icon.png")}
-                    alt="gift-icon"
-                  />
-                  <h3 className="details-active-title">Enjoy Result</h3>
                 </div>
               </div>
             </div>
-          </div>
-        </section>
+          </section> */}
+          {/* =========================
+    Details Section
+      ============================== */}
+          {/* <section id="details">
+            <div className="container">
+              <div
+                className="row wow fadeInLeft animated justify-content-center"
+                data-wow-delay="600ms"
+              >
+                <div className="col-10 col-sm-8 col-lg-3 details-box">
+                  <div className="row">
+                    <div className="col-sm-3 p0 text-center">
+                      <div className="details-img">
+                        <img
+                          className="img-fluid main-hover-icon-compare"
+                          src={require("./img/details-img/compare-icon.png")}
+                          alt="compare-icon"
+                        {/* /> */} 
+                        {/* <img
+                          className="img-fluid hover-icon-compare"
+                          src={require("./img/details-img/compare.png")}
+                          alt="compare-icon"
+                        />
+                      </div>
+                    </div>
+                    <div className="col-sm-9 p0 details-description">
+                      <h6 className="details-title">Lets Compare</h6>
+                      <p>
+                        Choose your product with price comparisons make your best
+                        deal today
+                      </p>
+                    </div>
+                  </div>
+                  <div className="arow">
+                    <img src={require("./img/details-img/angle2.png")} alt="" />
+                  </div>
+                </div>
+                <div className="col-10 col-sm-8 col-lg-3 details-box">
+                  <div className="row">
+                    <div className="col-sm-3 p0 text-center">
+                      <div className="details-img">
+                        <img
+                          className="img-fluid main-hover-icon-user"
+                          src={require("./img/details-img/review-icon.png")}
+                          alt="review-icon"
+                        />
+                        <img
+                          className="img-fluid hover-icon-user"
+                          src={require("./img/details-img/user-2.png")}
+                          alt="review-icon"
+                        />
+                      </div>
+                    </div>
+                    <div className="col-sm-9 p0 details-description">
+                      <h6 className="details-title">Take Review</h6>
+                      <p>Take your selected product review choose best one</p>
+                    </div>
+                  </div>
+                  <div className="arow">
+                    <img src="img/details-img/angle2.png" alt="" />
+                  </div>
+                </div>
+                <div className="col-10 col-sm-8 col-lg-3 details-box">
+                  <div className="row">
+                    <div className="col-sm-3 p0 text-center">
+                      <div className="details-img">
+                        <img
+                          className="img-fluid main-hover-icon-vendor"
+                          src={require("./img/details-img/shop.png")}
+                          alt="vendor-icon"
+                        />
+                        <img
+                          className="img-fluid hover-icon-vendor"
+                          src={require("./img/details-img/vendor-icon.png")}
+                          alt="vendor-icon"
+                        />
+                      </div>
+                    </div>
+                    <div className="col-sm-9 p0 details-description">
+                      <h6 className="details-title">Choose Multi-Vendor Store</h6>
+                      <p>
+                        Lets check your product from multivendor store get
+                        satisfy.
+                      </p>
+                    </div>
+                  </div>
+                  <div className="arow">
+                    <img src="img/details-img/angle2.png" alt="" />
+                  </div>
+                </div>
+                <div className="col-10 col-sm-8 col-lg-3 details-box details-active">
+                  <div className="text-center">
+                    <img
+                      className="img-fluid"
+                      src={require("./img/details-img/gift-icon.png")}
+                      alt="gift-icon"
+                    />
+                    <h3 className="details-active-title">Enjoy Result</h3>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
         {/* =========================
   Subscribe Section
     ============================== */}
