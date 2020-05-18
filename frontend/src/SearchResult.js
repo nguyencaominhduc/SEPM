@@ -37,13 +37,17 @@ class SearchResult extends React.Component {
   }
 
   fetchProducts() {
-    fetch(url)
+    fetch(url,{
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      })
       .then((res) => res.json())
       .then((json) => {
-        console.log(json.data);
-        console.log(json.data[0].category);
+        console.log(json);
         this.setState({ import: json }, () => {
-          console.log(this.state.import.data[0].data);
+          console.log(this.state.import);
         });
         // json.data is an array of 2100 data objects, each object contains props and another array of item objects
         var import_0 = json;
