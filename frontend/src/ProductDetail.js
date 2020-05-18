@@ -1,5 +1,7 @@
 import React, { useCallback } from "react";
 import axios from "axios";
+import AuthContext from "./auth-context.js";
+
 
 class ProductDetail extends React.Component {
   constructor(props) {
