@@ -10,6 +10,7 @@ class ProductDetail extends React.Component {
     this.onChangePros = this.onChangePros.bind(this);
     this.onChangeCons = this.onChangeCons.bind(this);
     this.onChangeEmail = this.onChangeEmail.bind(this);
+	      this.onSubmit = this.onSubmit.bind(this);
     this.state = {
       error: null,
       isLoaded: false,
@@ -40,7 +41,7 @@ class ProductDetail extends React.Component {
         pros: this.state.pros,
         cons: this.state.cons,
     }
-    const url = 'http://localhost:5000/api/v1/reviews';
+    const url = 'https://phamhang.com/api/v1/reviews';
     axios.post(url,obj)
       .then(res =>console.log(res.data))
       this.setState({
