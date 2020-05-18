@@ -10,7 +10,7 @@ import Navbar from "./Navbar.js";
 class WishList extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { bookmark: [], products: [], token: "" };
+    this.state = { bookmark: [], products: [], token: "", status: "" };
   }
 
   componentDidMount() {
@@ -35,7 +35,18 @@ class WishList extends React.Component {
     })
       .then((res) => res.json())
       .then((res) => {
-        this.setState({ bookmark: res[0].bookmark });
+        if (res.message== "Authentication failed!"){
+          console.log('ETHGh')
+          localStorage.clear()
+          window.location.reload(false);
+          
+        }
+        else if (res[0].bookmark ){
+          this.setState({ bookmark: res[0].bookmark, status: "Bookmark Products" });
+        }
+        else {
+          this.setState({ status: "No bookmark saved" });
+        }
       })
       .then(() => {
         var list = [];
@@ -77,7 +88,6 @@ class WishList extends React.Component {
   }
   render() {
     let listOfProducts = this.state.products;
-    var user = localStorage.getItem("username");
     return (
       <AuthContext.Consumer>
         {(context) => {
@@ -184,7 +194,7 @@ class WishList extends React.Component {
                 </div>
               </section>
 
-              {/* <!-- ========================= Review Section============================== --> */}
+              {/* <!-- ========================= BOOKMARK============================== --> */}
               <section id="amazon-review">
                 <div className="container-fluid custom-width">
                   <div className="amazon-review-box-area">
@@ -218,14 +228,14 @@ class WishList extends React.Component {
                                       {s.name}
                                     </h6>
                                     <p className="card-text text-left">
-                                      <div className="product-content">
+                                      <span className="product-content">
                                         Categories:{" "}
                                         <strong> {s.category}</strong>
-                                      </div>
+                                      </span>
                                     </p>
 
                                     <div className="product-content mt-3">
-                                      <p>
+                                     
                                         <strong
                                           className="active-color text-left"
                                           style={{ fontSize: 15 }}
@@ -239,7 +249,7 @@ class WishList extends React.Component {
                                             />
                                           </u>{" "}
                                         </strong>
-                                      </p>
+                                   
                                     </div>
 
                                     <div
@@ -252,7 +262,7 @@ class WishList extends React.Component {
                                       <a
                                         className="btn btn-primary btn-sm"
                                         href="#"
-                                        onClick={() => this.viewDetail(s)}
+                                        onClick={this.viewDetail.bind(this, s)}
                                       >
                                         <i
                                           className="fa fa-exchange"
@@ -263,7 +273,7 @@ class WishList extends React.Component {
                                       <a
                                         className="btn btn-primary btn-sm"
                                         href="#"
-                                        onClick={() => this.onDelete(s._id)}
+                                        onClick={this.viewDetail.bind(this, s._id)}
                                         style={{ background: "red" }}
                                       >
                                         <i
