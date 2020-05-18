@@ -3,7 +3,7 @@ import { Link, withRouter } from 'react-router-dom';
 import AuthContext from "./auth-context.js";
 import NumberFormat from 'react-number-format';
 import Navbar from './Navbar.js'
-
+import Footer from './Footer.js'
 
 class HomePage extends React.Component {
   constructor(props) {
@@ -36,6 +36,7 @@ class HomePage extends React.Component {
   render() {
     let listOfProducts = this.state.products;
     let popularProducts = this.state.popular;
+    
     return (
       <AuthContext.Consumer>
         {(context) => {
@@ -94,48 +95,45 @@ class HomePage extends React.Component {
               >
                 <div className="container-fluid custom-width">
                   <div className="row">
+                    {/* Mobile menu start  */}
                     <div className="col-md-8 col-2 col-sm-6 col-md-4 d-block d-lg-none">
-                      <div className="accordion-wrapper hide-sm-up">
-                        <a href="#" className="mobile-open">
-                          <i className="fa fa-bars"></i>
-                        </a>
-                        {/* <!--Mobile Menu start--> */}
-
-                        <ul id="mobilemenu" className="accordion">
-                          {/* <li className="mob-logo"><a href="/"><img src={require("./img/logo.png")} alt=""/></a></li> */}
-                          <li>
-                            <a className="closeme" href="#">
-                              <i className="fa fa-times"></i>
-                            </a>
-                          </li>
-                          <li className="mob-logo">
-                            <a href="/">
-                              <img
-                                src={require("./img/logo.png")}
-                                alt=""
-                                style={{ width: "80px", height: "80px" }}
-                              />
-                            </a>
-                          </li>
-
-                          <li>
-                            <div className="link">
-                              <a href="/">Home</a>
-                            </div>
-                          </li>
-                          <li>
-                            <div className="link">
-                              <a href="/">Home</a>
-                            </div>
-                          </li>
-                          <li>
-                            <div className="link">
-                              <a href="/">Home</a>
-                            </div>
-                          </li>
-                        </ul>
-                        {/* <!--Mobile Menu end--> */}
-                      </div>
+        
+                   <div style={{display: 'inline-flex'}}>
+                 
+                   
+                      <Link >
+                        <i
+                          className="fa fa-home"
+                          aria-hidden="true"
+                        ></i>{" "}
+                                  Home{"  "}
+                      </Link>
+                    
+                   
+                      <Link
+                        to="/WishList"
+                        
+                      >
+                        WishList{"  "}
+                      </Link>
+                    
+                      <Link
+                        to="/WishList"
+                        
+                      >
+                     About{"  "}
+                      </Link>
+                     
+                      <Link
+                        to="/WishList"
+                        
+                      >
+                     Contact{"  "}
+                      </Link>    
+                   
+                    
+            
+                </div>
                     </div>
                     {/* <!--Mobile menu end--> */}
                     <div className="col-xl-3 d-none d-xl-block">
@@ -595,244 +593,7 @@ class HomePage extends React.Component {
                 </div>
               </section>
 
-              {/* <!-- =========================Footer Section============================== --> */}
-              <footer
-                className="footer wow fadeInUp animated footer-2"
-                data-wow-delay="900ms"
-              >
-                <div className="container-fluid custom-width">
-                  <div className="row">
-                    <div className="col-md-12 col-lg-2">
-                      {/* <!-- ===========================Footer About=========================== --> */}
-                      <div className="footer-about">
-                        <a href="index.html" className="footer-about-logo">
-                          <img src={require("./img/logo.png")} alt="Logo" />
-                        </a>
-                        <div className="footer-description">
-                          <p>
-                            Lorem ipsum dolor sit amet, anim id est laborum. Sed
-                            ut perspconsectetur, adipisci vam aliquam qua.
-                          </p>
-                        </div>
-                        <div className="wb-social-media">
-                          <a href="#" className="bh">
-                            <i className="fa fa-behance"></i>
-                          </a>
-                          <a href="#" className="fb">
-                            <i className="fa fa-facebook-official"></i>
-                          </a>
-                          <a href="#" className="db">
-                            <i className="fa fa-dribbble"></i>
-                          </a>
-                          <a href="#" className="gp">
-                            <i className="fa fa-google-plus"></i>
-                          </a>
-                          <a href="#" className="vn">
-                            <i className="fa fa-vine"></i>
-                          </a>
-                          <a href="#" className="yt">
-                            <i className="fa fa-youtube-play"></i>
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-6 col-md-3 col-lg-2 footer-nav">
-                      {/* <!-- ===========================Festival Deals=========================== --> */}
-                      <h6 className="footer-subtitle">Festival Deals</h6>
-                      <ul>
-                        <li>
-                          <a href="index.html"> Home </a>
-                        </li>
-                        <li>
-                          <a href="compare-products.html">
-                            Comparison Product{" "}
-                          </a>
-                        </li>
-                        <li>
-                          <a href="shop-left-sidebar.html">Shop </a>
-                        </li>
-                        <li>
-                          <a href="review-left-sidebar.html">Reviews</a>
-                        </li>
-                        <li>
-                          <a href="blog-four-grid-left-sidebar.html">Blog</a>
-                        </li>
-                      </ul>
-                    </div>
-                    <div className="col-6 col-md-3 col-lg-2 footer-nav">
-                      {/* <!-- ===========================Top Stores=========================== --> */}
-                      <div className="stores-list">
-                        <h6 className="footer-subtitle">Top Stores</h6>
-                        <ul>
-                          <li>
-                            <a href="shop-left-sidebar.html">
-                              Affiliate Market 1
-                            </a>
-                          </li>
-                          <li>
-                            <a href="shop-left-sidebar.html">
-                              Affiliate Market 2
-                            </a>
-                          </li>
-                          <li>
-                            <a href="shop-left-sidebar.html">
-                              Affiliate Market 3
-                            </a>
-                          </li>
-                          <li>
-                            <a href="shop-left-sidebar.html">
-                              Affiliate Market 4
-                            </a>
-                          </li>
-                          <li>
-                            <a href="shop-left-sidebar.html">
-                              Affiliate Market 5
-                            </a>
-                          </li>
-                          <li>
-                            <a href="shop-left-sidebar.html">
-                              Affiliate Market 6
-                            </a>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                    <div className="col-6 col-md-3 col-lg-2 footer-nav">
-                      {/* <!-- ===========================Need Help ?=========================== --> */}
-                      <h6 className="footer-subtitle">Need Help ?</h6>
-                      <ul>
-                        <li>
-                          <a href="product-details-scroll.html">
-                            Getting Started
-                          </a>
-                        </li>
-                        <li>
-                          <a href="contact-us.html">Contact Us</a>
-                        </li>
-                        <li>
-                          <a href="product-details-scroll.html">FAQ's</a>
-                        </li>
-                        <li>
-                          <a href="product-details-scroll.html">Press</a>
-                        </li>
-                        <li>
-                          <a href="product-details-scroll.html">Product Feed</a>
-                        </li>
-                        <li>
-                          <a href="product-details-scroll.html">
-                            Best Rated Product
-                          </a>
-                        </li>
-                        <li>
-                          <a href="product-details-scroll.html">
-                            Feature product
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
-                    <div className="col-6 col-md-3 col-lg-2 footer-nav">
-                      {/* <!-- ===========================About=========================== --> */}
-                      <h6 className="footer-subtitle">About</h6>
-                      <ul>
-                        <li>
-                          <a href="conditions.html">Privacy</a>
-                        </li>
-                        <li>
-                          <a href="conditions.html">Return Policy</a>
-                        </li>
-                        <li>
-                          <a href="conditions.html">Order &#38; Return</a>
-                        </li>
-                        <li>
-                          <a href="conditions.html">Terms &#38; Conditions</a>
-                        </li>
-                      </ul>
-                    </div>
-                    <div className="col-12 col-md-12 col-lg-2">
-                      <h6 className="footer-subtitle">Newsletter Signup</h6>
-                      <p className="newsletter-content">
-                        By subscribing to our mailing list you will always be
-                        update with the latest news from us.
-                      </p>
-                      <div className="newsletter-form">
-                        <form>
-                          <div className="form-group">
-                            <input
-                              type="text"
-                              className="form-control newsletter-input"
-                              placeholder="Enter your email"
-                            />
-                          </div>
-                          <button
-                            type="submit"
-                            className="btn btn-primary newsletter-btn"
-                          >
-                            Join us
-                          </button>
-                        </form>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </footer>
-
-              {/* <!-- =========================CopyRight============================== --> */}
-              <section
-                className="copyright wow fadeInUp animated copyright-2"
-                data-wow-delay="1500ms"
-              >
-                <div className="container">
-                  <div className="row">
-                    <div className="col-md-6">
-                      <div className="copyright-text">
-                        <p className="text-uppercase">COPYRIGHT &copy; 2018</p>
-                        <a className="created-by" href="http://themeim.com/">
-                          ThemeIM
-                        </a>
-                      </div>
-                    </div>
-                    <div className="col-md-6">
-                      <div className="brand-logo">
-                        <a href="#">
-                          <img
-                            src="img/social-media-img/brand-logo-1.jpg"
-                            className="img-fluid"
-                            alt="Brand Logo"
-                          />
-                        </a>
-                        <a href="#">
-                          <img
-                            src="img/social-media-img/brand-logo-2.jpg"
-                            className="img-fluid"
-                            alt="Brand Logo"
-                          />
-                        </a>
-                        <a href="#">
-                          <img
-                            src="img/social-media-img/brand-logo-3.jpg"
-                            className="img-fluid"
-                            alt="Brand Logo"
-                          />
-                        </a>
-                        <a href="#">
-                          <img
-                            src="img/social-media-img/brand-logo-4.jpg"
-                            className="img-fluid"
-                            alt="Brand Logo"
-                          />
-                        </a>
-                        <a href="#">
-                          <img
-                            src="img/social-media-img/brand-logo-5.jpg"
-                            className="img-fluid"
-                            alt="Brand Logo"
-                          />
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </section>
+             <Footer/>
             </div>
           );
         }}

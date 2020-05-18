@@ -24,14 +24,6 @@ const Navbar = props => (
                                   Home{"  "}
                       </Link>
                     </li>
-                    {/* <li>
-                      <a
-                        href="compare-products.html"
-                        className="main-menu-list"
-                      >
-                        Comparison Product{"  "}
-                      </a>
-                    </li> */}
                     <li>
                       <Link
                         to="/WishList"
