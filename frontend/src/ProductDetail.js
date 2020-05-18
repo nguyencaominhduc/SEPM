@@ -1,12 +1,12 @@
 import React, { useCallback } from "react";
-import axios from "axios";
 import AuthContext from "./auth-context.js";
-
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 class ProductDetail extends React.Component {
   constructor(props) {
     super(props);
-	this.onChangeName = this.onChangeName.bind(this);
+    this.onChangeName = this.onChangeName.bind(this);
     this.onChangePros = this.onChangePros.bind(this);
     this.onChangeCons = this.onChangeCons.bind(this);
     this.onChangeEmail = this.onChangeEmail.bind(this);
@@ -18,7 +18,7 @@ class ProductDetail extends React.Component {
       id: {},
       reviews: [],
       comments: [],
-	name:'',
+      name:'',
       pros:'',
       email:'',
       cons: '',
@@ -32,41 +32,13 @@ class ProductDetail extends React.Component {
     window.scrollTo(0, 0);
   }
 
-  fetchReviews(){
-    var url = "https://phamhang.com/api/v1/reviews/5ea7ae2a2cf49d2070ad8dd8";
-    const that = this;
-    
-    fetch(url)
-      .then((res) => res.json())
-      .then((json) => that.setState({ reviews: json, comments: json.reviews}));
-    
-  }
-  fetchData() {
-    const that = this;
-    var url = "";
-    if (this.props.products.length !== 0) {//in case this condition caught undefined error since lenght isn't a method for object this.props.products, pls consider disabling the condition and use the one below
-      url = `https://phamhang.com/api/v1/products/${this.props.products._id}`;
-    } else {
-      url = `https://phamhang.com/api/v1/products/5e99d314b9128112d755c9fd`;
-    }
-
-    //receive URL param from SearchResult component using Router to obtain product id
-    if(this.props.match.params.id !== undefined){
-      url=`https://api-easyprice.herokuapp.com/api/v1/products/${this.props.match.params.id}`;
-    } else{
-      url = `https://api-easyprice.herokuapp.com/api/v1/products/5e99d314b9128112d755c9fd`;
-    }
-    //URL updated with prod id
-
-    fetch(url)
-      .then((res) => res.json())
-      .then((json) => that.setState({ product: json.data, detailProduct: json.data.data}));
-  }
-onSubmit(e){
+  onSubmit(e){
     e.preventDefault();
     const obj ={
         name: this.state.name,
-        opinion: this.state.opinion
+        email: this.state.email,
+        pros: this.state.pros,
+        cons: this.state.cons,
     }
     const url = 'http://localhost:5000/api/v1/reviews';
     axios.post(url,obj)
@@ -99,7 +71,47 @@ onChangeCons(e){
   });
 }
 
-  return ( 
+fetchReviews(){
+  var url = "https://phamhang.com/api/v1/reviews/5ea7ae2a2cf49d2070ad8dd8";
+  const that = this;
+  
+  fetch(url)
+    .then((res) => res.json())
+    .then((json) => that.setState({ reviews: json, comments: json.reviews}));
+  
+}
+fetchData() {
+  const that = this;
+  var url = "";
+  if (this.props.products.length !== 0) {//in case this condition caught undefined error since lenght isn't a method for object this.props.products, pls consider disabling the condition and use the one below
+    url = `https://phamhang.com/api/v1/products/${this.props.products._id}`;
+  } else {
+    url = `https://phamhang.com/api/v1/products/5e99d314b9128112d755c9fd`;
+  }
+
+  //receive URL param from SearchResult component using Router to obtain product id
+  if(this.props.match.params.id !== undefined){
+    url=`https://api-easyprice.herokuapp.com/api/v1/products/${this.props.match.params.id}`;
+  } else{
+    url = `https://api-easyprice.herokuapp.com/api/v1/products/5e99d314b9128112d755c9fd`;
+  }
+  //URL updated with prod id
+
+  fetch(url)
+    .then((res) => res.json())
+    .then((json) => that.setState({ product: json.data, detailProduct: json.data.data}));
+}
+
+  render() {
+    const { product } = this.state;
+    let ProductInfo = this.state.product;
+    let FullDetails=this.state.detailProduct;
+    let Reviews = this.state.reviews;
+    let Comments = this.state.comments;
+    console.log(Reviews);
+    console.log(Comments);
+
+    return ( 
       <AuthContext.Consumer>
       {(context) => {
         return (
