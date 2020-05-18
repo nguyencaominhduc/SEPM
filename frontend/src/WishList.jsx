@@ -36,7 +36,6 @@ class WishList extends React.Component {
       .then((res) => res.json())
       .then((res) => {
         if (res.message== "Authentication failed!"){
-          console.log('ETHGh')
           localStorage.clear()
           window.location.reload(false);
           

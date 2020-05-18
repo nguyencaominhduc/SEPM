@@ -40,13 +40,13 @@ class ProductDetail extends React.Component {
       url = `https://phamhang.com/api/v1/products/5e99d314b9128112d755c9fd`;
     }
 
-    // //receive URL param from SearchResult component using Router to obtain product id
-    // if(this.props.match.params.id !== undefined){
-    //   url=`https://api-easyprice.herokuapp.com/api/v1/products/${this.props.match.params.id}`;
-    // } else{
-    //   url = `https://api-easyprice.herokuapp.com/api/v1/products/5e99d314b9128112d755c9fd`;
-    // }
-    // //URL updated with prod id
+    //receive URL param from SearchResult component using Router to obtain product id
+    if(this.props.match.params.id !== undefined){
+      url=`https://api-easyprice.herokuapp.com/api/v1/products/${this.props.match.params.id}`;
+    } else{
+      url = `https://api-easyprice.herokuapp.com/api/v1/products/5e99d314b9128112d755c9fd`;
+    }
+    //URL updated with prod id
 
     fetch(url)
       .then((res) => res.json())
