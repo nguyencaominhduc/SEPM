@@ -5,7 +5,7 @@ const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 
 const User = require('../model/User')
-
+const Product = require('../model/Product')
 const checkAuth = require('../middleware/checkAuth')
 
 router.post('/login', (req, res, next) => {
@@ -213,6 +213,21 @@ router.delete('/bookmark/:username&:itemId', checkAuth.checkHandler, async (req,
         function (err, result) {
             res.send(result)
         })
+})
+
+router.get('/load', async (req, res, next) => {
+    try {
+        const products = await Product.find().limit(209).skip(1200);
+        res.status(201).json({
+            success: true,
+            count: products.length,
+            data: products
+        })
+    } catch (err) {
+        res.status(400).json({
+            success: false
+        })
+    }
 })
 
 module.exports = router;
