@@ -2056,17 +2056,14 @@ fetchData() {
                     {/* ====================================
 						        Single Product Gallery Section
 						    ========================================= */}
-                {FullDetails.map(s =><div className="row" key="1">
+                {FullDetails.slice(0,1).map(s =><div className="row" >
                       <div className="col-md-12 product-slier-details">
-                        <ul id="lightSlider">
-                          <li data-thumb={s.image}>
                             <img
                               className="figure-img img-fluid"
                               src={s.image}
                               alt="product-img"
+                              key="1"
                             />
-                          </li>
-                        </ul>
                       </div>
                     </div>)}
                   </div>
