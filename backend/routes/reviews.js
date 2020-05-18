@@ -1,41 +1,22 @@
 const express = require("express");
 const router = express.Router();
-const mongoose = require("mongoose")
 
 const Review = require('../model/Review')
 
-router.get('/:url', (req, res, next) => {
-    Review.find({ product_url: decodeURIComponent(req.params.url) }, function (err, reviews) {
+router.get('/:_id', (req, res, next) => {
+    Review.find({ _id: req.params._id }, function (err, reviews) {
         res.send(reviews)
     })
 })
 
-// router.post('/', (req, res, next) => {
-//     const reviews = new Review({
-//         product_url: req.body.url,
-//         reviews: req.body.reviews
-//     });
-//     reviews
-//         .save()
-//         .then(result => {
-//             console.log(result);
-//         })
-//         .catch(err => console.log(err));
-//     res.status(201).json({
-//         message: "New review created",
-//         newReviews: reviews
-//     })
-//     next()
-// })
-
-router.post('/', (req, res, next) => {
-    Review.find({ product_url: decodeURIComponent(req.body.url) })
+router.post('/:_id', (req, res, next) => {
+    Review.find({ _id: req.params._id })
         .exec()
         .then(reviews => {
             if (reviews.length < 1) {
                 const reviews = new Review({
-                    product_url: req.body.url,
-                    reviews: req.body.reviews
+                    _id: req.params._id,
+                    reviews: [{ "name": req.body.name, "email": req.body.email, "content": req.body.content }]
                 });
                 reviews
                     .save()
@@ -49,9 +30,9 @@ router.post('/', (req, res, next) => {
                 })
                 next()
             } else {
-                Review.updateOne({ product_url: decodeURIComponent(req.body.url) }, {
-                    $push: { reviews: req.body.reviews }
-                }, function (err, result) {
+                Review.findByIdAndUpdate({ _id: req.params._id }, {
+                    $push: { reviews: [{ "name": req.body.name, "email": req.body.email, "content": req.body.content }] }
+                }, { 'new': true }, function (err, result) {
                     res.send(result)
                 })
             }
