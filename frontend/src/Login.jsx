@@ -28,7 +28,7 @@ export default class Auth extends Component {
             return;
         }
 
-        fetch('https://phamhang.com/api/v1/users/login', {
+        fetch('http://localhost:5000/api/v1/users/login', {
             method: 'POST',
             body: JSON.stringify({
                 username: username,

@@ -13,7 +13,7 @@ class HomePage extends React.Component {
 
   // load project after call the component
   componentDidMount() {
-    fetch(`https://phamhang.com/api/v1/products`, {
+    fetch(`http://localhost:5000/api/v1/users/load`, {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -21,7 +21,7 @@ class HomePage extends React.Component {
     })
       .then((res) => res.json())
       .then((res) => {
-        this.setState({ products: res.data.slice(1200, 1206), popular: res.data.slice(1400, 1408) })
+        this.setState({ products: res.data.slice(0, 6), popular: res.data.slice(200, 208) })
         console.log(this.state.popular)
       })
   }
@@ -31,7 +31,7 @@ class HomePage extends React.Component {
       type: "VIEW_PRODUCT",
       payload: products
     });
-    this.props.history.push('/ProductDetail');
+    this.props.history.push(`/ProductDetail/${products._id}`);
   }
 
   handleSearch(event) {

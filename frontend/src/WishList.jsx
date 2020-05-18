@@ -26,7 +26,7 @@ class WishList extends React.Component {
   loadBookmark() {
     var user = localStorage.getItem("username");
     var token = localStorage.getItem("token");
-    fetch(`https://phamhang.com/api/v1/users/bookmark/${user}`, {
+    fetch(`http://localhost:5000/api/v1/users/bookmark/${user}`, {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -50,7 +50,7 @@ class WishList extends React.Component {
       .then(() => {
         var list = [];
         this.state.bookmark.forEach((productID) => {
-          fetch(`https://phamhang.com/api/v1/products/${productID}`, {
+          fetch(`http://localhost:5000/api/v1/products/${productID}`, {
             headers: {
               Accept: "application/json",
               "Content-Type": "application/json",
@@ -69,13 +69,13 @@ class WishList extends React.Component {
       type: "VIEW_PRODUCT",
       payload: product,
     });
-    this.props.history.push("/ProductDetail");
+    this.props.history.push(`/ProductDetail/${product._id}`);
   }
   onDelete(id) {
     if (!window.confirm("Do you want to remove this bookmark?")) return;
     var user = localStorage.getItem("username");
     var token = localStorage.getItem("token");
-    fetch(`https://phamhang.com/api/v1/users/bookmark/${user}&${id}`, {
+    fetch(`http://localhost:5000/api/v1/users/bookmark/${user}&${id}`, {
       method: "delete",
       headers: {
         Accept: "application/json",
