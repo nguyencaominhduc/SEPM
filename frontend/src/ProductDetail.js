@@ -1,9 +1,15 @@
 import React, { useCallback } from "react";
 import axios from "axios";
+import AuthContext from "./auth-context.js";
+
 
 class ProductDetail extends React.Component {
   constructor(props) {
     super(props);
+	this.onChangeName = this.onChangeName.bind(this);
+    this.onChangePros = this.onChangePros.bind(this);
+    this.onChangeCons = this.onChangeCons.bind(this);
+    this.onChangeEmail = this.onChangeEmail.bind(this);
     this.state = {
       error: null,
       isLoaded: false,
@@ -12,6 +18,10 @@ class ProductDetail extends React.Component {
       id: {},
       reviews: [],
       comments: [],
+	name:'',
+      pros:'',
+      email:'',
+      cons: '',
     };
   }
 
@@ -52,19 +62,48 @@ class ProductDetail extends React.Component {
       .then((res) => res.json())
       .then((json) => that.setState({ product: json.data, detailProduct: json.data.data}));
   }
+onSubmit(e){
+    e.preventDefault();
+    const obj ={
+        name: this.state.name,
+        opinion: this.state.opinion
+    }
+    const url = 'http://localhost:5000/api/v1/reviews';
+    axios.post(url,obj)
+      .then(res =>console.log(res.data))
+      this.setState({
+          name:'',
+          pros:'',
+          email:'',
+          cons: '',
+      })
+}
+onChangeName(e){
+    this.setState({
+        name: e.target.value
+    });
+}
+onChangePros(e){
+    this.setState({
+        pros: e.target.value
+    })
+}
+onChangeEmail(e){
+  this.setState({
+      email: e.target.value
+  });
+}
+onChangeCons(e){
+  this.setState({
+      cons: e.target.value
+  });
+}
 
-  render() {
-    const { product } = this.state;
-    let ProductInfo = this.state.product;
-    let FullDetails=this.state.detailProduct;
-    let Reviews = this.state.reviews;
-    let Comments = this.state.comments;
-    console.log(Reviews);
-    console.log(Comments);
-
-    return ( 
-
-      <div>
+  return ( 
+      <AuthContext.Consumer>
+      {(context) => {
+        return (
+          <div>
         {/* <div className="preloader" /> */}
         {/* =========================
   Header Top Section
@@ -2474,8 +2513,191 @@ class ProductDetail extends React.Component {
                 </div>
               </div>
             </div>
+
             <div className="row related-product">
-              <h4 className="related-product-title">Related Items</h4>
+            {/* 
+                                                        =================================
+                                                        Review Comment Section
+                                                        =================================
+                                                    */}
+                                                    <div className="review-comment-section">
+                                                            <div className="row">
+                                                                <div className="col-12 col-md-12 col-lg-12 col-xl-8">
+                                                                    <div className="reviews-title leave-opinion">
+                                                                        <h3>Leave your Opinion here</h3>
+                                                                    </div>
+                                                                    <form onSubmit={this.onSubmit}>
+                                                                        <div className="row">
+                                                                            <div className="col-md-6">
+                                                                                <div className="form-group">
+                                                                                    <label htmlFor="first" className="color-black">Name *</label>
+                                                                                    <input type="text" className="form-control" placeholder id="first" onChange={this.onChangeName} value={this.state.name} />
+                                                                                </div>
+                                                                            </div>
+                                                                            <div className="col-md-6">
+                                                                                <div className="form-group">
+                                                                                    <label htmlFor="last" className="color-black">Email *</label>
+                                                                                    <input type="email" className="form-control" placeholder id="last" onChange={this.onChangeEmail} value={this.state.email} />
+                                                                                </div>
+                                                                            </div>
+                                                                            <div className="col-md-6">
+                                                                                <div className="form-group">
+                                                                                    <label htmlFor="last" className="color-green">Prons</label>
+                                                                                    <textarea className="form-control col-md-12" id="exampleFormControlTextarea1" placeholder="Write your Opinion here ... " defaultValue={""} onChange={this.onChangePros} value={this.state.pros} />
+                                                                                </div>
+                                                                            </div>
+                                                                            <div className="col-md-6">
+                                                                                <div className="form-group">
+                                                                                    <label htmlFor="exampleFormControlTextarea2" className="color-red">Cons</label>
+                                                                                    <textarea className="form-control col-12" id="exampleFormControlTextarea2" placeholder="Write your Opinion here ... " defaultValue={""} onChange={this.onChangeCons} value={this.state.cons} />
+                                                                                </div>
+                                                                            </div>
+                                                                            <div className="col-12 col-md-12 product-rating-area">
+                                                                                <div className="product-rating-ph">
+                                                                                    <div className="rating-area">
+                                                                                        <div className="d-flex justify-content-between">
+                                                                                            <p>Camera</p>
+                                                                                            <div className="rating">
+                                                                                                <a href="#"><i className="fa fa-star cat-1" aria-hidden="true" /></a>
+                                                                                                <a href="#"><i className="fa fa-star cat-2" aria-hidden="true" /></a>
+                                                                                                <a href="#"><i className="fa fa-star cat-3" aria-hidden="true" /></a>
+                                                                                                <a href="#"><i className="fa fa-star cat-4" aria-hidden="true" /></a>
+                                                                                                <a href="#"><i className="fa fa-star cat-5" aria-hidden="true" /></a>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div className="rating-slider-1" />
+                                                                                    </div>
+                                                                                    <div className="rating-area">
+                                                                                        <div className="d-flex justify-content-between">
+                                                                                            <p>Video Quality</p>
+                                                                                            <div className="rating">
+                                                                                                <a href="#"><i className="fa fa-star cat-2-1" aria-hidden="true" /></a>
+                                                                                                <a href="#"><i className="fa fa-star cat-2-2" aria-hidden="true" /></a>
+                                                                                                <a href="#"><i className="fa fa-star cat-2-3" aria-hidden="true" /></a>
+                                                                                                <a href="#"><i className="fa fa-star cat-2-4" aria-hidden="true" /></a>
+                                                                                                <a href="#"><i className="fa fa-star cat-2-5" aria-hidden="true" /></a>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div className="rating-slider-2" />
+                                                                                    </div>
+                                                                                    <div className="rating-area">
+                                                                                        <div className="d-flex justify-content-between">
+                                                                                            <p>Box Quality</p>
+                                                                                            <div className="rating">
+                                                                                                <a href="#"><i className="fa fa-star cat-3-1" aria-hidden="true" /></a>
+                                                                                                <a href="#"><i className="fa fa-star cat-3-2" aria-hidden="true" /></a>
+                                                                                                <a href="#"><i className="fa fa-star cat-3-3" aria-hidden="true" /></a>
+                                                                                                <a href="#"><i className="fa fa-star cat-3-4" aria-hidden="true" /></a>
+                                                                                                <a href="#"><i className="fa fa-star cat-3-5" aria-hidden="true" /></a>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div className="rating-slider-3" />
+                                                                                    </div>
+                                                                                    <div className="rating-area">
+                                                                                        <div className="d-flex justify-content-between">
+                                                                                            <p>Video Quality</p>
+                                                                                            <div className="rating">
+                                                                                                <a href="#"><i className="fa fa-star cat-4-1" aria-hidden="true" /></a>
+                                                                                                <a href="#"><i className="fa fa-star cat-4-2" aria-hidden="true" /></a>
+                                                                                                <a href="#"><i className="fa fa-star cat-4-3" aria-hidden="true" /></a>
+                                                                                                <a href="#"><i className="fa fa-star cat-4-4" aria-hidden="true" /></a>
+                                                                                                <a href="#"><i className="fa fa-star cat-4-5" aria-hidden="true" /></a>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div className="rating-slider-4" />
+                                                                                    </div>
+                                                                                    <div className="rating-area">
+                                                                                        <div className="d-flex justify-content-between">
+                                                                                            <p>Box Quality</p>
+                                                                                            <div className="rating">
+                                                                                                <a href="#"><i className="fa fa-star cat-5-1" aria-hidden="true" /></a>
+                                                                                                <a href="#"><i className="fa fa-star cat-5-2" aria-hidden="true" /></a>
+                                                                                                <a href="#"><i className="fa fa-star cat-5-3" aria-hidden="true" /></a>
+                                                                                                <a href="#"><i className="fa fa-star cat-5-4" aria-hidden="true" /></a>
+                                                                                                <a href="#"><i className="fa fa-star cat-5-5" aria-hidden="true" /></a>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div className="rating-slider-5" />
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div className="col-md-12">
+                                                                                <button type="submit" className="btn btn-primary review-comment"><i className="fa fa-check" aria-hidden="true" /> Post Comment</button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                                <div className="col-12 col-md-12 col-lg-12 col-xl-4 product-rating-area">
+                                                                    <div className="product-rating-list product-rating-desktop">
+                                                                        <div className="rating-area">
+                                                                            <div className="d-flex justify-content-between">
+                                                                                <p>Camera</p>
+                                                                                <div className="rating">
+                                                                                    <a href="#"><i className="fa fa-star cat-1" aria-hidden="true" /></a>
+                                                                                    <a href="#"><i className="fa fa-star cat-2" aria-hidden="true" /></a>
+                                                                                    <a href="#"><i className="fa fa-star cat-3" aria-hidden="true" /></a>
+                                                                                    <a href="#"><i className="fa fa-star cat-4" aria-hidden="true" /></a>
+                                                                                    <a href="#"><i className="fa fa-star cat-5" aria-hidden="true" /></a>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div className="rating-slider-1" />
+                                                                        </div>
+                                                                        <div className="rating-area">
+                                                                            <div className="d-flex justify-content-between">
+                                                                                <p>Video Quality</p>
+                                                                                <div className="rating">
+                                                                                    <a href="#"><i className="fa fa-star cat-2-1" aria-hidden="true" /></a>
+                                                                                    <a href="#"><i className="fa fa-star cat-2-2" aria-hidden="true" /></a>
+                                                                                    <a href="#"><i className="fa fa-star cat-2-3" aria-hidden="true" /></a>
+                                                                                    <a href="#"><i className="fa fa-star cat-2-4" aria-hidden="true" /></a>
+                                                                                    <a href="#"><i className="fa fa-star cat-2-5" aria-hidden="true" /></a>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div className="rating-slider-2" />
+                                                                        </div>
+                                                                        <div className="rating-area">
+                                                                            <div className="d-flex justify-content-between">
+                                                                                <p>Box Quality</p>
+                                                                                <div className="rating">
+                                                                                    <a href="#"><i className="fa fa-star cat-3-1" aria-hidden="true" /></a>
+                                                                                    <a href="#"><i className="fa fa-star cat-3-2" aria-hidden="true" /></a>
+                                                                                    <a href="#"><i className="fa fa-star cat-3-3" aria-hidden="true" /></a>
+                                                                                    <a href="#"><i className="fa fa-star cat-3-4" aria-hidden="true" /></a>
+                                                                                    <a href="#"><i className="fa fa-star cat-3-5" aria-hidden="true" /></a>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div className="rating-slider-3" />
+                                                                        </div>
+                                                                        <div className="rating-area">
+                                                                            <div className="d-flex justify-content-between">
+                                                                                <p>Video Quality</p>
+                                                                                <div className="rating">
+                                                                                    <a href="#"><i className="fa fa-star cat-4-1" aria-hidden="true" /></a>
+                                                                                    <a href="#"><i className="fa fa-star cat-4-2" aria-hidden="true" /></a>
+                                                                                    <a href="#"><i className="fa fa-star cat-4-3" aria-hidden="true" /></a>
+                                                                                    <a href="#"><i className="fa fa-star cat-4-4" aria-hidden="true" /></a>
+                                                                                    <a href="#"><i className="fa fa-star cat-4-5" aria-hidden="true" /></a>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div className="rating-slider-4" />
+                                                                        </div>
+                                                                        <div className="rating-area">
+                                                                            <div className="d-flex justify-content-between">
+                                                                                <p>Box Quality</p>
+                                                                                <div className="rating">
+                                                                                    <a href="#"><i className="fa fa-star cat-5-1" aria-hidden="true" /></a>
+                                                                                    <a href="#"><i className="fa fa-star cat-5-2" aria-hidden="true" /></a>
+                                                                                    <a href="#"><i className="fa fa-star cat-5-3" aria-hidden="true" /></a>
+                                                                                    <a href="#"><i className="fa fa-star cat-5-4" aria-hidden="true" /></a>
+                                                                                    <a href="#"><i className="fa fa-star cat-5-5" aria-hidden="true" /></a>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div className="rating-slider-5" />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
               <div id="related-product" className="owl-carousel owl-theme">
                 <div className="col-12">
                   <figure className="figure product-box">
@@ -3167,6 +3389,8 @@ class ProductDetail extends React.Component {
     ============================== */}
         {/*  */}
       </div>
+        )}}
+      </AuthContext.Consumer>
     );
   }
 }
