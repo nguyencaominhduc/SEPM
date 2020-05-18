@@ -22,16 +22,11 @@ class HomePage extends React.Component {
       .then((res) => res.json())
       .then((res) => {
         this.setState({ products: res.data.slice(0, 6), popular: res.data.slice(200, 208) })
-        console.log(this.state.popular)
       })
   }
 
-  viewDetail(products) {
-    this.props.dispatch({
-      type: "VIEW_PRODUCT",
-      payload: products
-    });
-    this.props.history.push(`/ProductDetail/${products._id}`);
+  viewDetail(id) {
+    this.props.history.push(`/ProductDetail/${id}`);
   }
 
   handleSearch(event) {
@@ -460,7 +455,7 @@ class HomePage extends React.Component {
                                     </strong>
                                   </div>
                                   <button
-                                    onClick={this.viewDetail.bind(this, s)}
+                                    onClick={this.viewDetail.bind(this, s._id)}
                                     className="btn btn-primary amazon-details"
                                   >
                                     Details{" "}
@@ -538,18 +533,18 @@ class HomePage extends React.Component {
                         className="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 wow fadeIn animated"
                         data-wow-delay="100ms"
                         key={p._id}
-                        onClick={this.viewDetail.bind(this, p)}
+                        onClick={this.viewDetail.bind(this, p._id)}
                       >
-                        <div className="recent-product-box">
+                        <div className="recent-product-box" >
                           <div className="recent-product-img">
-                            <a href="/ProductDetail">
+                            <span>
                               <img
                                 src={p.data[0].image}
                                 style={{ width: "240px", height: "280px" }}
                                 className="img-fluid"
                                 alt="recent-product img"
                               />
-                            </a>
+                            </span>
                             <span className="badge badge-secondary wd-badge text-uppercase">
                               New
                           </span>
