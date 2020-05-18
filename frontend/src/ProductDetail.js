@@ -10,7 +10,7 @@ class ProductDetail extends React.Component {
     this.onChangePros = this.onChangePros.bind(this);
     this.onChangeCons = this.onChangeCons.bind(this);
     this.onChangeEmail = this.onChangeEmail.bind(this);
-	      this.onSubmit = this.onSubmit.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
     this.state = {
       error: null,
       isLoaded: false,
@@ -35,7 +35,7 @@ class ProductDetail extends React.Component {
 
   onSubmit(e){
     e.preventDefault();
-    const obj ={
+    let obj ={
         name: this.state.name,
         email: this.state.email,
         pros: this.state.pros,
@@ -73,7 +73,7 @@ onChangeCons(e){
 }
 
 fetchReviews(){
-  var url = "http://localhost:5000/api/v1/reviews/5ea7ae2a2cf49d2070ad8dd8";
+  var url = "https://phamhang.com/api/v1/reviews/5ea7ae2a2cf49d2070ad8dd8";
   const that = this;
   
   fetch(url)
@@ -85,16 +85,16 @@ fetchData() {
   const that = this;
   var url = "";
   if (this.props.products.length !== 0) {//in case this condition caught undefined error since lenght isn't a method for object this.props.products, pls consider disabling the condition and use the one below
-    url = `http://localhost:5000/api/v1/products/${this.props.products._id}`;
+    url = `https://phamhang.com/api/v1/products/${this.props.products._id}`;
   } else {
-    url = `http://localhost:5000/api/v1/products/5e99d314b9128112d755c9fd`;
+    url = `https://phamhang.com/api/v1/products/5e99d314b9128112d755c9fd`;
   }
 
   //receive URL param from SearchResult component using Router to obtain product id
   if(this.props.match.params.id !== undefined){
-    url=`http://localhost:5000/api/v1/products/${this.props.match.params.id}`;
+    url=`https://api-easyprice.herokuapp.com/api/v1/products/${this.props.match.params.id}`;
   } else{
-    url = `http://localhost:5000/api/v1/products/5e99d314b9128112d755c9fd`;
+    url = `https://api-easyprice.herokuapp.com/api/v1/products/5e99d314b9128112d755c9fd`;
   }
   //URL updated with prod id
 
@@ -2056,7 +2056,7 @@ fetchData() {
                     {/* ====================================
 						        Single Product Gallery Section
 						    ========================================= */}
-                {FullDetails.map(s =><div className="row" key={product._id}>
+                {FullDetails.map(s =><div className="row" key="1">
                       <div className="col-md-12 product-slier-details">
                         <ul id="lightSlider">
                           <li data-thumb={s.image}>
