@@ -67,13 +67,15 @@ class SearchResult extends React.Component {
                         // console.log("Sellers_0: "+sellers_0)
                     }
                     var undefiner = false
-                    if(json.data[i].data[0].image === undefined){
-                        undefiner=true
-                    } else if(json.data[i].name === undefined){
-                        undefiner=true
-                    } else if(json.data[i].category === undefined){
-                        undefiner=true
-                    }
+                    if(typeof json.data[i]!=="undefined"){
+                        if(typeof json.data[i].data[0] === "undefined"){
+                            undefiner=true
+                        } else if(typeof json.data[i].name === "undefined"){
+                            undefiner=true
+                        } else if(typeof json.data[i].category === "undefined"){
+                            undefiner=true
+                        }
+                    } else undefiner=true
                     if(undefiner==true){
                         var newObj_0 = {
                             id: import_0.data[i]._id,
@@ -1958,24 +1960,26 @@ class SearchResult extends React.Component {
                             <div className="container">
                                 <div className="row">
                                     <div className="col-12">
-                                    <div className="col-4 col-md-2 client-img">
-                                        <img style={{width:195, height:100}} className="figure-img img-fluid" src={require("./img/client/client-img-1-10.jpg")} alt="" />
-                                    </div>
-                                    <div className="col-4 col-md-2 client-img">
-                                        <img style={{width:195, height:100}} className="figure-img img-fluid" src={require("./img/client/client-img-2-10.jpg")} alt="" />
-                                    </div>
-                                    <div className="col-4 col-md-2 client-img">
-                                        <img style={{width:195, height:100}} className="figure-img img-fluid" src={require("./img/client/client-img-3-10.jpg")} alt="" />
-                                    </div>
-                                    <div className="col-4 col-md-2 client-img">
-                                        <img style={{width:195, height:100}} className="figure-img img-fluid" src={require("./img/client/client-img-4-10.jpg")} alt="" />
-                                    </div>
-                                    <div className="col-4 col-md-2 client-img">
-                                        <img style={{width:195, height:100}} className="figure-img img-fluid" src={require("./img/client/client-img-5-10.jpg")} alt="" />
-                                    </div>
-                                    <div className="col-4 col-md-2 client-img">
-                                        <img style={{width:195, height:100}} className="figure-img img-fluid" src={require("./img/client/client-img-6-10.jpg")} alt="" />
-                                    </div>
+                                        <div className="row">
+                                            <div className="col-4 col-md-2 client-img">
+                                                <img style={{width:195, height:100}} className="figure-img img-fluid" src={require("./img/client/client-img-1-10.jpg")} alt="" />
+                                            </div>
+                                            <div className="col-4 col-md-2 client-img">
+                                                <img style={{width:195, height:100}} className="figure-img img-fluid" src={require("./img/client/client-img-2-10.jpg")} alt="" />
+                                            </div>
+                                            <div className="col-4 col-md-2 client-img">
+                                                <img style={{width:195, height:100}} className="figure-img img-fluid" src={require("./img/client/client-img-3-10.jpg")} alt="" />
+                                            </div>
+                                            <div className="col-4 col-md-2 client-img">
+                                                <img style={{width:195, height:100}} className="figure-img img-fluid" src={require("./img/client/client-img-4-10.jpg")} alt="" />
+                                            </div>
+                                            <div className="col-4 col-md-2 client-img">
+                                                <img style={{width:195, height:100}} className="figure-img img-fluid" src={require("./img/client/client-img-5-10.jpg")} alt="" />
+                                            </div>
+                                            <div className="col-4 col-md-2 client-img">
+                                                <img style={{width:195, height:100}} className="figure-img img-fluid" src={require("./img/client/client-img-6-10.jpg")} alt="" />
+                                            </div>
+                                        </div>
                                     </div>
                                     <div className="col-12 p0 ">
                                         <div className="page-location">
@@ -3295,13 +3299,13 @@ class SearchResult extends React.Component {
                             <div className="container ">
                                 <div className="row ">
                                     <div className="col-12 col-md-6">
-                                        <h2 className="call-to-action-message">The most happy <span className="bold-font">Comparison</span> theme to Build with great <span className="bold-font">Features.</span></h2>
+                                        <h2 className="call-to-action-message text-dark">The most happy <span className="bold-font">Comparison</span> application Build with great <span className="bold-font">Features.</span></h2>
                                     </div>
                                     <div className="col-12 col-md-6 text-right">
                                         <div className="call-to-action-buy-now">
                                             {/* By Theme */}
                                             <a href="https://themeforest.net/item/blurb-price-comparison-affiliate-website-multivendor-store-and-product-review-html5-template/20880845" className="btn btn-primary wd-shop-btn">
-                                                Purchase Theme <i className="fa fa-arrow-right" aria-hidden="true" />
+                                                Purchase Now <i className="fa fa-arrow-right" aria-hidden="true" />
                                             </a>
                                         </div>
                                     </div>
