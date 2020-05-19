@@ -21,13 +21,10 @@ router.post('/:_id', (req, res, next) => {
                 reviews
                     .save()
                     .then(result => {
-                        console.log(result);
+                        res.send(result)
                     })
                     .catch(err => console.log(err));
-                res.status(201).json({
-                    message: "New review created",
-                    newReviews: reviews
-                })
+                
                 next()
             } else {
                 Review.findByIdAndUpdate({ _id: req.params._id }, {
