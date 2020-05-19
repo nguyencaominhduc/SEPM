@@ -16,7 +16,7 @@ router.post('/:_id', (req, res, next) => {
             if (reviews.length < 1) {
                 const reviews = new Review({
                     _id: req.params._id,
-                    reviews: [{ "name": req.body.name, "email": req.body.email, "content": req.body.content }]
+                    reviews: [{ "name": req.body.name, "email": req.body.email, "pros": req.body.pros, "cons": req.body.cons }]
                 });
                 reviews
                     .save()
@@ -31,7 +31,7 @@ router.post('/:_id', (req, res, next) => {
                 next()
             } else {
                 Review.findByIdAndUpdate({ _id: req.params._id }, {
-                    $push: { reviews: [{ "name": req.body.name, "email": req.body.email, "content": req.body.content }] }
+                    $push: { reviews: [{ "name": req.body.name, "email": req.body.email, "pros": req.body.pros, "cons": req.body.cons }] }
                 }, { 'new': true }, function (err, result) {
                     res.send(result)
                 })

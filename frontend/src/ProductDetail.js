@@ -22,112 +22,115 @@ class ProductDetail extends React.Component {
       id: {},
       reviews: [],
       comments: [],
-      name:'',
-      pros:'',
-      email:'',
+      name: '',
+      pros: '',
+      email: '',
       cons: '',
-      image:'',
-      target:''
+      image: '',
+      target: ''
     };
   }
 
   componentDidMount() {
-    console.log("RECEIVE PROP: ", this.props.products);
+
     this.fetchData();
+    console.log("RECEIVE PROP: ", this.props.products);
     this.fetchReviews();
     window.scrollTo(0, 0);
   }
 
-  onSubmit(e){
+  onSubmit(e) {
     e.preventDefault();
-    let obj ={
-        name: this.state.name,
-        email: this.state.email,
-        pros: this.state.pros,
-        cons: this.state.cons,
+    let obj = {
+      name: this.state.name,
+      email: this.state.email,
+      pros: this.state.pros,
+      cons: this.state.cons,
     }
-    const url = 'https://phamhang.com/api/v1/reviews';
-    axios.post(url,obj)
-      .then(res =>console.log(res.data))
-      this.setState({
-          name:'',
-          pros:'',
-          email:'',
-          cons: '',
-      })
-}
-onChangeName(e){
+    const url = `http://localhost:5000/api/v1/reviews/${this.props.match.params.id}`;
+    console.log(url)
+    axios.post(url, obj)
+      .then(res => console.log(res.data))
+      .then(json => this.fetchReviews())
     this.setState({
-        name: e.target.value
-    });
-}
-onChangePros(e){
-    this.setState({
-        pros: e.target.value
+      name: '',
+      pros: '',
+      email: '',
+      cons: '',
     })
-}
-onChangeEmail(e){
-  this.setState({
+  }
+  onChangeName(e) {
+    this.setState({
+      name: e.target.value
+    });
+  }
+  onChangePros(e) {
+    this.setState({
+      pros: e.target.value
+    })
+  }
+  onChangeEmail(e) {
+    this.setState({
       email: e.target.value
-  });
-}
-onChangeCons(e){
-  this.setState({
+    });
+  }
+  onChangeCons(e) {
+    this.setState({
       cons: e.target.value
-  });
-}
-
-fetchReviews(){
-  var url = "https://phamhang.com/api/v1/reviews/5ea7ae2a2cf49d2070ad8dd8";
-  const that = this;
-  
-  fetch(url)
-    .then((res) => res.json())
-    .then((json) => that.setState({ reviews: json, comments: json.reviews}));
-  
-}
-fetchData() {
-  const that = this;
-  var url = "";
-  if (this.props.products.length !== 0) {//in case this condition caught undefined error since lenght isn't a method for object this.props.products, pls consider disabling the condition and use the one below
-    url = `https://phamhang.com/api/v1/products/${this.props.products._id}`;
-  } else {
-    url = `https://phamhang.com/api/v1/products/5e99d314b9128112d755c9fd`;
+    });
   }
 
-  //receive URL param from SearchResult component using Router to obtain product id
-  if(this.props.match.params.id !== undefined){
-    url=`https://api-easyprice.herokuapp.com/api/v1/products/${this.props.match.params.id}`;
-  } else{
-    url = `https://api-easyprice.herokuapp.com/api/v1/products/5e99d314b9128112d755c9fd`;
+  fetchReviews() {
+    var url = `http://localhost:5000/api/v1/reviews/${this.props.match.params.id}`;
+    const that = this;
+
+    fetch(url)
+      .then((res) => res.json())
+      .then((json) => that.setState({ reviews: json, comments: json.reviews }));
+
   }
-  //URL updated with prod id
+  fetchData() {
+    const that = this;
+    var url = "";
+    if (this.props.products.length !== 0) {//in case this condition caught undefined error since lenght isn't a method for object this.props.products, pls consider disabling the condition and use the one below
+      url = `https://phamhang.com/api/v1/products/${this.props.products._id}`;
+    } else {
+      url = `https://phamhang.com/api/v1/products/5e99d314b9128112d755c9fd`;
+    }
 
-  fetch(url)
-    .then((res) => res.json())
-    .then((json) => that.setState({ product: json.data, detailProduct: json.data.data.slice(0,5), image: json.data.data[0].image}));
-}
+    //receive URL param from SearchResult component using Router to obtain product id
+    if (this.props.match.params.id !== undefined) {
+      url = `https://api-easyprice.herokuapp.com/api/v1/products/${this.props.match.params.id}`;
+    } else {
+      url = `https://api-easyprice.herokuapp.com/api/v1/products/5e99d314b9128112d755c9fd`;
+    }
+    //URL updated with prod id
 
-handleSearch(event) {
-  this.setState({ target: event.target.value })
-}
+    fetch(url)
+      .then((res) => res.json())
+      .then((json) => that.setState({ product: json.data, detailProduct: json.data.data.slice(0, 5), image: json.data.data[0].image }));
+  }
+
+  handleSearch(event) {
+    this.setState({ target: event.target.value })
+  }
 
   render() {
     const { product } = this.state;
     let ProductInfo = this.state.product;
-    let FullDetails=this.state.detailProduct;
+    let FullDetails = this.state.detailProduct;
     let Reviews = this.state.reviews;
     let Comments = this.state.comments;
     console.log(Reviews);
     console.log(Comments);
 
-    return ( 
+    return (
       <AuthContext.Consumer>
-      {(context) => {
-        return (
-          <div>
- {/* <!-- =========================Header Section============================== --> */}
- <section id="wd-header">
+        {(context) => {
+          return (
+            <div>
+              {/* <!-- =========================Header Section============================== --> */}
+              <section id="wd-header">
                 <div className="container-fluid custom-width">
                   <div className="row">
                     <div className="col-md-12 col-lg-3 col-xl-3 text-center second-home-main-logo">
@@ -147,7 +150,7 @@ handleSearch(event) {
                           placeholder="Enter your search key ..."
                           onChange={this.handleSearch.bind(this)}
                         />
-                        <Link to={{pathname:'/SearchResult', state: {search_target: this.state.target}}}className="input-group-btn">
+                        <Link to={{ pathname: '/SearchResult', state: { search_target: this.state.target } }} className="input-group-btn">
                           {/* <a className="input-group-btn" href='/SearchResult'> */}
                           <button
                             className="btn btn-secondary wd-search-btn"
@@ -223,66 +226,593 @@ handleSearch(event) {
                       </div>
                     </div>
                     {/* <!--Mobile menu end--> */}
-                    <div className="col-xl-3 d-none d-xl-block"/>
+                    <div className="col-xl-3 d-none d-xl-block" />
                     <Navbar />
                   </div>
                 </div>
               </section>
-        {/* =========================
+              {/* =========================
   Product Details Section
     ============================== */}
-        <section className="product-details">
-          <div className="container">
-            <div className="row">
-              <div className="col-12 p0">
-                <div className="page-location">
-                  <ul>
-                    <li>
-                      <a href="#">
-                        Home / Shop <span className="divider">/</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        className="page-location-active"
-                        href="#"
-                        key={product.name}
-                      >
-                        {product.name}
-                        <span className="divider">/</span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div className="col-12 product-details-section">
-                {/* ====================================
+              <section className="product-details">
+                <div className="container">
+                  <div className="row">
+                    <div className="col-12 p0">
+                      <div className="page-location">
+                        <ul>
+                          <li>
+                            <a href="#">
+                              Home / Shop <span className="divider">/</span>
+                            </a>
+                          </li>
+                          <li>
+                            <a
+                              className="page-location-active"
+                              href="#"
+                              key={product.name}
+                            >
+                              {product.name}
+                              <span className="divider">/</span>
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div className="col-12 product-details-section">
+                      {/* ====================================
 				        Product Details Gallery Section
 				    ========================================= */}
-                <div className="row">
-                  <div className="product-gallery col-12 col-md-12 col-lg-6">
-                    {/* ====================================
+                      <div className="row">
+                        <div className="product-gallery col-12 col-md-12 col-lg-6">
+                          {/* ====================================
 						        Single Product Gallery Section
 						    ========================================= */}
-                {FullDetails.slice(0,1).map(s =><div className="row" >
-                      <div className="col-md-12 product-slier-details">
-                            <img
-                              className="figure-img img-fluid"
-                              src={s.image}
-                              alt="product-img"
-                              key="1"
-                            />
+                          {FullDetails.slice(0, 1).map(s => <div className="row" >
+                            <div className="col-md-12 product-slier-details">
+                              <img
+                                className="figure-img img-fluid"
+                                src={s.image}
+                                alt="product-img"
+                                key="1"
+                              />
+                            </div>
+                          </div>)}
+                        </div>
+                        <div className="col-6 col-12 col-md-12 col-lg-6">
+                          <div className="product-details-gallery">
+                            <div className="list-group">
+                              <h4 className="list-group-item-heading product-title">
+                                {product.name}
+                              </h4>
+                              <div className="media">
+                                <div className="media-left media-middle">
+                                  <div className="rating">
+                                    <a href="#">
+                                      <i
+                                        className="fa fa-star active-color"
+                                        aria-hidden="true"
+                                      />
+                                    </a>
+                                    <a href="#">
+                                      <i
+                                        className="fa fa-star active-color"
+                                        aria-hidden="true"
+                                      />
+                                    </a>
+                                    <a href="#">
+                                      <i
+                                        className="fa fa-star active-color"
+                                        aria-hidden="true"
+                                      />
+                                    </a>
+                                    <a href="#">
+                                      <i
+                                        className="fa fa-star-o"
+                                        aria-hidden="true"
+                                      />
+                                    </a>
+                                    <a href="#">
+                                      <i
+                                        className="fa fa-star-o"
+                                        aria-hidden="true"
+                                      />
+                                    </a>
+                                  </div>
+                                </div>
+                                <div className="media-body">
+                                  <p>
+                                    3.7/5{" "}
+                                    <span className="product-ratings-text">
+                                      {" "}
+                                -1747 Ratings
+                              </span>
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="list-group content-list">
+                              <p>
+                                <i
+                                  className="fa fa-dot-circle-o"
+                                  aria-hidden="true"
+                                />{" "}
+                          100% Original product
+                        </p>
+                              <p>
+                                <i
+                                  className="fa fa-dot-circle-o"
+                                  aria-hidden="true"
+                                />{" "}
+                          Manufacturer Warranty
+                        </p>
+                              <p>
+                                <i
+                                  className="fa fa-dot-circle-o"
+                                  aria-hidden="true"
+                                />{" "}
+                          Count: {product.count}
+                              </p>
+                              <p>
+                                <i
+                                  className="fa fa-dot-circle-o"
+                                  aria-hidden="true"
+                                />{" "}
+                          Category: {product.category}
+                              </p>
+                            </div>
+                          </div>
+
+
+                          <div className="product-store row">
+                            {FullDetails.map(s =>
+                              <div className="col-12 product-store-box" key={product._id}>
+                                <div className="row">
+                                  <div className="col-3 p0 store-border-img ">
+                                    <img
+                                      src={s.image}
+                                      className="figure-img img-fluid"
+                                      alt="Product Img"
+                                    />
+
+                                  </div>
+                                  <div className="col-6 store-border-price text-center" >
+                                    <div className="price">
+                                      <p > <NumberFormat value={s.price} displayType={'text'} thousandSeparator={true} prefix={'VND '} /></p>
+                                      <span style={{ fontSize: 16 }}><strong>{s.platform}</strong></span>
+                                    </div>
+                                  </div>
+                                  <div className="col-3 store-border-button">
+                                    <a
+                                      href={s.product_url}
+                                      className="btn btn-primary wd-shop-btn pull-right"
+                                    >
+                                      Buy it
+                            </a>
+                                  </div>
+                                </div>
+                              </div>)}
+                          </div>
+                        </div>
                       </div>
-                    </div>)}
+                    </div>
                   </div>
-                  <div className="col-6 col-12 col-md-12 col-lg-6">
-                    <div className="product-details-gallery">
-                      <div className="list-group">
-                        <h4 className="list-group-item-heading product-title">
-                          {product.name}
-                        </h4>
-                        <div className="media">
-                          <div className="media-left media-middle">
+                  <div className="row">
+                    <div className="col-12">
+                      <div className="wd-tab-section">
+                        <div className="tab-pane" id="description-section">
+                          <div className="reviews-section">
+                            <h6 className="review-rating-title">
+                              Average Ratings and Reviews
+                      </h6>
+                            <div className="row tab-rating-bar-section">
+                              <div className="col-8 col-md-4 col-lg-4">
+                                {/* <img
+                            src={require("./img/icon/icon review.png")}
+                            alt="review-bg"
+                          /> */}
+                                <div className="review-rating text-center">
+                                  <h1 className="rating">4.5</h1>
+                                  <p>4 Ratings &amp; 0 Reviews</p>
+                                </div>
+                              </div>
+                              <div className="col-12 col-md-3 rating-bar-section">
+                                <div className="media rating-star-area">
+                                  <p>
+                                    5 <i className="fa fa-star" aria-hidden="true" />
+                                  </p>
+                                  <div className="media-body rating-bar">
+                                    <div className="progress wd-progress">
+                                      <div
+                                        className="progress-bar wd-bg-green"
+                                        role="progressbar"
+                                        style={{ width: "100%" }}
+                                        aria-valuenow={100}
+                                        aria-valuemin={0}
+                                        aria-valuemax={100}
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+                                <div className="media rating-star-area">
+                                  <p>
+                                    4 <i className="fa fa-star" aria-hidden="true" />
+                                  </p>
+                                  <div className="media-body rating-bar">
+                                    <div className="progress wd-progress">
+                                      <div
+                                        className="progress-bar wd-bg-green"
+                                        role="progressbar"
+                                        style={{ width: "75%" }}
+                                        aria-valuenow={75}
+                                        aria-valuemin={0}
+                                        aria-valuemax={100}
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+                                <div className="media rating-star-area">
+                                  <p>
+                                    3 <i className="fa fa-star" aria-hidden="true" />
+                                  </p>
+                                  <div className="media-body rating-bar">
+                                    <div className="progress wd-progress">
+                                      <div
+                                        className="progress-bar wd-bg-green"
+                                        role="progressbar"
+                                        style={{ width: "50%" }}
+                                        aria-valuenow={50}
+                                        aria-valuemin={0}
+                                        aria-valuemax={100}
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+                                <div className="media rating-star-area">
+                                  <p>
+                                    2 <i className="fa fa-star" aria-hidden="true" />
+                                  </p>
+                                  <div className="media-body rating-bar">
+                                    <div className="progress wd-progress">
+                                      <div
+                                        className="progress-bar wd-bg-yellow"
+                                        role="progressbar"
+                                        style={{ width: "35%" }}
+                                        aria-valuenow={35}
+                                        aria-valuemin={0}
+                                        aria-valuemax={100}
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+                                <div className="media rating-star-area">
+                                  <p>
+                                    1 <i className="fa fa-star" aria-hidden="true" />
+                                  </p>
+                                  <div className="media-body rating-bar">
+                                    <div className="progress wd-progress">
+                                      <div
+                                        className="progress-bar wd-bg-red"
+                                        role="progressbar"
+                                        style={{ width: "25%" }}
+                                        aria-valuenow={25}
+                                        aria-valuemin={0}
+                                        aria-valuemax={100}
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="product-tab-content">
+                            <h4 className="description-title">{product.name}</h4>
+                            <h6 className="description-subtitle" style={{ textAlign: "left" }}>
+                              Battery and Power
+                      </h6>
+                            <p className="description-subcontent" style={{ textAlign: "left" }}>
+                              Those looking forward to an excellent trimmer at an
+                              affordable price will say they have found their ultimate
+                              solution in Kamei KM-2013 Trimmer. This Electric Hair
+                              Clipper from Kemei features in brown color with an
+                              ergonomically crafted outfit. The recharge time for this
+                              device is 480 minutes with the usage time of 40 minutes.
+                              You can plug and charge the device from a standard 220V,
+                              50Hz power source. The technology and design assure a
+                              great trimming experience.
+                      </p>
+                            <h6 className="description-subtitle" style={{ textAlign: "left" }}>
+                              Quality of Body and Combs
+                      </h6>
+                            <p className="description-subcontent" style={{ textAlign: "left" }}>
+                              High Hardness Alloy Steel Blade. The attachment includes
+                              stubble comb which can suffice various applications. The
+                              device also comes with Superior lift cut technology
+                              which offers smooth trimming with the cutting intervals
+                              of 1 mm, 1.5 mm, 2 mm, 3 mm, 4 mm, 5 mm, 6 mm, 7 mm, 8
+                              mm. The number of combs is one, and the number of trim
+                        settings are{" "}
+                            </p>
+                            <h6 className="description-subtitle" style={{ textAlign: "left" }}>Usability</h6>
+                            <p className="description-subcontent" style={{ textAlign: "left" }}>
+                              There are no additional epilator settings. Brush
+                              cleaning is facilitated to clean after every use. The
+                              device can be used in cordless fashion for extra
+                              convenience. So you do not have to worry about moving
+                              the unit to the desired location. The handle grip
+                              material is made of plastic and there is a pop-up
+                              trimmer as well. The different technical specifications
+                              make it highly convenient to use.
+                      </p>
+                            <h6 className="description-subtitle" style={{ textAlign: "left" }}>
+                              Additional features
+                      </h6>
+                            <p className="description-subcontent" style={{ textAlign: "left" }}>
+                              The device features a LED display. here are no
+                              additional epilator settings. Brush cleaning is
+                              facilitated to clean after every use. The device can be
+                              used in cordless fashion for extra convenience. S The
+                              interesting aspects of the hair trimmer include a
+                        fantastic design that supports ease of use,{" "}
+                              <a className="highlights-text" href="#">
+                                good battery backup and a great blade that
+                        </a>
+                            </p>
+                            <h6 className="description-subtitle" style={{ textAlign: "left" }}>Features</h6>
+                            <p className="description-subcontent" style={{ textAlign: "left" }}>
+                              Redefine your workday with the Palm Treo Pro smartphone.
+                              Perfectly balanced, you can respond to business and
+                              personal email, stay on top of appointments and
+                              contacts, and use Wi-Fi or GPS when you’re out and
+                              about. Then watch a video on YouTube, catch up with news
+                              and sports on the web, or listen to a few songs. Balance
+                              your work and play the way you like it, with the Palm
+                              Treo Pro.
+                      </p>
+                            <div className="row">
+                              <div className="col-12 col-md-12 col-lg-6">
+                                <ul className="description-list">
+                                  <li>
+                                    <i
+                                      className="fa fa-dot-circle-o"
+                                      aria-hidden="true"
+                                    />{" "}
+                              Windows Mobile® 6.1 Professional Edition
+                            </li>
+                                  <li>
+                                    <i
+                                      className="fa fa-dot-circle-o"
+                                      aria-hidden="true"
+                                    />{" "}
+                              Qualcomm® MSM7201 400MHz Processor
+                            </li>
+                                  <li>
+                                    <i
+                                      className="fa fa-dot-circle-o"
+                                      aria-hidden="true"
+                                    />{" "}
+                              320x320 transflective colour TFT touchscreen
+                            </li>
+                                  <li>
+                                    <i
+                                      className="fa fa-dot-circle-o"
+                                      aria-hidden="true"
+                                    />{" "}
+                              HSDPA/UMTS/EDGE/GPRS/GSM radio
+                            </li>
+                                  <li>
+                                    <i
+                                      className="fa fa-dot-circle-o"
+                                      aria-hidden="true"
+                                    />{" "}
+                              Tri-band UMTS — 850MHz, 1900MHz, 2100MHz
+                            </li>
+                                  <li>
+                                    <i
+                                      className="fa fa-dot-circle-o"
+                                      aria-hidden="true"
+                                    />{" "}
+                              Quad-band GSM — 850/900/1800/1900
+                            </li>
+                                  <li>
+                                    <i
+                                      className="fa fa-dot-circle-o"
+                                      aria-hidden="true"
+                                    />{" "}
+                              802.11b/g with WPA, WPA2, and 801.1x
+                              authentication
+                            </li>
+                                  <li>
+                                    <i
+                                      className="fa fa-dot-circle-o"
+                                      aria-hidden="true"
+                                    />{" "}
+                              Built-in GPS
+                            </li>
+                                  <li>
+                                    <i
+                                      className="fa fa-dot-circle-o"
+                                      aria-hidden="true"
+                                    />{" "}
+                              Bluetooth Version: 2.0 + Enhanced Data Rate
+                            </li>
+                                  <li>
+                                    <i
+                                      className="fa fa-dot-circle-o"
+                                      aria-hidden="true"
+                                    />{" "}
+                              256MB storage (100MB user available), 128MB RAM
+                            </li>
+                                  <li>
+                                    <i
+                                      className="fa fa-dot-circle-o"
+                                      aria-hidden="true"
+                                    />{" "}
+                              2.0 megapixel camera, up to 8x digital zoom and
+                              video capture
+                            </li>
+                                  <li>
+                                    <i
+                                      className="fa fa-dot-circle-o"
+                                      aria-hidden="true"
+                                    />{" "}
+                              Removable, rechargeable 1500mAh lithium-ion
+                              battery
+                            </li>
+                                </ul>
+                              </div>
+                              <div className="col-12 col-md-12 col-lg-6">
+                                <img
+                                  className="figure-img img-fluid"
+                                  src={this.state.image}
+                                  alt="Features"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                          <hr />
+                          <div className="row tab-video-area">
+                            <div className="col-12 col-md-12 col-lg-6">
+                              <img
+                                className="figure-img img-fluid"
+                                src={this.state.image}
+                                alt="Features"
+                              />
+                            </div>
+                            <div className="col-12 col-md-12 col-lg-6 video-info">
+                              <h6 className="video-info-title">
+                                Some prons and Cons
+                        </h6>
+                              <p>
+                                <strong className="video-info-subtitle">Pros:</strong>
+                          really great keyboard, good trackpad, alcantara,
+                          stand-out design, USB-A port, great screen, great
+                          battery life, Windows Hello
+                        </p>
+                              <p>
+                                <strong className="video-info-subtitle">Pros:</strong>
+                          really great keyboard, good trackpad, alcantara,
+                          stand-out design, USB-A port, great screen, great
+                          battery life, Windows Hello
+                        </p>
+                              <p className="video-info-content">
+                                The device features a LED display. The interesting
+                                aspects of the hair trimmer include a fantastic design
+                                that supports ease of use, good battery backup and a
+                                great blade that performs well and lasts for so long.
+                        </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="row related-product">
+                    {/* 
+                                                        =================================
+                                                        Review Comment Section
+                                                        =================================
+                                                    */}
+                    <div className="review-comment-section">
+                      {context.token && <div className="row">
+                        <div className="col-12 col-md-12 col-lg-12 col-xl-12">
+                          <div className="reviews-title leave-opinion">
+                            <h3>Leave your Opinion here</h3>
+                          </div>
+                          <form onSubmit={this.onSubmit}>
+                            <div className="row">
+                              <div className="col-md-6">
+                                <div className="form-group">
+                                  <label htmlFor="first" className="color-black">Name *</label>
+                                  <input type="text" className="form-control" placeholder id="first" onChange={this.onChangeName} value={this.state.name} />
+                                </div>
+                              </div>
+                              <div className="col-md-6">
+                                <div className="form-group">
+                                  <label htmlFor="last" className="color-black">Email *</label>
+                                  <input type="email" className="form-control" placeholder id="last" onChange={this.onChangeEmail} value={this.state.email} />
+                                </div>
+                              </div>
+                              <div className="col-md-6">
+                                <div className="form-group">
+                                  <label htmlFor="last" className="color-green">Prons</label>
+                                  <textarea className="form-control col-md-12" id="exampleFormControlTextarea1" placeholder="Write your Opinion here ... " defaultValue={""} onChange={this.onChangePros} value={this.state.pros} />
+                                </div>
+                              </div>
+                              <div className="col-md-6">
+                                <div className="form-group">
+                                  <label htmlFor="exampleFormControlTextarea2" className="color-red">Cons</label>
+                                  <textarea className="form-control col-12" id="exampleFormControlTextarea2" placeholder="Write your Opinion here ... " defaultValue={""} onChange={this.onChangeCons} value={this.state.cons} />
+                                </div>
+                              </div>
+
+                              <div className="col-md-12">
+                                <button type="submit" className="btn btn-primary review-comment"><i className="fa fa-check" aria-hidden="true" /> Post Comment</button>
+                              </div>
+                            </div>
+                            <br />
+                          </form>
+                          <br />
+                        </div>
+                      </div>}
+
+
+                      {/* // display all comment */}
+                      <div className="row">
+                        {this.state.reviews.map((s, index) =>
+                          <div className="col-lg-4 col-sm-6 d-flex" style={{ width: 100 }}>
+                            {s.reviews.map((r, index1) =>
+                              <div>
+                                <h6>{r.name}</h6>
+                                <br />
+                                <h6>{r.email}</h6>
+                                <br />
+                                <h6>{r.pros}</h6>
+                                <br />
+                                <h6>{r.cons}</h6>
+                              </div>
+                            )}
+                          </div>
+                        )}
+                      </div>
+
+                    </div>
+                    <div id="related-product" className="owl-carousel owl-theme">
+                      <div className="col-12">
+                        <figure className="figure product-box">
+                          <div className="product-box-img">
+                            <img
+                              src={require("./img/product-img/product-img-1.jpg")}
+                              className="figure-img img-fluid"
+                              alt="Product Img"
+                            />
+                          </div>
+                          <div className="quick-view-btn">
+                            <div className="compare-btn">
+                              <a className="btn btn-primary btn-sm" href="#">
+                                <i className="fa fa-eye" aria-hidden="true" /> Quick
+                          view
+                        </a>
+                            </div>
+                          </div>
+                          <figcaption className="figure-caption text-center">
+                            <span className="badge badge-secondary wd-badge text-uppercase">
+                              New
+                      </span>
+                            <div className="wishlist">
+                              <i className="fa fa-heart" aria-hidden="true" />
+                            </div>
+                            <div className="price-start">
+                              <p>
+                                Price start from{" "}
+                                <strong className="active-color">
+                                  <u>$80.00</u> - <u>$75.00</u>
+                                </strong>
+                              </p>
+                            </div>
+                            <div className="content-excerpt">
+                              <p>Cras in nunc non ipsum duo cursus ultrices est</p>
+                            </div>
                             <div className="rating">
                               <a href="#">
                                 <i
@@ -303,920 +833,276 @@ handleSearch(event) {
                                 />
                               </a>
                               <a href="#">
-                                <i
-                                  className="fa fa-star-o"
-                                  aria-hidden="true"
-                                />
+                                <i className="fa fa-star-o" aria-hidden="true" />
                               </a>
                               <a href="#">
-                                <i
-                                  className="fa fa-star-o"
-                                  aria-hidden="true"
-                                />
+                                <i className="fa fa-star-o" aria-hidden="true" />
                               </a>
                             </div>
-                          </div>
-                          <div className="media-body">
-                            <p>
-                              3.7/5{" "}
-                              <span className="product-ratings-text">
-                                {" "}
-                                -1747 Ratings
-                              </span>
-                            </p>
-                          </div>
-                        </div>
+                            <div className="compare-btn">
+                              <a className="btn btn-primary btn-sm" href="#">
+                                <i className="fa fa-exchange" aria-hidden="true" />{" "}
+                          Add to compare
+                        </a>
+                            </div>
+                          </figcaption>
+                        </figure>
                       </div>
-                      <div className="list-group content-list">
-                        <p>
-                          <i
-                            className="fa fa-dot-circle-o"
-                            aria-hidden="true"
-                          />{" "}
-                          100% Original product
-                        </p>
-                        <p>
-                          <i
-                            className="fa fa-dot-circle-o"
-                            aria-hidden="true"
-                          />{" "}
-                          Manufacturer Warranty
-                        </p>
-                        <p>
-                          <i
-                            className="fa fa-dot-circle-o"
-                            aria-hidden="true"
-                          />{" "}
-                          Count: {product.count}
-                        </p>
-                        <p>
-                          <i
-                            className="fa fa-dot-circle-o"
-                            aria-hidden="true"
-                          />{" "}
-                          Category: {product.category}
-                        </p>
-                      </div>
-                    </div>
-                    
-                    
-                    <div className="product-store row">
-                    {FullDetails.map(s =>
-                      <div className="col-12 product-store-box" key={product._id}>
-                        <div className="row">
-                          <div className="col-3 p0 store-border-img ">
+                      <div className="col-12">
+                        <figure className="figure product-box">
+                          <div className="product-box-img">
                             <img
-                              src={s.image}
+                              src={require("./img/product-img/product-img-2.jpg")}
                               className="figure-img img-fluid"
                               alt="Product Img"
                             />
-                            
                           </div>
-                          <div className="col-6 store-border-price text-center" >
-                            <div className="price">
-                              <p > <NumberFormat value={s.price} displayType={'text'} thousandSeparator={true} prefix={'VND '} /></p>
-                              <span style={{fontSize: 16}}><strong>{s.platform}</strong></span>
-                            </div>
-                          </div>
-                          <div className="col-3 store-border-button">
-                            <a
-                              href={s.product_url}
-                              className="btn btn-primary wd-shop-btn pull-right"
-                            >
-                              Buy it
-                            </a>
-                          </div>
-                        </div>
-                      </div> )}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-12">
-                <div className="wd-tab-section">
-                  <div className="tab-pane" id="description-section">
-                    <div className="reviews-section">
-                      <h6 className="review-rating-title">
-                        Average Ratings and Reviews
-                      </h6>
-                      <div className="row tab-rating-bar-section">
-                        <div className="col-8 col-md-4 col-lg-4">
-                          {/* <img
-                            src={require("./img/icon/icon review.png")}
-                            alt="review-bg"
-                          /> */}
-                          <div className="review-rating text-center">
-                            <h1 className="rating">4.5</h1>
-                            <p>4 Ratings &amp; 0 Reviews</p>
-                          </div>
-                        </div>
-                        <div className="col-12 col-md-3 rating-bar-section">
-                          <div className="media rating-star-area">
-                            <p>
-                              5 <i className="fa fa-star" aria-hidden="true" />
-                            </p>
-                            <div className="media-body rating-bar">
-                              <div className="progress wd-progress">
-                                <div
-                                  className="progress-bar wd-bg-green"
-                                  role="progressbar"
-                                  style={{ width: "100%" }}
-                                  aria-valuenow={100}
-                                  aria-valuemin={0}
-                                  aria-valuemax={100}
-                                />
-                              </div>
-                            </div>
-                          </div>
-                          <div className="media rating-star-area">
-                            <p>
-                              4 <i className="fa fa-star" aria-hidden="true" />
-                            </p>
-                            <div className="media-body rating-bar">
-                              <div className="progress wd-progress">
-                                <div
-                                  className="progress-bar wd-bg-green"
-                                  role="progressbar"
-                                  style={{ width: "75%" }}
-                                  aria-valuenow={75}
-                                  aria-valuemin={0}
-                                  aria-valuemax={100}
-                                />
-                              </div>
-                            </div>
-                          </div>
-                          <div className="media rating-star-area">
-                            <p>
-                              3 <i className="fa fa-star" aria-hidden="true" />
-                            </p>
-                            <div className="media-body rating-bar">
-                              <div className="progress wd-progress">
-                                <div
-                                  className="progress-bar wd-bg-green"
-                                  role="progressbar"
-                                  style={{ width: "50%" }}
-                                  aria-valuenow={50}
-                                  aria-valuemin={0}
-                                  aria-valuemax={100}
-                                />
-                              </div>
-                            </div>
-                          </div>
-                          <div className="media rating-star-area">
-                            <p>
-                              2 <i className="fa fa-star" aria-hidden="true" />
-                            </p>
-                            <div className="media-body rating-bar">
-                              <div className="progress wd-progress">
-                                <div
-                                  className="progress-bar wd-bg-yellow"
-                                  role="progressbar"
-                                  style={{ width: "35%" }}
-                                  aria-valuenow={35}
-                                  aria-valuemin={0}
-                                  aria-valuemax={100}
-                                />
-                              </div>
-                            </div>
-                          </div>
-                          <div className="media rating-star-area">
-                            <p>
-                              1 <i className="fa fa-star" aria-hidden="true" />
-                            </p>
-                            <div className="media-body rating-bar">
-                              <div className="progress wd-progress">
-                                <div
-                                  className="progress-bar wd-bg-red"
-                                  role="progressbar"
-                                  style={{ width: "25%" }}
-                                  aria-valuenow={25}
-                                  aria-valuemin={0}
-                                  aria-valuemax={100}
-                                />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="product-tab-content">
-                      <h4 className="description-title">{product.name}</h4>
-                      <h6 className="description-subtitle" style={{textAlign: "left"}}>
-                        Battery and Power
-                      </h6>
-                      <p className="description-subcontent" style={{textAlign: "left"}}>
-                        Those looking forward to an excellent trimmer at an
-                        affordable price will say they have found their ultimate
-                        solution in Kamei KM-2013 Trimmer. This Electric Hair
-                        Clipper from Kemei features in brown color with an
-                        ergonomically crafted outfit. The recharge time for this
-                        device is 480 minutes with the usage time of 40 minutes.
-                        You can plug and charge the device from a standard 220V,
-                        50Hz power source. The technology and design assure a
-                        great trimming experience.
-                      </p>
-                      <h6 className="description-subtitle"style={{textAlign: "left"}}>
-                        Quality of Body and Combs
-                      </h6>
-                      <p className="description-subcontent" style={{textAlign: "left"}}>
-                        High Hardness Alloy Steel Blade. The attachment includes
-                        stubble comb which can suffice various applications. The
-                        device also comes with Superior lift cut technology
-                        which offers smooth trimming with the cutting intervals
-                        of 1 mm, 1.5 mm, 2 mm, 3 mm, 4 mm, 5 mm, 6 mm, 7 mm, 8
-                        mm. The number of combs is one, and the number of trim
-                        settings are{" "}
-                      </p>
-                      <h6 className="description-subtitle"style={{textAlign: "left"}}>Usability</h6>
-                      <p className="description-subcontent"style={{textAlign: "left"}}>
-                        There are no additional epilator settings. Brush
-                        cleaning is facilitated to clean after every use. The
-                        device can be used in cordless fashion for extra
-                        convenience. So you do not have to worry about moving
-                        the unit to the desired location. The handle grip
-                        material is made of plastic and there is a pop-up
-                        trimmer as well. The different technical specifications
-                        make it highly convenient to use.
-                      </p>
-                      <h6 className="description-subtitle"style={{textAlign: "left"}}>
-                        Additional features
-                      </h6>
-                      <p className="description-subcontent"style={{textAlign: "left"}}>
-                        The device features a LED display. here are no
-                        additional epilator settings. Brush cleaning is
-                        facilitated to clean after every use. The device can be
-                        used in cordless fashion for extra convenience. S The
-                        interesting aspects of the hair trimmer include a
-                        fantastic design that supports ease of use,{" "}
-                        <a className="highlights-text" href="#">
-                          good battery backup and a great blade that
-                        </a>
-                      </p>
-                      <h6 className="description-subtitle"style={{textAlign: "left"}}>Features</h6>
-                      <p className="description-subcontent"style={{textAlign: "left"}}>
-                        Redefine your workday with the Palm Treo Pro smartphone.
-                        Perfectly balanced, you can respond to business and
-                        personal email, stay on top of appointments and
-                        contacts, and use Wi-Fi or GPS when you’re out and
-                        about. Then watch a video on YouTube, catch up with news
-                        and sports on the web, or listen to a few songs. Balance
-                        your work and play the way you like it, with the Palm
-                        Treo Pro.
-                      </p>
-                      <div className="row">
-                        <div className="col-12 col-md-12 col-lg-6">
-                          <ul className="description-list">
-                            <li>
-                              <i
-                                className="fa fa-dot-circle-o"
-                                aria-hidden="true"
-                              />{" "}
-                              Windows Mobile® 6.1 Professional Edition
-                            </li>
-                            <li>
-                              <i
-                                className="fa fa-dot-circle-o"
-                                aria-hidden="true"
-                              />{" "}
-                              Qualcomm® MSM7201 400MHz Processor
-                            </li>
-                            <li>
-                              <i
-                                className="fa fa-dot-circle-o"
-                                aria-hidden="true"
-                              />{" "}
-                              320x320 transflective colour TFT touchscreen
-                            </li>
-                            <li>
-                              <i
-                                className="fa fa-dot-circle-o"
-                                aria-hidden="true"
-                              />{" "}
-                              HSDPA/UMTS/EDGE/GPRS/GSM radio
-                            </li>
-                            <li>
-                              <i
-                                className="fa fa-dot-circle-o"
-                                aria-hidden="true"
-                              />{" "}
-                              Tri-band UMTS — 850MHz, 1900MHz, 2100MHz
-                            </li>
-                            <li>
-                              <i
-                                className="fa fa-dot-circle-o"
-                                aria-hidden="true"
-                              />{" "}
-                              Quad-band GSM — 850/900/1800/1900
-                            </li>
-                            <li>
-                              <i
-                                className="fa fa-dot-circle-o"
-                                aria-hidden="true"
-                              />{" "}
-                              802.11b/g with WPA, WPA2, and 801.1x
-                              authentication
-                            </li>
-                            <li>
-                              <i
-                                className="fa fa-dot-circle-o"
-                                aria-hidden="true"
-                              />{" "}
-                              Built-in GPS
-                            </li>
-                            <li>
-                              <i
-                                className="fa fa-dot-circle-o"
-                                aria-hidden="true"
-                              />{" "}
-                              Bluetooth Version: 2.0 + Enhanced Data Rate
-                            </li>
-                            <li>
-                              <i
-                                className="fa fa-dot-circle-o"
-                                aria-hidden="true"
-                              />{" "}
-                              256MB storage (100MB user available), 128MB RAM
-                            </li>
-                            <li>
-                              <i
-                                className="fa fa-dot-circle-o"
-                                aria-hidden="true"
-                              />{" "}
-                              2.0 megapixel camera, up to 8x digital zoom and
-                              video capture
-                            </li>
-                            <li>
-                              <i
-                                className="fa fa-dot-circle-o"
-                                aria-hidden="true"
-                              />{" "}
-                              Removable, rechargeable 1500mAh lithium-ion
-                              battery
-                            </li>
-                          </ul>
-                        </div>
-                        <div className="col-12 col-md-12 col-lg-6">
-                          <img
-                            className="figure-img img-fluid"
-                            src={this.state.image}
-                            alt="Features"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <hr />
-                    <div className="row tab-video-area">
-                      <div className="col-12 col-md-12 col-lg-6">
-                        <img
-                          className="figure-img img-fluid"
-                          src={this.state.image}
-                          alt="Features"
-                        />
-                      </div>
-                      <div className="col-12 col-md-12 col-lg-6 video-info">
-                        <h6 className="video-info-title">
-                          Some prons and Cons
-                        </h6>
-                        <p>
-                          <strong className="video-info-subtitle">Pros:</strong>
-                          really great keyboard, good trackpad, alcantara,
-                          stand-out design, USB-A port, great screen, great
-                          battery life, Windows Hello
-                        </p>
-                        <p>
-                          <strong className="video-info-subtitle">Pros:</strong>
-                          really great keyboard, good trackpad, alcantara,
-                          stand-out design, USB-A port, great screen, great
-                          battery life, Windows Hello
-                        </p>
-                        <p className="video-info-content">
-                          The device features a LED display. The interesting
-                          aspects of the hair trimmer include a fantastic design
-                          that supports ease of use, good battery backup and a
-                          great blade that performs well and lasts for so long.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="row related-product">
-            {/* 
-                                                        =================================
-                                                        Review Comment Section
-                                                        =================================
-                                                    */}
-                                                    <div className="review-comment-section">
-                                                            <div className="row">
-                                                                <div className="col-12 col-md-12 col-lg-12 col-xl-12">
-                                                                    <div className="reviews-title leave-opinion">
-                                                                        <h3>Leave your Opinion here</h3>
-                                                                    </div>
-                                                                    <form onSubmit={this.onSubmit}>
-                                                                        <div className="row">
-                                                                            <div className="col-md-6">
-                                                                                <div className="form-group">
-                                                                                    <label htmlFor="first" className="color-black">Name *</label>
-                                                                                    <input type="text" className="form-control" placeholder id="first" onChange={this.onChangeName} value={this.state.name} />
-                                                                                </div>
-                                                                            </div>
-                                                                            <div className="col-md-6">
-                                                                                <div className="form-group">
-                                                                                    <label htmlFor="last" className="color-black">Email *</label>
-                                                                                    <input type="email" className="form-control" placeholder id="last" onChange={this.onChangeEmail} value={this.state.email} />
-                                                                                </div>
-                                                                            </div>
-                                                                            <div className="col-md-6">
-                                                                                <div className="form-group">
-                                                                                    <label htmlFor="last" className="color-green">Prons</label>
-                                                                                    <textarea className="form-control col-md-12" id="exampleFormControlTextarea1" placeholder="Write your Opinion here ... " defaultValue={""} onChange={this.onChangePros} value={this.state.pros} />
-                                                                                </div>
-                                                                            </div>
-                                                                            <div className="col-md-6">
-                                                                                <div className="form-group">
-                                                                                    <label htmlFor="exampleFormControlTextarea2" className="color-red">Cons</label>
-                                                                                    <textarea className="form-control col-12" id="exampleFormControlTextarea2" placeholder="Write your Opinion here ... " defaultValue={""} onChange={this.onChangeCons} value={this.state.cons} />
-                                                                                </div>
-                                                                            </div>
-                                                                            {/* <div className="col-12 col-md-12 product-rating-area">
-                                                                                <div className="product-rating-ph">
-                                                                                    <div className="rating-area">
-                                                                                        <div className="d-flex justify-content-between">
-                                                                                            <p>Camera</p>
-                                                                                            <div className="rating">
-                                                                                                <a href="#"><i className="fa fa-star cat-1" aria-hidden="true" /></a>
-                                                                                                <a href="#"><i className="fa fa-star cat-2" aria-hidden="true" /></a>
-                                                                                                <a href="#"><i className="fa fa-star cat-3" aria-hidden="true" /></a>
-                                                                                                <a href="#"><i className="fa fa-star cat-4" aria-hidden="true" /></a>
-                                                                                                <a href="#"><i className="fa fa-star cat-5" aria-hidden="true" /></a>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div className="rating-slider-1" />
-                                                                                    </div>
-                                                                                    <div className="rating-area">
-                                                                                        <div className="d-flex justify-content-between">
-                                                                                            <p>Video Quality</p>
-                                                                                            <div className="rating">
-                                                                                                <a href="#"><i className="fa fa-star cat-2-1" aria-hidden="true" /></a>
-                                                                                                <a href="#"><i className="fa fa-star cat-2-2" aria-hidden="true" /></a>
-                                                                                                <a href="#"><i className="fa fa-star cat-2-3" aria-hidden="true" /></a>
-                                                                                                <a href="#"><i className="fa fa-star cat-2-4" aria-hidden="true" /></a>
-                                                                                                <a href="#"><i className="fa fa-star cat-2-5" aria-hidden="true" /></a>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div className="rating-slider-2" />
-                                                                                    </div>
-                                                                                    <div className="rating-area">
-                                                                                        <div className="d-flex justify-content-between">
-                                                                                            <p>Box Quality</p>
-                                                                                            <div className="rating">
-                                                                                                <a href="#"><i className="fa fa-star cat-3-1" aria-hidden="true" /></a>
-                                                                                                <a href="#"><i className="fa fa-star cat-3-2" aria-hidden="true" /></a>
-                                                                                                <a href="#"><i className="fa fa-star cat-3-3" aria-hidden="true" /></a>
-                                                                                                <a href="#"><i className="fa fa-star cat-3-4" aria-hidden="true" /></a>
-                                                                                                <a href="#"><i className="fa fa-star cat-3-5" aria-hidden="true" /></a>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div className="rating-slider-3" />
-                                                                                    </div>
-                                                                                    <div className="rating-area">
-                                                                                        <div className="d-flex justify-content-between">
-                                                                                            <p>Video Quality</p>
-                                                                                            <div className="rating">
-                                                                                                <a href="#"><i className="fa fa-star cat-4-1" aria-hidden="true" /></a>
-                                                                                                <a href="#"><i className="fa fa-star cat-4-2" aria-hidden="true" /></a>
-                                                                                                <a href="#"><i className="fa fa-star cat-4-3" aria-hidden="true" /></a>
-                                                                                                <a href="#"><i className="fa fa-star cat-4-4" aria-hidden="true" /></a>
-                                                                                                <a href="#"><i className="fa fa-star cat-4-5" aria-hidden="true" /></a>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div className="rating-slider-4" />
-                                                                                    </div>
-                                                                                    <div className="rating-area">
-                                                                                        <div className="d-flex justify-content-between">
-                                                                                            <p>Box Quality</p>
-                                                                                            <div className="rating">
-                                                                                                <a href="#"><i className="fa fa-star cat-5-1" aria-hidden="true" /></a>
-                                                                                                <a href="#"><i className="fa fa-star cat-5-2" aria-hidden="true" /></a>
-                                                                                                <a href="#"><i className="fa fa-star cat-5-3" aria-hidden="true" /></a>
-                                                                                                <a href="#"><i className="fa fa-star cat-5-4" aria-hidden="true" /></a>
-                                                                                                <a href="#"><i className="fa fa-star cat-5-5" aria-hidden="true" /></a>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div className="rating-slider-5" />
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div> */}
-                                                                            
-                                                                            <div className="col-md-12">
-                                                                                <button type="submit" className="btn btn-primary review-comment"><i className="fa fa-check" aria-hidden="true" /> Post Comment</button>
-                                                                            </div>
-                                                                        </div>
-                                                                        <br/>
-                                                                    </form>
-                                                                    <br/>
-                                                                </div>
-                                                                {/* <div className="col-12 col-md-12 col-lg-12 col-xl-4 product-rating-area">
-                                                                    <div className="product-rating-list product-rating-desktop">
-                                                                        <div className="rating-area">
-                                                                            <div className="d-flex justify-content-between">
-                                                                                <p>Camera</p>
-                                                                                <div className="rating">
-                                                                                    <a href="#"><i className="fa fa-star cat-1" aria-hidden="true" /></a>
-                                                                                    <a href="#"><i className="fa fa-star cat-2" aria-hidden="true" /></a>
-                                                                                    <a href="#"><i className="fa fa-star cat-3" aria-hidden="true" /></a>
-                                                                                    <a href="#"><i className="fa fa-star cat-4" aria-hidden="true" /></a>
-                                                                                    <a href="#"><i className="fa fa-star cat-5" aria-hidden="true" /></a>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div className="rating-slider-1" />
-                                                                        </div>
-                                                                        <div className="rating-area">
-                                                                            <div className="d-flex justify-content-between">
-                                                                                <p>Video Quality</p>
-                                                                                <div className="rating">
-                                                                                    <a href="#"><i className="fa fa-star cat-2-1" aria-hidden="true" /></a>
-                                                                                    <a href="#"><i className="fa fa-star cat-2-2" aria-hidden="true" /></a>
-                                                                                    <a href="#"><i className="fa fa-star cat-2-3" aria-hidden="true" /></a>
-                                                                                    <a href="#"><i className="fa fa-star cat-2-4" aria-hidden="true" /></a>
-                                                                                    <a href="#"><i className="fa fa-star cat-2-5" aria-hidden="true" /></a>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div className="rating-slider-2" />
-                                                                        </div>
-                                                                        <div className="rating-area">
-                                                                            <div className="d-flex justify-content-between">
-                                                                                <p>Box Quality</p>
-                                                                                <div className="rating">
-                                                                                    <a href="#"><i className="fa fa-star cat-3-1" aria-hidden="true" /></a>
-                                                                                    <a href="#"><i className="fa fa-star cat-3-2" aria-hidden="true" /></a>
-                                                                                    <a href="#"><i className="fa fa-star cat-3-3" aria-hidden="true" /></a>
-                                                                                    <a href="#"><i className="fa fa-star cat-3-4" aria-hidden="true" /></a>
-                                                                                    <a href="#"><i className="fa fa-star cat-3-5" aria-hidden="true" /></a>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div className="rating-slider-3" />
-                                                                        </div>
-                                                                        <div className="rating-area">
-                                                                            <div className="d-flex justify-content-between">
-                                                                                <p>Video Quality</p>
-                                                                                <div className="rating">
-                                                                                    <a href="#"><i className="fa fa-star cat-4-1" aria-hidden="true" /></a>
-                                                                                    <a href="#"><i className="fa fa-star cat-4-2" aria-hidden="true" /></a>
-                                                                                    <a href="#"><i className="fa fa-star cat-4-3" aria-hidden="true" /></a>
-                                                                                    <a href="#"><i className="fa fa-star cat-4-4" aria-hidden="true" /></a>
-                                                                                    <a href="#"><i className="fa fa-star cat-4-5" aria-hidden="true" /></a>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div className="rating-slider-4" />
-                                                                        </div>
-                                                                        <div className="rating-area">
-                                                                            <div className="d-flex justify-content-between">
-                                                                                <p>Box Quality</p>
-                                                                                <div className="rating">
-                                                                                    <a href="#"><i className="fa fa-star cat-5-1" aria-hidden="true" /></a>
-                                                                                    <a href="#"><i className="fa fa-star cat-5-2" aria-hidden="true" /></a>
-                                                                                    <a href="#"><i className="fa fa-star cat-5-3" aria-hidden="true" /></a>
-                                                                                    <a href="#"><i className="fa fa-star cat-5-4" aria-hidden="true" /></a>
-                                                                                    <a href="#"><i className="fa fa-star cat-5-5" aria-hidden="true" /></a>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div className="rating-slider-5" />
-                                                                        </div>
-                                                                    </div>
-                                                                </div> */}
-                                                            </div>
-                                                        </div>
-              <div id="related-product" className="owl-carousel owl-theme">
-                <div className="col-12">
-                  <figure className="figure product-box">
-                    <div className="product-box-img">
-                      <img
-                        src={require("./img/product-img/product-img-1.jpg")}
-                        className="figure-img img-fluid"
-                        alt="Product Img"
-                      />
-                    </div>
-                    <div className="quick-view-btn">
-                      <div className="compare-btn">
-                        <a className="btn btn-primary btn-sm" href="#">
-                          <i className="fa fa-eye" aria-hidden="true" /> Quick
+                          <div className="quick-view-btn">
+                            <div className="compare-btn">
+                              <a className="btn btn-primary btn-sm" href="#">
+                                <i className="fa fa-eye" aria-hidden="true" /> Quick
                           view
                         </a>
-                      </div>
-                    </div>
-                    <figcaption className="figure-caption text-center">
-                      <span className="badge badge-secondary wd-badge text-uppercase">
-                        New
+                            </div>
+                          </div>
+                          <figcaption className="figure-caption text-center">
+                            <span className="badge badge-secondary wd-badge text-uppercase">
+                              New
                       </span>
-                      <div className="wishlist">
-                        <i className="fa fa-heart" aria-hidden="true" />
-                      </div>
-                      <div className="price-start">
-                        <p>
-                          Price start from{" "}
-                          <strong className="active-color">
-                            <u>$80.00</u> - <u>$75.00</u>
-                          </strong>
-                        </p>
-                      </div>
-                      <div className="content-excerpt">
-                        <p>Cras in nunc non ipsum duo cursus ultrices est</p>
-                      </div>
-                      <div className="rating">
-                        <a href="#">
-                          <i
-                            className="fa fa-star active-color"
-                            aria-hidden="true"
-                          />
-                        </a>
-                        <a href="#">
-                          <i
-                            className="fa fa-star active-color"
-                            aria-hidden="true"
-                          />
-                        </a>
-                        <a href="#">
-                          <i
-                            className="fa fa-star active-color"
-                            aria-hidden="true"
-                          />
-                        </a>
-                        <a href="#">
-                          <i className="fa fa-star-o" aria-hidden="true" />
-                        </a>
-                        <a href="#">
-                          <i className="fa fa-star-o" aria-hidden="true" />
-                        </a>
-                      </div>
-                      <div className="compare-btn">
-                        <a className="btn btn-primary btn-sm" href="#">
-                          <i className="fa fa-exchange" aria-hidden="true" />{" "}
+                            <div className="wishlist">
+                              <i
+                                className="fa fa-heart active-wishlist"
+                                aria-hidden="true"
+                              />
+                            </div>
+                            <div className="price-start">
+                              <p>
+                                Price start from{" "}
+                                <strong className="active-color">
+                                  <u>$80.00</u> - <u>$75.00</u>
+                                </strong>
+                              </p>
+                            </div>
+                            <div className="content-excerpt">
+                              <p>Cras in nunc non ipsum duo cursus ultrices est</p>
+                            </div>
+                            <div className="rating">
+                              <a className="active-color" href="#">
+                                <i className="fa fa-star" aria-hidden="true" />
+                              </a>
+                              <a className="active-color" href="#">
+                                <i className="fa fa-star" aria-hidden="true" />
+                              </a>
+                              <a className="active-color" href="#">
+                                <i className="fa fa-star" aria-hidden="true" />
+                              </a>
+                              <a href="#">
+                                <i className="fa fa-star-o" aria-hidden="true" />
+                              </a>
+                              <a href="#">
+                                <i className="fa fa-star-o" aria-hidden="true" />
+                              </a>
+                            </div>
+                            <div className="compare-btn">
+                              <a className="btn btn-primary btn-sm" href="#">
+                                <i className="fa fa-exchange" aria-hidden="true" />{" "}
                           Add to compare
                         </a>
+                            </div>
+                          </figcaption>
+                        </figure>
                       </div>
-                    </figcaption>
-                  </figure>
-                </div>
-                <div className="col-12">
-                  <figure className="figure product-box">
-                    <div className="product-box-img">
-                      <img
-                        src={require("./img/product-img/product-img-2.jpg")}
-                        className="figure-img img-fluid"
-                        alt="Product Img"
-                      />
-                    </div>
-                    <div className="quick-view-btn">
-                      <div className="compare-btn">
-                        <a className="btn btn-primary btn-sm" href="#">
-                          <i className="fa fa-eye" aria-hidden="true" /> Quick
+                      <div className="col-12">
+                        <figure className="figure product-box">
+                          <div className="product-box-img">
+                            <img
+                              src={require("./img/product-img/product-img-3.jpg")}
+                              className="figure-img img-fluid"
+                              alt="Product Img"
+                            />
+                          </div>
+                          <div className="quick-view-btn">
+                            <div className="compare-btn">
+                              <a className="btn btn-primary btn-sm" href="#">
+                                <i className="fa fa-eye" aria-hidden="true" /> Quick
                           view
                         </a>
-                      </div>
-                    </div>
-                    <figcaption className="figure-caption text-center">
-                      <span className="badge badge-secondary wd-badge text-uppercase">
-                        New
+                            </div>
+                          </div>
+                          <figcaption className="figure-caption text-center">
+                            <span className="badge badge-secondary wd-badge featured-bg-color text-uppercase">
+                              Featured
                       </span>
-                      <div className="wishlist">
-                        <i
-                          className="fa fa-heart active-wishlist"
-                          aria-hidden="true"
-                        />
-                      </div>
-                      <div className="price-start">
-                        <p>
-                          Price start from{" "}
-                          <strong className="active-color">
-                            <u>$80.00</u> - <u>$75.00</u>
-                          </strong>
-                        </p>
-                      </div>
-                      <div className="content-excerpt">
-                        <p>Cras in nunc non ipsum duo cursus ultrices est</p>
-                      </div>
-                      <div className="rating">
-                        <a className="active-color" href="#">
-                          <i className="fa fa-star" aria-hidden="true" />
-                        </a>
-                        <a className="active-color" href="#">
-                          <i className="fa fa-star" aria-hidden="true" />
-                        </a>
-                        <a className="active-color" href="#">
-                          <i className="fa fa-star" aria-hidden="true" />
-                        </a>
-                        <a href="#">
-                          <i className="fa fa-star-o" aria-hidden="true" />
-                        </a>
-                        <a href="#">
-                          <i className="fa fa-star-o" aria-hidden="true" />
-                        </a>
-                      </div>
-                      <div className="compare-btn">
-                        <a className="btn btn-primary btn-sm" href="#">
-                          <i className="fa fa-exchange" aria-hidden="true" />{" "}
-                          Add to compare
-                        </a>
-                      </div>
-                    </figcaption>
-                  </figure>
-                </div>
-                <div className="col-12">
-                  <figure className="figure product-box">
-                    <div className="product-box-img">
-                      <img
-                        src={require("./img/product-img/product-img-3.jpg")}
-                        className="figure-img img-fluid"
-                        alt="Product Img"
-                      />
-                    </div>
-                    <div className="quick-view-btn">
-                      <div className="compare-btn">
-                        <a className="btn btn-primary btn-sm" href="#">
-                          <i className="fa fa-eye" aria-hidden="true" /> Quick
-                          view
-                        </a>
-                      </div>
-                    </div>
-                    <figcaption className="figure-caption text-center">
-                      <span className="badge badge-secondary wd-badge featured-bg-color text-uppercase">
-                        Featured
-                      </span>
-                      <div className="wishlist">
-                        <i className="fa fa-heart" aria-hidden="true" />
-                      </div>
-                      <div className="price-start">
-                        <p>
-                          Price start from{" "}
-                          <strong className="active-color">
-                            <u>$80.00</u> - <u>$75.00</u>
-                            </strong>
-                          </p>
-                        </div>
-                        <div className="content-excerpt">
-                          <p>Cras in nunc non ipsum duo cursus ultrices est</p>
-                        </div>
-                        <div className="rating">
-                          <a className="active-color" href="#">
-                            <i className="fa fa-star" aria-hidden="true" />
-                          </a>
-                          <a className="active-color" href="#">
-                            <i className="fa fa-star" aria-hidden="true" />
-                          </a>
-                          <a className="active-color" href="#">
-                            <i className="fa fa-star" aria-hidden="true" />
-                          </a>
-                          <a href="#">
-                            <i className="fa fa-star-o" aria-hidden="true" />
-                          </a>
-                          <a href="#">
-                            <i className="fa fa-star-o" aria-hidden="true" />
-                          </a>
-                        </div>
-                        <div className="compare-btn">
-                          <a className="btn btn-primary btn-sm" href="#">
-                            <i className="fa fa-exchange" aria-hidden="true" />{" "}
+                            <div className="wishlist">
+                              <i className="fa fa-heart" aria-hidden="true" />
+                            </div>
+                            <div className="price-start">
+                              <p>
+                                Price start from{" "}
+                                <strong className="active-color">
+                                  <u>$80.00</u> - <u>$75.00</u>
+                                </strong>
+                              </p>
+                            </div>
+                            <div className="content-excerpt">
+                              <p>Cras in nunc non ipsum duo cursus ultrices est</p>
+                            </div>
+                            <div className="rating">
+                              <a className="active-color" href="#">
+                                <i className="fa fa-star" aria-hidden="true" />
+                              </a>
+                              <a className="active-color" href="#">
+                                <i className="fa fa-star" aria-hidden="true" />
+                              </a>
+                              <a className="active-color" href="#">
+                                <i className="fa fa-star" aria-hidden="true" />
+                              </a>
+                              <a href="#">
+                                <i className="fa fa-star-o" aria-hidden="true" />
+                              </a>
+                              <a href="#">
+                                <i className="fa fa-star-o" aria-hidden="true" />
+                              </a>
+                            </div>
+                            <div className="compare-btn">
+                              <a className="btn btn-primary btn-sm" href="#">
+                                <i className="fa fa-exchange" aria-hidden="true" />{" "}
                             Add to compare
                           </a>
-                        </div>
-                      </figcaption>
-                    </figure>
-                  </div>
-                  <div className="col-12">
-                    <figure className="figure product-box">
-                      <div className="product-box-img">
-                        <img
-                          src={require("./img/product-img/product-img-4.jpg")}
-                          className="figure-img img-fluid"
-                          alt="Product Img"
-                        />
+                            </div>
+                          </figcaption>
+                        </figure>
                       </div>
-                      <div className="quick-view-btn">
-                        <div className="compare-btn">
-                          <a className="btn btn-primary btn-sm" href="#">
-                            <i className="fa fa-eye" aria-hidden="true" /> Quick
+                      <div className="col-12">
+                        <figure className="figure product-box">
+                          <div className="product-box-img">
+                            <img
+                              src={require("./img/product-img/product-img-4.jpg")}
+                              className="figure-img img-fluid"
+                              alt="Product Img"
+                            />
+                          </div>
+                          <div className="quick-view-btn">
+                            <div className="compare-btn">
+                              <a className="btn btn-primary btn-sm" href="#">
+                                <i className="fa fa-eye" aria-hidden="true" /> Quick
                             view
                           </a>
-                        </div>
-                      </div>
-                      <figcaption className="figure-caption text-center">
-                        <span className="badge badge-secondary wd-badge text-uppercase">
-                          New
+                            </div>
+                          </div>
+                          <figcaption className="figure-caption text-center">
+                            <span className="badge badge-secondary wd-badge text-uppercase">
+                              New
                         </span>
-                        <div className="wishlist">
-                          <i className="fa fa-heart" aria-hidden="true" />
-                        </div>
-                        <div className="price-start">
-                          <p>
-                            Price start from{" "}
-                            <strong className="active-color">
-                              <u>$80.00</u> - <u>$75.00</u>
-                            </strong>
-                          </p>
-                        </div>
-                        <div className="content-excerpt">
-                          <p>Cras in nunc non ipsum duo cursus ultrices est</p>
-                        </div>
-                        <div className="rating">
-                          <a className="active-color" href="#">
-                            <i className="fa fa-star" aria-hidden="true" />
-                          </a>
-                          <a className="active-color" href="#">
-                            <i className="fa fa-star" aria-hidden="true" />
-                          </a>
-                          <a className="active-color" href="#">
-                            <i className="fa fa-star" aria-hidden="true" />
-                          </a>
-                          <a href="#">
-                            <i className="fa fa-star-o" aria-hidden="true" />
-                          </a>
-                          <a href="#">
-                            <i className="fa fa-star-o" aria-hidden="true" />
-                          </a>
-                        </div>
-                        <div className="compare-btn">
-                          <a className="btn btn-primary btn-sm" href="#">
-                            <i className="fa fa-exchange" aria-hidden="true" />{" "}
+                            <div className="wishlist">
+                              <i className="fa fa-heart" aria-hidden="true" />
+                            </div>
+                            <div className="price-start">
+                              <p>
+                                Price start from{" "}
+                                <strong className="active-color">
+                                  <u>$80.00</u> - <u>$75.00</u>
+                                </strong>
+                              </p>
+                            </div>
+                            <div className="content-excerpt">
+                              <p>Cras in nunc non ipsum duo cursus ultrices est</p>
+                            </div>
+                            <div className="rating">
+                              <a className="active-color" href="#">
+                                <i className="fa fa-star" aria-hidden="true" />
+                              </a>
+                              <a className="active-color" href="#">
+                                <i className="fa fa-star" aria-hidden="true" />
+                              </a>
+                              <a className="active-color" href="#">
+                                <i className="fa fa-star" aria-hidden="true" />
+                              </a>
+                              <a href="#">
+                                <i className="fa fa-star-o" aria-hidden="true" />
+                              </a>
+                              <a href="#">
+                                <i className="fa fa-star-o" aria-hidden="true" />
+                              </a>
+                            </div>
+                            <div className="compare-btn">
+                              <a className="btn btn-primary btn-sm" href="#">
+                                <i className="fa fa-exchange" aria-hidden="true" />{" "}
                             Add to compare
                           </a>
-                        </div>
-                      </figcaption>
-                    </figure>
-                  </div>
-                  <div className="col-12">
-                    <figure className="figure product-box">
-                      <div className="product-box-img">
-                        <img
-                          src={require("./img/product-img/product-img-5.jpg")}
-                          className="figure-img img-fluid"
-                          alt="Product Img"
-                        />
+                            </div>
+                          </figcaption>
+                        </figure>
                       </div>
-                      <div className="quick-view-btn">
-                        <div className="compare-btn">
-                          <a className="btn btn-primary btn-sm" href="#">
-                            <i className="fa fa-eye" aria-hidden="true" /> Quick
+                      <div className="col-12">
+                        <figure className="figure product-box">
+                          <div className="product-box-img">
+                            <img
+                              src={require("./img/product-img/product-img-5.jpg")}
+                              className="figure-img img-fluid"
+                              alt="Product Img"
+                            />
+                          </div>
+                          <div className="quick-view-btn">
+                            <div className="compare-btn">
+                              <a className="btn btn-primary btn-sm" href="#">
+                                <i className="fa fa-eye" aria-hidden="true" /> Quick
                             view
                           </a>
-                        </div>
-                      </div>
-                      <figcaption className="figure-caption text-center">
-                        <span className="badge badge-secondary wd-badge text-uppercase">
-                          New
+                            </div>
+                          </div>
+                          <figcaption className="figure-caption text-center">
+                            <span className="badge badge-secondary wd-badge text-uppercase">
+                              New
                         </span>
-                        <div className="wishlist">
-                          <i className="fa fa-heart" aria-hidden="true" />
-                        </div>
-                        <div className="price-start">
-                          <p>
-                            Price start from{" "}
-                            <strong className="active-color">
-                              <u>$80.00</u> - <u>$75.00</u>
-                            </strong>
-                          </p>
-                        </div>
-                        <div className="content-excerpt">
-                          <p>Cras in nunc non ipsum duo cursus ultrices est</p>
-                        </div>
-                        <div className="rating">
-                          <a className="active-color" href="#">
-                            <i className="fa fa-star" aria-hidden="true" />
-                          </a>
-                          <a className="active-color" href="#">
-                            <i className="fa fa-star" aria-hidden="true" />
-                          </a>
-                          <a className="active-color" href="#">
-                            <i className="fa fa-star" aria-hidden="true" />
-                          </a>
-                          <a href="#">
-                            <i className="fa fa-star-o" aria-hidden="true" />
-                          </a>
-                          <a href="#">
-                            <i className="fa fa-star-o" aria-hidden="true" />
-                          </a>
-                        </div>
-                        <div className="compare-btn">
-                          <a className="btn btn-primary btn-sm" href="#">
-                            <i className="fa fa-exchange" aria-hidden="true" />{" "}
+                            <div className="wishlist">
+                              <i className="fa fa-heart" aria-hidden="true" />
+                            </div>
+                            <div className="price-start">
+                              <p>
+                                Price start from{" "}
+                                <strong className="active-color">
+                                  <u>$80.00</u> - <u>$75.00</u>
+                                </strong>
+                              </p>
+                            </div>
+                            <div className="content-excerpt">
+                              <p>Cras in nunc non ipsum duo cursus ultrices est</p>
+                            </div>
+                            <div className="rating">
+                              <a className="active-color" href="#">
+                                <i className="fa fa-star" aria-hidden="true" />
+                              </a>
+                              <a className="active-color" href="#">
+                                <i className="fa fa-star" aria-hidden="true" />
+                              </a>
+                              <a className="active-color" href="#">
+                                <i className="fa fa-star" aria-hidden="true" />
+                              </a>
+                              <a href="#">
+                                <i className="fa fa-star-o" aria-hidden="true" />
+                              </a>
+                              <a href="#">
+                                <i className="fa fa-star-o" aria-hidden="true" />
+                              </a>
+                            </div>
+                            <div className="compare-btn">
+                              <a className="btn btn-primary btn-sm" href="#">
+                                <i className="fa fa-exchange" aria-hidden="true" />{" "}
                             Add to compare
                           </a>
-                        </div>
-                      </figcaption>
-                    </figure>
+                            </div>
+                          </figcaption>
+                        </figure>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
-          </section>
-          {/* =========================
+              </section>
+              {/* =========================
     Call To Action Section
       ============================== */}
-          {/* <section id="call-to-action" className="d-flex align-items-center">
+              {/* <section id="call-to-action" className="d-flex align-items-center">
             <div className="container ">
               <div className="row ">
                 <div className="col-12 col-md-6">
@@ -1241,10 +1127,10 @@ handleSearch(event) {
               </div>
             </div>
           </section> */}
-          {/* =========================
+              {/* =========================
     Details Section
       ============================== */}
-          {/* <section id="details">
+              {/* <section id="details">
             <div className="container">
               <div
                 className="row wow fadeInLeft animated justify-content-center"
@@ -1258,8 +1144,8 @@ handleSearch(event) {
                           className="img-fluid main-hover-icon-compare"
                           src={require("./img/details-img/compare-icon.png")}
                           alt="compare-icon"
-                        {/* /> */} 
-                        {/* <img
+                        {/* /> */}
+              {/* <img
                           className="img-fluid hover-icon-compare"
                           src={require("./img/details-img/compare.png")}
                           alt="compare-icon"
@@ -1347,7 +1233,7 @@ handleSearch(event) {
         {/* =========================
   Subscribe Section
     ============================== */}
-        {/* <section id="subscribe">
+              {/* <section id="subscribe">
           <div className="container">
             <div className="row subscribe-body">
               <div className="col-12 col-md-12 col-lg-5">
@@ -1375,14 +1261,15 @@ handleSearch(event) {
             </div>
           </div>
         </section> */}
-       <Footer/>
+              <Footer />
 
-        {/* =========================
+              {/* =========================
     	Main Loding JS Script
     ============================== */}
-        {/*  */}
-      </div>
-        )}}
+              {/*  */}
+            </div>
+          )
+        }}
       </AuthContext.Consumer>
     );
   }
