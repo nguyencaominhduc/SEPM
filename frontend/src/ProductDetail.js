@@ -115,6 +115,13 @@ class ProductDetail extends React.Component {
     this.setState({ target: event.target.value })
   }
 
+  handleKeyPress(target) {
+    const { history } = this.props;
+    if(target.charCode==13){
+      history.push({pathname:'/SearchResult', state: {search_target: this.state.target}});
+    }
+  }
+
   render() {
     const { product } = this.state;
     let ProductInfo = this.state.product;
@@ -149,6 +156,7 @@ class ProductDetail extends React.Component {
                           className="form-control input-search-box"
                           placeholder="Enter your search key ..."
                           onChange={this.handleSearch.bind(this)}
+                          onKeyPress={e => this.handleKeyPress(e)}
                         />
                         <Link to={{ pathname: '/SearchResult', state: { search_target: this.state.target } }} className="input-group-btn">
                           {/* <a className="input-group-btn" href='/SearchResult'> */}

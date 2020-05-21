@@ -471,6 +471,18 @@ class SearchResult extends React.Component {
         this.setState({ target: event.target.value })
     }
 
+    handleKeySearch(target) {
+        if(target.charCode==13){
+            this.setState({ activeBrands: [] })
+            this.setState({ currentCategory: "" })
+            this.setState({ searchMode: true })
+            this.setState({homesearch:""})
+            this.setState({fromPrice:0})
+            this.setState({toPrice:0})
+            this.fetchProducts()
+        }
+    }
+
     toggleView(boolean) {
         this.setState({ toggleViewMode: boolean })
     }
@@ -725,7 +737,7 @@ class SearchResult extends React.Component {
                             ============================== */}
                                     <div className="col-12 order-lg-2 col-md-5 col-lg-6 col-xl-5 d-none d-lg-block">
                                         <div className="input-group wd-btn-group header-search-option">
-                                            <input style={{ height: 47 }} type="text" className="form-control blurb-search" value={this.state.target} onChange={this.handleSearch.bind(this)} placeholder="Search ..." aria-label="Search for..." />
+                                            <input style={{ height: 47 }} type="text" className="form-control blurb-search" value={this.state.target} onChange={this.handleSearch.bind(this)} onKeyPress={e => this.handleKeySearch(e)} placeholder="Search ..." aria-label="Search for..." />
                                             <span className="input-group-btn">
                                                 <button style={{ height: 47 }} className="btn btn-secondary wd-btn-search" onClick={() => {
                                                     this.setState({ activeBrands: [] })

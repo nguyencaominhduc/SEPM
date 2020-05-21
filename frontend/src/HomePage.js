@@ -33,6 +33,13 @@ class HomePage extends React.Component {
     this.setState({ target: event.target.value })
   }
 
+  handleKeyPress(target) {
+    const { history } = this.props;
+    if(target.charCode==13){
+      history.push({pathname:'/SearchResult', state: {search_target: this.state.target}});
+    }
+  }
+
   render() {
     let listOfProducts = this.state.products;
     let popularProducts = this.state.popular;
@@ -62,6 +69,7 @@ class HomePage extends React.Component {
                           className="form-control input-search-box"
                           placeholder="Enter your search key ..."
                           onChange={this.handleSearch.bind(this)}
+                          onKeyPress={e => this.handleKeyPress(e)}
                         />
                         <Link to={{pathname:'/SearchResult', state: {search_target: this.state.target}}}className="input-group-btn">
                           {/* <a className="input-group-btn" href='/SearchResult'> */}
