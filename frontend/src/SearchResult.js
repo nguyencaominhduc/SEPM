@@ -194,6 +194,7 @@ class SearchResult extends React.Component {
                             priceList = priceList.filter(function (el) {
                                 return el >= frP
                             })
+                            priceList = [...new Set(priceList)]
                             if (priceList.length > 0) {
                                 var arr_temp = []
                                 for (var i = 0; i < priceList.length; i++) {
@@ -215,6 +216,7 @@ class SearchResult extends React.Component {
                             priceList = priceList.filter(function (el) {
                                 return el >= frP && el <= toP
                             })
+                            priceList = [...new Set(priceList)]
                             if (priceList.length > 0) {
                                 var arr_temp = []
                                 for (var i = 0; i < priceList.length; i++) {
@@ -300,6 +302,7 @@ class SearchResult extends React.Component {
                                     return el >= frP
                                 })
                                 console.log(priceList)
+                                priceList = [...new Set(priceList)]
                                 if (priceList.length > 0) {
                                     var arr_temp = []
                                     for (var i = 0; i < priceList.length; i++) {
@@ -322,6 +325,7 @@ class SearchResult extends React.Component {
                                 priceList = priceList.filter(function (el) {
                                     return el >= frP && el <= toP
                                 })
+                                priceList = [...new Set(priceList)]
                                 if (priceList.length > 0) {
                                     var arr_temp = []
                                     for (var i = 0; i < priceList.length; i++) {
@@ -398,6 +402,7 @@ class SearchResult extends React.Component {
                                 })
                                 console.log("Price List")
                                 console.log(priceList)
+                                priceList = [...new Set(priceList)]
                                 if (priceList.length > 0) {
                                     var arr_temp = []
                                     for (var i = 0; i < priceList.length; i++) {
@@ -419,6 +424,7 @@ class SearchResult extends React.Component {
                                 priceList = priceList.filter(function (el) {
                                     return el >= frP && el <= toP
                                 })
+                                priceList = [...new Set(priceList)]
                                 if (priceList.length > 0) {
                                     var arr_temp = []
                                     for (var i = 0; i < priceList.length; i++) {
