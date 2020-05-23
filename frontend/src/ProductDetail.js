@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useContext } from "react";
 import AuthContext from "./auth-context.js";
 import { Link } from 'react-router-dom';
 import axios from 'axios';
@@ -14,6 +14,8 @@ class ProductDetail extends React.Component {
     this.onChangeCons = this.onChangeCons.bind(this);
     this.onChangeEmail = this.onChangeEmail.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.onAdd = this.onAdd.bind(this);
+    this.onDelete = this.onDelete.bind(this);
     this.state = {
       error: null,
       isLoaded: false,
@@ -27,16 +29,26 @@ class ProductDetail extends React.Component {
       email: '',
       cons: '',
       image: '',
-      target: ''
+      target: '',
+      isBookmark: false
     };
   }
 
   componentDidMount() {
-
     this.fetchData();
     console.log("RECEIVE PROP: ", this.props.products);
     this.fetchReviews();
+    this.fetchBookmark();
     window.scrollTo(0, 0);
+  }
+
+  fetchBookmark() {
+    var url = `http://localhost:5000/api/v1/users/bookmark/${localStorage.getItem("username")}&${this.props.match.params.id}`;
+    const that = this;
+    console.log(url)
+    fetch(url, { method: "PUT" })
+      .then((res) => res.json())
+      .then((json) => that.setState({ isBookmark: json.result }));
   }
 
   onSubmit(e) {
@@ -59,21 +71,45 @@ class ProductDetail extends React.Component {
       cons: '',
     })
   }
+
+  onAdd(e) {
+    const url = `http://localhost:5000/api/v1/users/bookmark/${localStorage.getItem("username")}&${this.props.match.params.id}`;
+    console.log(url)
+    fetch(url, {
+      method: "POST"
+    })
+      .then(res => console.log(res.data))
+      .then(json => this.fetchBookmark())
+  }
+
+  onDelete(e) {
+    const url = `http://localhost:5000/api/v1/users/bookmark/${localStorage.getItem("username")}&${this.props.match.params.id}`;
+    console.log(url)
+    fetch(url, {
+      method: "DELETE"
+    })
+      .then(res => console.log(res.data))
+      .then(json => this.fetchBookmark())
+  }
+
   onChangeName(e) {
     this.setState({
       name: e.target.value
     });
   }
+
   onChangePros(e) {
     this.setState({
       pros: e.target.value
     })
   }
+
   onChangeEmail(e) {
     this.setState({
       email: e.target.value
     });
   }
+
   onChangeCons(e) {
     this.setState({
       cons: e.target.value
@@ -87,8 +123,8 @@ class ProductDetail extends React.Component {
     fetch(url)
       .then((res) => res.json())
       .then((json) => that.setState({ reviews: json, comments: json.reviews }));
-
   }
+
   fetchData() {
     const that = this;
     var url = "";
@@ -117,8 +153,8 @@ class ProductDetail extends React.Component {
 
   handleKeyPress(target) {
     const { history } = this.props;
-    if(target.charCode==13){
-      history.push({pathname:'/SearchResult', state: {search_target: this.state.target}});
+    if (target.charCode == 13) {
+      history.push({ pathname: '/SearchResult', state: { search_target: this.state.target } });
     }
   }
 
@@ -128,14 +164,20 @@ class ProductDetail extends React.Component {
     let FullDetails = this.state.detailProduct;
     let Reviews = this.state.reviews;
     let Comments = this.state.comments;
+    let abc = this.state.isBookmark
     console.log(Reviews);
     console.log(Comments);
+    console.log(abc)
 
     return (
+
       <AuthContext.Consumer>
+
         {(context) => {
           return (
             <div>
+
+              {this.state.isBookmark ? <button onClick={this.onDelete}>Remove from wishlist</button> : <button onClick={this.onAdd}>Add to wishlist</button>}
               {/* <!-- =========================Header Section============================== --> */}
               <section id="wd-header">
                 <div className="container-fluid custom-width">

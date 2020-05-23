@@ -25,7 +25,7 @@ router.post('/:_id', (req, res, next) => {
                     })
                     .catch(err => console.log(err));
                 
-                next()
+                // next()
             } else {
                 Review.findByIdAndUpdate({ _id: req.params._id }, {
                     $push: { reviews: [{ "name": req.body.name, "email": req.body.email, "pros": req.body.pros, "cons": req.body.cons }] }

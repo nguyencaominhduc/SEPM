@@ -166,7 +166,7 @@ router.get('/bookmark/:username', checkAuth.checkHandler, (req, res, next) => {
     })
 })
 
-router.post('/bookmark/:username&:itemId', checkAuth.checkHandler, (req, res, next) => {
+router.post('/bookmark/:username&:itemId', (req, res, next) => {
     User.find({ username: req.params.username })
         .exec()
         .then(user => {
@@ -204,7 +204,7 @@ router.post('/bookmark/:username&:itemId', checkAuth.checkHandler, (req, res, ne
         })
 })
 
-router.delete('/bookmark/:username&:itemId', checkAuth.checkHandler, async (req, res, next) => {
+router.delete('/bookmark/:username&:itemId', async (req, res, next) => {
     User.findOneAndUpdate({ username: req.params.username }, {
         $pull: {
             bookmark: req.params.itemId
@@ -212,6 +212,46 @@ router.delete('/bookmark/:username&:itemId', checkAuth.checkHandler, async (req,
     }, { 'new': true },
         function (err, result) {
             res.send(result)
+        })
+})
+
+router.put('/bookmark/:username&:itemId', (req, res, next) => {
+    User.find({ username: req.params.username })
+        .exec()
+        .then(user => {
+            if (user.length < 1) {
+                return res.status(409).json({
+                    message: 'No such user found'
+                })
+            } else {
+                User.find({ username: req.params.username }, { bookmark: 1, _id: 0 })
+                    .exec()
+                    .then(user => {
+                        if (user[0].bookmark.includes(req.params.itemId)) {
+                            // return res.status(409).json({
+                            //     message: 'Item already bookmarked'
+                            // })
+                            res.send(200, {"result": true})
+                        } else {
+                            // User.findOneAndUpdate({ username: req.params.username }, {
+                            //     $push: {
+                            //         bookmark: req.params.itemId
+                            //     }
+                            // },{ 'new': true})
+                            //     .exec()
+                            //     .then(user => {
+                            //         res.send(user)
+                            //     })
+                            //     .catch(err => {
+                            //         console.log(err)
+                            //         res.status(500).json({
+                            //             error: err
+                            //         })
+                            //     });
+                            res.send(200, {"result": false})
+                        }
+                    })
+            }
         })
 })
 
