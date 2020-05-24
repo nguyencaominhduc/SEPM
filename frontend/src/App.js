@@ -9,6 +9,8 @@ import SearchResult from "./SearchResult.js";
 import Review from "./Review.js";
 import ProductDetail from "./ProductDetail.js";
 import HomePage from "./HomePage.js";
+import About from "./About.js";
+import Contact from "./Contact.js";
 import { connect } from "react-redux";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
@@ -129,6 +131,8 @@ class App extends React.Component {
                 <Route path="/WishList" render={() => <WishList dispatch={this.props.dispatch}/>} />
                 <Route path="/Register" render={() => <Register />} />
                 <Route path="/SearchResult" render={() => < SearchResult dispatch={this.props.dispatch}/>} />
+                <Route path="/About" render={() => <About />} />
+                <Route path="/Contact" render={() => <Contact />} />
               </Switch>
             </AuthContext.Provider>
           </React.Fragment>

@@ -33,20 +33,20 @@ const Navbar = props => (
                       </Link>
                     </li>
                     <li className="pos-inherit">
-                      <a
-                        href="shop-left-sidebar.html"
-                        className="main-menu-list "
-                      >
-                        About{"  "}
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="review-left-sidebar.html"
+                    <Link
+                        to="/About"
                         className="main-menu-list"
                       >
-                        Contact Us
-                                </a>
+                        About{"  "}
+                      </Link>
+                    </li>
+                    <li>
+                    <Link
+                        to="/Contact"
+                        className="main-menu-list"
+                      >
+                        Contact us{"  "}
+                      </Link>
                     </li>
                   </ul>
                 </div>
