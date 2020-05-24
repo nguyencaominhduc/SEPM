@@ -177,7 +177,6 @@ class ProductDetail extends React.Component {
           return (
             <div>
 
-              {this.state.isBookmark ? <button onClick={this.onDelete}>Remove from wishlist</button> : <button onClick={this.onAdd}>Add to wishlist</button>}
               {/* <!-- =========================Header Section============================== --> */}
               <section id="wd-header">
                 <div className="container-fluid custom-width">
@@ -378,6 +377,7 @@ class ProductDetail extends React.Component {
                               </span>
                                   </p>
                                 </div>
+                                              {this.state.isBookmark ? <button onClick={this.onDelete} className="btn btn-primary wd-shop-btn pull-right">Remove from wishlist</button> : <button onClick={this.onAdd} className="btn btn-primary wd-shop-btn pull-right">Add to wishlist</button>}
                               </div>
                             </div>
                             <div className="list-group content-list">
@@ -809,21 +809,48 @@ class ProductDetail extends React.Component {
 
                       {/* // display all comment */}
                       <div className="row">
-                        {this.state.reviews.map((s, index) =>
-                          <div className="col-lg-4 col-sm-6 d-flex" style={{ width: 100 }}>
-                            {s.reviews.map((r, index1) =>
-                              <div>
-                                <h6>{r.name}</h6>
-                                <br />
-                                <h6>{r.email}</h6>
-                                <br />
-                                <h6>{r.pros}</h6>
-                                <br />
-                                <h6>{r.cons}</h6>
-                              </div>
-                            )}
-                          </div>
-                        )}
+                      <div class="limiter">
+    <h3>List of Reviews</h3>
+    <br/>
+    <br/>
+    {this.state.reviews.map((s, index) =>
+
+		<div class="container-table100">
+			<div class="wrap-table100">
+				<div class="table100 ver1">
+				
+					
+					<div class="wrap-table100-nextcols js-pscroll">
+						<div class="table100-nextcols">
+            {s.reviews.map((r, index1) =>
+
+							<table>
+								<thead>
+									<tr class="row100 head">
+										<th class="cell100 column2">Name</th>
+										<th class="cell100 column4">Email</th>
+										<th class="cell100 column6">Prons</th>
+										<th class="cell100 column8">Cons</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr class="row100 body">
+										<td class="cell100 column2">{r.name}</td>
+										<td class="cell100 column4"> {r.email}</td>
+										<td class="cell100 column6">{r.pros}</td>
+										<td class="cell100 column8">{r.cons}</td>
+									
+									</tr>
+
+									
+								</tbody>
+							</table>)}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>)}
+	</div>
                       </div>
 
                     </div>
