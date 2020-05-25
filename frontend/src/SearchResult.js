@@ -35,7 +35,7 @@ class SearchResult extends React.Component {
         }
     }
 
-    fetchProducts() {
+    loadProducts() {
         fetch(url,{
             headers: {
               Accept: "application/json",
@@ -486,7 +486,7 @@ class SearchResult extends React.Component {
             this.setState({homesearch:""})
             this.setState({fromPrice:0})
             this.setState({toPrice:0})
-            this.loadProducts()
+            this.fetchProducts()
         }
     }
 
@@ -513,7 +513,7 @@ class SearchResult extends React.Component {
         this.setState({toPrice:0})
         this.setState({ currentCategory: c })
         this.setState({ activeBrands: [] })
-        this.loadProducts()
+        this.fetchProducts()
     }
 
     gotoProductDetail(id) {
@@ -537,7 +537,7 @@ class SearchResult extends React.Component {
             activeBrands = [...new Set(activeBrands)]
             this.setState({ activeBrands: activeBrands })
         }
-        this.loadProducts()
+        this.fetchProducts()
     }
 
     handleChangePrice1(e) {
@@ -550,7 +550,7 @@ class SearchResult extends React.Component {
 
     togglePriceFilter() {
         this.setState({ priceFilter: true })
-        this.loadProducts()
+        this.fetchProducts()
     }
 
     removeCommas(str) {
@@ -562,10 +562,10 @@ class SearchResult extends React.Component {
 
     componentDidMount() {
         console.log(this.state.homesearch)
-        this.loadProducts()
+        this.fetchProducts()
     }
 
-    loadProducts() {
+    fetchProducts() {
         const json = require('./data/products.json')
         // console.log(json.data)
         // console.log(json.data[0].category)
@@ -1015,6 +1015,12 @@ class SearchResult extends React.Component {
                                 })}
                                 </div>
                             </p>
+                            <p className="card-text text-left">
+                                <div className="product-content">
+                                    Sellers:
+                                {p.id}
+                                </div>
+                            </p>
                             <div className="compare-btn" style={{ position: "absolute", bottom: 20 }}>
                                 {/* <a className="btn btn-primary btn-sm" href="#" onClick={() => this.gotoProductDetail(p.id)}><i className="fa fa-exchange" aria-hidden="true" /> Compare Price</a> */}
                                 <Link to={`/ProductDetail/${p.id}`} className="btn btn-primary btn-sm"><i className="fa fa-exchange" aria-hidden="true" />Compare Price</Link>
@@ -1167,7 +1173,7 @@ class SearchResult extends React.Component {
                                                     this.setState({homesearch:""})
                                                     this.setState({fromPrice:0})
                                                     this.setState({toPrice:0})
-                                                    this.loadProducts()
+                                                    this.fetchProducts()
                                                 }} type="button">
                                                     <i className="fa fa-search" aria-hidden="true" />
                                                 </button>
