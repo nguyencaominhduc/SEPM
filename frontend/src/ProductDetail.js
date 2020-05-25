@@ -434,6 +434,7 @@ class ProductDetail extends React.Component {
                                   <div className="col-3 store-border-button">
                                     <a
                                       href={s.product_url}
+                                      target="_blank"
                                       className="btn btn-primary wd-shop-btn pull-right"
                                     >
                                       Buy it

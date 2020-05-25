@@ -4,6 +4,7 @@ import AuthContext from "./auth-context.js";
 import NumberFormat from 'react-number-format';
 import ProductDetail from './ProductDetail.js';
 import Navbar from './Navbar.js'
+import Footer from './Footer.js'
 //There should be a quick go back button on product detail to direct user back to their current searching page session
 //after fix on search logic, after inputting search query and clicking on one of the categories, please re-type the search query before proceeding to use search again
 
@@ -3754,218 +3755,88 @@ class SearchResult extends React.Component {
                                 </div>
                             </div>
                         </section>
-                        {/* =========================
-                Details Section
-                ============================== */}
-                        <section id="details">
-                            <div className="container">
-                                <div className="row wow fadeInLeft animated justify-content-center" data-wow-delay="600ms">
-                                    <div className="col-10 col-sm-8 col-lg-3 details-box">
-                                        <div className="row">
-                                            <div className="col-sm-3 p0 text-center">
-                                                <div className="details-img">
-                                                    <img style={{width:45, height:45}} className="img-fluid main-hover-icon-compare" src={require("./img/details-img/compare-icon-1.png")} alt="compare-icon" />
-                                                    <img style={{width:45, height:45}} className="img-fluid hover-icon-compare" src={require("./img/details-img/compare-1.png")} alt="compare-icon" />
-                                                </div>
-                                            </div>
-                                            <div className="col-sm-9 p0 details-description">
-                                                <h6 className="details-title">Lets Compare</h6>
-                                                <p>Choose your product with price comparisons make your best deal today</p>
-                                            </div>
-                                        </div>
-                                        <div className="arow">
-                                            <img style={{width:30, height:128}} src={require("./img/details-img/angle2-1.png")} alt="" />
-                                        </div>
-                                    </div>
-                                    <div className="col-10 col-sm-8 col-lg-3 details-box">
-                                        <div className="row">
-                                            <div className="col-sm-3 p0 text-center">
-                                                <div className="details-img">
-                                                    <img style={{width:45, height:45}} className="img-fluid main-hover-icon-user" src={require("./img/details-img/review-icon-1.png")} alt="review-icon" />
-                                                    <img style={{width:45, height:45}} className="img-fluid hover-icon-user" src={require("./img/details-img/user-2-1.png")} alt="review-icon" />
-                                                </div>
-                                            </div>
-                                            <div className="col-sm-9 p0 details-description">
-                                                <h6 className="details-title">Take Review</h6>
-                                                <p>Take your selected product review choose best one</p>
-                                            </div>
-                                        </div>
-                                        <div className="arow">
-                                            <img style={{width:30, height:128}} src={require("./img/details-img/angle2-1.png")} alt="" />
-                                        </div>
-                                    </div>
-                                    <div className="col-10 col-sm-8 col-lg-3 details-box">
-                                        <div className="row">
-                                            <div className="col-sm-3 p0 text-center">
-                                                <div className="details-img">
-                                                    <img style={{width:45, height:45}} className="img-fluid main-hover-icon-vendor" src={require("./img/details-img/shop-1.png")} alt="vendor-icon" />
-                                                    <img style={{width:45, height:45}} className="img-fluid hover-icon-vendor" src={require("./img/details-img/vendor-icon-1.png")} alt="vendor-icon" />
-                                                </div>
-                                            </div>
-                                            <div className="col-sm-9 p0 details-description">
-                                                <h6 className="details-title">Choose Multi-Vendor Store</h6>
-                                                <p>Lets check your product from multivendor store get satisfy.</p>
-                                            </div>
-                                        </div>
-                                        <div className="arow">
-                                            <img style={{width:30, height:128}} src={require("./img/details-img/angle2-1.png")} alt="" />
-                                        </div>
-                                    </div>
-                                    <div className="col-10 col-sm-8 col-lg-3 details-box details-active">
-                                        <div className="text-center">
-                                        <img style={{width:"auto", height:48}} className="img-fluid" src={require("./img/details-img/gift-icon-1.png")} alt="gift-icon" />
-                                            <h3 className="details-active-title">Enjoy Result</h3>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-                        {/* =========================
-                Subscribe Section
-                ============================== */}
-                        <section id="subscribe">
-                            <div className="container">
-                                {/* <div class="col-md-1"></div> */}
-                                <div className="row subscribe-body">
-                                    <div className="col-12 col-md-12 col-lg-5">
-                                        <h4 className="subscribe-title">Sign up for the latest updates</h4>
-                                    </div>
-                                    <div className="col-12 col-md-9 col-lg-5">
-                                        <div className="input-group">
-                                            <input type="text" className="form-control" aria-label="Text input with segmented button dropdown" />
-                                        </div>
-                                    </div>
-                                    <div className="col-12 col-md-3 col-lg-2">
-                                        <button type="button" className="btn btn-primary wd-shop-btn subscribe-btn">
-                                            Subscribe
-                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-                        {/* =========================
-                Footer Section
-                ============================== */}
-                        <footer className="footer wow fadeInUp animated" data-wow-delay="900ms">
-                            <div className="container">
-                                <div className="row">
-                                    <div className="col-md-3">
-                                        {/* ===========================
-                                            Footer About
-                                    =========================== */}
-                                        <div className="footer-about">
-                                            <a href="#" className="footer-about-logo">
-                                                <img src={require("./img/logo.png")} alt="Logo" />
-                                            </a>
-                                            <div className="footer-description">
-                                                <p>Lorem ipsum dolor sit amet, anim id est laborum. Sed ut perspconsectetur, adipisci vam aliquam qua.</p>
-                                            </div>
-                                            <div className="wb-social-media">
-                                                <a href="#" className="bh"><i className="fa fa-behance" /></a>
-                                                <a href="#" className="fb"><i className="fa fa-facebook-official" /></a>
-                                                <a href="#" className="db"><i className="fa fa-dribbble" /></a>
-                                                <a href="#" className="gp"><i className="fa fa-google-plus" /></a>
-                                                <a href="#" className="vn"><i className="fa fa-vine" /></a>
-                                                <a href="#" className="yt"><i className="fa fa-youtube-play" /></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-md-2 footer-view-controller">
-                                        {/* ===========================
-                                            Festival Deals
-                                    =========================== */}
-                                        <div className="footer-nav">
-                                            <h6 className="footer-subtitle active-color">Footer Menu</h6>
-                                            <ul>
-                                                <li><a href="index.html"> Home </a></li>
-                                                <li><a href="compare-products.html">Comparison Product </a></li>
-                                                <li><a href="shop-left-sidebar.html">Shop </a></li>
-                                                <li><a href="review-left-sidebar.html">Reviews</a></li>
-                                                <li><a href="blog-four-grid-left-sidebar.html">Blog</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div className="col-md-3 footer-view-controller">
-                                        {/* ===========================
-                                            Top Stores
-                                    =========================== */}
-                                        <div className="footer-nav">
-                                            <div className="stores-list">
-                                                <h6 className="footer-subtitle">Top Stores</h6>
-                                                <ul>
-                                                    <li><a href="shop-left-sidebar.html">Affiliate Market 1</a></li>
-                                                    <li><a href="shop-left-sidebar.html">Affiliate Market 2</a></li>
-                                                    <li><a href="shop-left-sidebar.html">Affiliate Market 3</a></li>
-                                                    <li><a href="shop-left-sidebar.html">Affiliate Market 4</a></li>
-                                                    <li><a href="shop-left-sidebar.html">Affiliate Market 5</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-md-2 footer-view-controller">
-                                        {/* ===========================
-                                            Need Help ?
-                                    =========================== */}
-                                        <div className="footer-nav">
-                                            <h6 className="footer-subtitle">Need Help ?</h6>
-                                            <ul>
-                                                <li><a href="#">Getting Started</a></li>
-                                                <li><a href="contact-us.html">Contact us</a></li>
-                                                <li><a href="#">FAQ's</a></li>
-                                                <li><a href="#">Press</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div className="col-md-2 footer-view-controller">
-                                        {/* ===========================
-                                            About
-                                    =========================== */}
-                                        <div className="footer-nav">
-                                            <h6 className="footer-subtitle">About</h6>
-                                            <ul>
-                                                <li><a href="conditions.html">Privacy</a></li>
-                                                <li><a href="conditions.html">Return Policy</a></li>
-                                                <li><a href="conditions.html">Order &amp; Return</a></li>
-                                                <li><a href="conditions.html">Terms &amp; Conditions</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </footer>
-                        {/* =========================
-                CopyRight
-                ============================== */}
-                        <section className="copyright wow fadeInUp animated" data-wow-delay="1500ms">
-                            <div className="container">
-                                <div className="row">
-                                    <div className="col-md-6">
-                                        {/* <div className="copyright-text">
-                            <p className="text-uppercase">COPYRIGHT © 2018</p><a className="created-by" href="http://themeim.com/">ThemeIM</a>
-                        </div> */}
-                                    </div>
-                                    <div className="col-md-6">
-                                        <div className="brand-logo">
-                                            <a href="#">
-                                                <img style={{width:56, height:35}} src={require("./img/social-media-img/brand-logo-1-10.jpg")} className="img-fluid" alt="Brand Logo" />
-                                            </a>
-                                            <a href="#">
-                                                <img style={{width:56, height:35}} src={require("./img/social-media-img/brand-logo-2-10.jpg")} className="img-fluid" alt="Brand Logo" />
-                                            </a>
-                                            <a href="#">
-                                                <img style={{width:56, height:35}} src={require("./img/social-media-img/brand-logo-3-10.jpg")} className="img-fluid" alt="Brand Logo" />
-                                            </a>
-                                            <a href="#">
-                                                <img style={{width:56, height:35}} src={require("./img/social-media-img/brand-logo-4-10.jpg")} className="img-fluid" alt="Brand Logo" />
-                                            </a>
-                                            <a href="#">
-                                                <img style={{width:56, height:35}} src={require("./img/social-media-img/brand-logo-5-10.jpg")} className="img-fluid" alt="Brand Logo" />
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
+
+              {/* <!-- =========================Service Section============================== --> */}
+              <section className="wd-service">
+                <div className="container-fluid custom-width">
+                  <div className="row">
+                    <div
+                      className="col-md-12 col-lg-4 col-xl-4 wow fadeIn animated"
+                      data-wow-delay="0.2s"
+                    >
+                      <ul className="list-unstyled">
+                        <li className="media">
+                          <img
+                            className="d-flex mr-3"
+                            src={require("./img/compare-icon-2.png")}
+                            style={{ width: "75px", height: "75px" }}
+                            alt="compare-icon"
+                          />
+                          <div className="media-body">
+                            <h5 className="wd-service-title mt-0 mb-1">
+                              Lets Compare
+                            </h5>
+                            <p>
+                              Choose your product with price comparisons make
+                              your best deal today
+                            </p>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                    <div
+                      className="col-md-12 col-lg-4 col-xl-4 wow fadeIn animated"
+                      data-wow-delay="0.4s"
+                    >
+                      <ul className="list-unstyled">
+                        <li className="media">
+                          <img
+                            className="d-flex mr-3"
+                            src={require("./img/review-icon.png")}
+                            style={{ width: "75px", height: "75px" }}
+                            alt="compare-icon"
+                          />
+                          <div className="media-body">
+                            <h5 className="wd-service-title mt-0 mb-1">
+                              Take Review
+                            </h5>
+                            <p>
+                              Choose your product with price comparisons make
+                              your best deal today
+                            </p>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                    <div
+                      className="col-md-12 col-lg-4 col-xl-4 wow fadeIn animated"
+                      data-wow-delay="0.6s"
+                    >
+                      <ul className="list-unstyled">
+                        <li className="media">
+                          <img
+                            className="d-flex mr-3"
+                            src={require("./img/store-icon.png")}
+                            style={{ width: "75px", height: "75px" }}
+                            alt="compare-icon"
+                          />
+                          <div className="media-body">
+                            <h5 className="wd-service-title mt-0 mb-1">
+                              Choose Multi-Vendor
+                            </h5>
+                            <p>
+                              Choose your product with price comparisons make
+                              your best deal today
+                            </p>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+                    <Footer/>
                     </div>
                     )
                 }}
