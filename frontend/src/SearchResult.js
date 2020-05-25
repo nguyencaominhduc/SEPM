@@ -485,7 +485,7 @@ class SearchResult extends React.Component {
             this.setState({ searchMode: true })
             this.setState({homesearch:""})
             this.setState({fromPrice:0})
-            this.setState({toPrice:0})
+            this.setState({toPrice:0},()=>{this.fetchProducts()})
             this.fetchProducts()
         }
     }
@@ -512,7 +512,7 @@ class SearchResult extends React.Component {
         this.setState({fromPrice:0})
         this.setState({toPrice:0})
         this.setState({ currentCategory: c })
-        this.setState({ activeBrands: [] })
+        this.setState({ activeBrands: [] },()=>{this.fetchProducts()})
         this.fetchProducts()
     }
 
@@ -530,12 +530,12 @@ class SearchResult extends React.Component {
             if (index > -1) {
                 activeBrands.splice(index, 1);
                 activeBrands = [...new Set(activeBrands)]
-                this.setState({ activeBrands: activeBrands })
+                this.setState({ activeBrands: activeBrands },()=>{this.fetchProducts()})
             }
         } else {
             activeBrands.push(event.target.value)
             activeBrands = [...new Set(activeBrands)]
-            this.setState({ activeBrands: activeBrands })
+            this.setState({ activeBrands: activeBrands },()=>{this.fetchProducts()})
         }
         this.fetchProducts()
     }
@@ -549,7 +549,7 @@ class SearchResult extends React.Component {
     }
 
     togglePriceFilter() {
-        this.setState({ priceFilter: true })
+        this.setState({ priceFilter: true }, ()=>{this.fetchProducts()})
         this.fetchProducts()
     }
 
@@ -1166,7 +1166,7 @@ class SearchResult extends React.Component {
                                                     this.setState({ searchMode: true })
                                                     this.setState({homesearch:""})
                                                     this.setState({fromPrice:0})
-                                                    this.setState({toPrice:0})
+                                                    this.setState({toPrice:0},()=>{this.fetchProducts()})
                                                     this.fetchProducts()
                                                 }} type="button">
                                                     <i className="fa fa-search" aria-hidden="true" />
@@ -3746,7 +3746,7 @@ class SearchResult extends React.Component {
                                     <div className="col-12 col-md-6 text-right">
                                         <div className="call-to-action-buy-now">
                                             {/* By Theme */}
-                                            <a href="https://themeforest.net/item/blurb-price-comparison-affiliate-website-multivendor-store-and-product-review-html5-template/20880845" className="btn btn-primary wd-shop-btn">
+                                            <a href="#" className="btn btn-primary wd-shop-btn">
                                                 Purchase Now <i className="fa fa-arrow-right" aria-hidden="true" />
                                             </a>
                                         </div>
