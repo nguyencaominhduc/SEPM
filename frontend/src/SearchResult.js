@@ -6,6 +6,7 @@ import ProductDetail from './ProductDetail.js';
 import Navbar from './Navbar.js'
 //There should be a quick go back button on product detail to direct user back to their current searching page session
 //after fix on search logic, after inputting search query and clicking on one of the categories, please re-type the search query before proceeding to use search again
+
 const url = 'http://localhost:5000/api/v1/products'
 // const url = 'http://localhost:5000/api/v1/users/load'
 class SearchResult extends React.Component {
@@ -485,7 +486,7 @@ class SearchResult extends React.Component {
             this.setState({homesearch:""})
             this.setState({fromPrice:0})
             this.setState({toPrice:0})
-            this.fetchProducts()
+            this.loadProducts()
         }
     }
 
@@ -512,7 +513,7 @@ class SearchResult extends React.Component {
         this.setState({toPrice:0})
         this.setState({ currentCategory: c })
         this.setState({ activeBrands: [] })
-        this.fetchProducts()
+        this.loadProducts()
     }
 
     gotoProductDetail(id) {
@@ -536,7 +537,7 @@ class SearchResult extends React.Component {
             activeBrands = [...new Set(activeBrands)]
             this.setState({ activeBrands: activeBrands })
         }
-        this.fetchProducts()
+        this.loadProducts()
     }
 
     handleChangePrice1(e) {
@@ -549,7 +550,7 @@ class SearchResult extends React.Component {
 
     togglePriceFilter() {
         this.setState({ priceFilter: true })
-        this.fetchProducts()
+        this.loadProducts()
     }
 
     removeCommas(str) {
@@ -561,7 +562,420 @@ class SearchResult extends React.Component {
 
     componentDidMount() {
         console.log(this.state.homesearch)
-        this.fetchProducts()
+        this.loadProducts()
+    }
+
+    loadProducts() {
+        const json = require('./data/products.json')
+        // console.log(json.data)
+        // console.log(json.data[0].category)
+        // this.setState({ import: json }, () => { console.log(this.state.import.data[0].data) })
+        console.log(json)
+        this.setState({ import: json },() => { console.log(this.state.import) })
+        // json.data is an array of 2100 data objects, each object contains props and another array of item objects
+        var import_0 = json
+        var filtered_price_productList = []
+        var activeBrands = this.state.activeBrands
+        for (var i = 0; i < import_0.data.length; i++) {
+            var temp_high_price = 0
+            var temp_low_price = 0
+            var sellers_0 = []
+            for (var x = 0; x < import_0.data[i].data.length; x++) {
+                temp_high_price = import_0.data[i].data[x].price
+                temp_low_price = import_0.data[i].data[x].price
+                if (import_0.data[i].data.length = 1) {
+                    temp_high_price = import_0.data[i].data[x].price
+                    temp_low_price = import_0.data[i].data[x].price
+                } else {
+                    if (import_0.data[i].data[x + 1].price > import_0.data[i].data[x].price) {
+                        temp_high_price = import_0.data[i].data[x + 1].price
+                    }
+                    if (import_0.data[i].data[x + 1].price < import_0.data[i].data[x].price) {
+                        temp_high_price = import_0.data[i].data[x + 1].price
+                    }
+                }
+                sellers_0.push(import_0.data[i].data[x].retailer)
+                sellers_0 = [...new Set(sellers_0)]
+                // console.log("Sellers_0: "+sellers_0)
+            }
+            var undefiner = false
+            if(typeof json.data[i]!=="undefined"){
+                if(typeof json.data[i].data[0] === "undefined"){
+                    undefiner=true
+                } else if(typeof json.data[i].name === "undefined"){
+                    undefiner=true
+                } else if(typeof json.data[i].category === "undefined"){
+                    undefiner=true
+                }
+            } else undefiner=true
+            if(undefiner==true){
+                var newObj_0 = {
+                    id: import_0.data[i]._id,
+                    name: "",
+                    category: "",
+                    image: "",
+                    lowestPrice: 0,
+                    highestPrice: 0,
+                    sellers: []
+                }
+            } else {
+                var newObj_0 = {
+                    id: import_0.data[i]._id,
+                    name: import_0.data[i].name,
+                    category: import_0.data[i].category,
+                    image: import_0.data[i].data[0].image,
+                    lowestPrice: temp_low_price,
+                    highestPrice: temp_high_price,
+                    sellers: sellers_0
+                }
+            }
+            filtered_price_productList.push(newObj_0)
+        }
+        console.log(filtered_price_productList)
+        var filtered_search_productList = []
+        if (this.state.searchMode == true && this.state.target !== ""||this.state.homesearch!=="") {
+            if(this.state.searchMode==true){
+                this.setState({homesearch:""})
+            }
+            if(this.state.homesearch!==""&&this.state.searchMode==false){
+                for (var i = 0; i < filtered_price_productList.length; i++) {
+                    if (filtered_price_productList[i].name.toUpperCase().indexOf(this.state.homesearch.toUpperCase()) > -1) {
+                        filtered_search_productList.push(filtered_price_productList[i])
+                    }
+                }
+            } else {
+                for (var i = 0; i < filtered_price_productList.length; i++) {
+                    if (filtered_price_productList[i].name.toUpperCase().indexOf(this.state.target.toUpperCase()) > -1) {
+                        filtered_search_productList.push(filtered_price_productList[i])
+                    }
+                }
+            }
+        }
+        if (this.state.target == "") {
+            this.setState({ searchMode: false })
+        }
+        if (filtered_search_productList.length > 0) {
+            // if(this.state.currentCategory!==""){
+            //     var temp_arr_0 = []
+            //     for (var i = 0; i < filtered_search_productList.length; i++){
+            //         if(filtered_search_productList[i].category==this.state.currentCategory){
+            //             temp_arr_0.push(filtered_search_productList[i])
+            //         }
+            //     }
+            //     this.setState({filtered_price_productList: temp_arr_0}, ()=>{console.log(this.state.filtered_price_productList)})
+            // } else this.setState({filtered_price_productList: filtered_search_productList}, ()=>{console.log(this.state.filtered_price_productList)})
+            var sellers = []
+            for (var i = 0; i < filtered_search_productList.length; i++) {
+                for (var x = 0; x < filtered_search_productList[i].sellers.length; x++) {
+                    sellers.push(filtered_search_productList[i].sellers[x])
+                }
+            }
+            sellers = [...new Set(sellers)]
+            this.setState({ sellers: sellers })
+            if (activeBrands.length > 0) {
+                var temp = []
+                for (var i = 0; i < activeBrands.length; i++) {
+                    for (var x = 0; x < filtered_search_productList.length; x++) {
+                        for (var y = 0; y < filtered_search_productList[x].sellers.length; y++) {
+                            if (filtered_search_productList[x].sellers[y] == activeBrands[i]) {
+                                temp.push(filtered_search_productList[x])
+                            }
+                        }
+                    }
+                }
+                console.log(temp)
+                filtered_search_productList = temp
+                for (var i = 0; i < activeBrands.length; i++) {
+                    sellers.push(activeBrands[i])
+                }
+                sellers = [...new Set(sellers)]
+                this.setState({ sellers: sellers })
+            } else {
+                sellers = [...new Set(sellers)]
+                this.setState({ sellers: sellers })
+            }
+            if (this.state.priceFilter == true) {
+                if(isNaN(frP)==true){
+                    var frP = parseFloat(this.state.fromPrice.toString().replace(/,/g, ''))
+                }
+                if(isNaN(toP)==true){
+                    var toP = parseFloat(this.state.toPrice.toString().replace(/,/g, ''))
+                }
+                console.log(frP)
+                if(isNaN(frP)==true){
+                    frP=0
+                    this.setState({fromPrice:0})
+                }
+                if(isNaN(toP)==true){
+                    toP=0
+                    this.setState({toPrice:0})
+                }
+                if (frP > 0 && toP == 0) {
+                    var priceList = []
+                    for (var i = 0; i < filtered_search_productList.length; i++) {
+                        priceList.push(filtered_search_productList[i].lowestPrice)
+                    }
+                    priceList = priceList.filter(function (el) {
+                        return el >= frP
+                    })
+                    priceList = [...new Set(priceList)]
+                    if (priceList.length > 0) {
+                        var arr_temp = []
+                        for (var i = 0; i < priceList.length; i++) {
+                            for (var y = 0; y < filtered_search_productList.length; y++) {
+                                if (filtered_search_productList[y].lowestPrice == priceList[i]) {
+                                    arr_temp.push(filtered_search_productList[y])
+                                }
+                            }
+                        }
+                        if (arr_temp.length > 0) {
+                            filtered_search_productList = arr_temp
+                        }
+                    } else filtered_search_productList = []
+                } else if (frP >= 0 && toP > frP) {
+                    var priceList = []
+                    for (var i = 0; i < filtered_search_productList.length; i++) {
+                        priceList.push(filtered_search_productList[i].lowestPrice)
+                    }
+                    priceList = priceList.filter(function (el) {
+                        return el >= frP && el <= toP
+                    })
+                    priceList = [...new Set(priceList)]
+                    if (priceList.length > 0) {
+                        var arr_temp = []
+                        for (var i = 0; i < priceList.length; i++) {
+                            for (var y = 0; y < filtered_search_productList.length; y++) {
+                                if (filtered_search_productList[y].lowestPrice == priceList[i]) {
+                                    arr_temp.push(filtered_search_productList[y])
+                                }
+                            }
+                        }
+                        if (arr_temp.length > 0) {
+                            filtered_search_productList = arr_temp
+                        }
+                    } else filtered_search_productList = []
+                }
+                if (frP == 0 && toP == 0) {
+                    this.setState({ priceFilter: false })
+                }
+            }
+            this.setState({ filtered_price_productList: filtered_search_productList }, () => { console.log(this.state.filtered_price_productList) })
+        } else {
+            console.log(filtered_price_productList)
+            if (this.state.currentCategory !== "") {
+                var temp_arr_1 = []
+                for (var i = 0; i < filtered_price_productList.length; i++) {
+                    if (filtered_price_productList[i].category.toUpperCase() == this.state.currentCategory.toUpperCase()) {
+                        temp_arr_1.push(filtered_price_productList[i])
+                    }
+                }
+                console.log(filtered_price_productList)
+                console.log(temp_arr_1)
+                var sellers = []
+                for (var i = 0; i < temp_arr_1.length; i++) {
+                    for (var x = 0; x < temp_arr_1[i].sellers.length; x++) {
+                        sellers.push(temp_arr_1[i].sellers[x])
+                    }
+                }
+                sellers = [...new Set(sellers)]
+                this.setState({ sellers: sellers })
+                if (activeBrands.length > 0) {
+                    var temp = []
+                    for (var i = 0; i < activeBrands.length; i++) {
+                        for (var x = 0; x < temp_arr_1.length; x++) {
+                            for (var y = 0; y < temp_arr_1[x].sellers.length; y++) {
+                                if (temp_arr_1[x].sellers[y] == activeBrands[i]) {
+                                    temp.push(temp_arr_1[x])
+                                }
+                            }
+                        }
+                    }
+                    console.log(temp)
+                    temp_arr_1 = temp
+                    for (var i = 0; i < activeBrands.length; i++) {
+                        sellers.push(activeBrands[i])
+                    }
+                    sellers = [...new Set(sellers)]
+                    this.setState({ sellers: sellers })
+                } else {
+                    sellers = [...new Set(sellers)]
+                    this.setState({ sellers: sellers })
+                }
+                if (this.state.priceFilter == true) {
+                    if(isNaN(frP)==true){
+                        var frP = parseFloat(this.state.fromPrice.toString().replace(/,/g, ''))
+                    }
+                    if(isNaN(toP)==true){
+                        var toP = parseFloat(this.state.toPrice.toString().replace(/,/g, ''))
+                    }
+                    if(isNaN(frP)==true){
+                        frP=0
+                        this.setState({fromPrice:0})
+                    }
+                    if(isNaN(toP)==true){
+                        toP=0
+                        this.setState({toPrice:0})
+                    }
+                    if (frP > 0 && toP == 0) {
+                        var priceList = []
+                        for (var i = 0; i < temp_arr_1.length; i++) {
+                            priceList.push(temp_arr_1[i].lowestPrice)
+                        }
+
+                        priceList = priceList.filter(function (el) {
+                            return el >= frP
+                        })
+                        console.log(priceList)
+                        priceList = [...new Set(priceList)]
+                        if (priceList.length > 0) {
+                            var arr_temp = []
+                            for (var i = 0; i < priceList.length; i++) {
+                                for (var y = 0; y < temp_arr_1.length; y++) {
+                                    if (temp_arr_1[y].lowestPrice == priceList[i]) {
+                                        arr_temp.push(temp_arr_1[y])
+                                    }
+                                }
+                            }
+                            if (arr_temp.length > 0) {
+                                temp_arr_1 = arr_temp
+                            }
+                        } else temp_arr_1 = []
+                        console.log(temp_arr_1)
+                    } else if (frP >= 0 && toP > frP) {
+                        var priceList = []
+                        for (var i = 0; i < temp_arr_1.length; i++) {
+                            priceList.push(temp_arr_1[i].lowestPrice)
+                        }
+                        priceList = priceList.filter(function (el) {
+                            return el >= frP && el <= toP
+                        })
+                        priceList = [...new Set(priceList)]
+                        if (priceList.length > 0) {
+                            var arr_temp = []
+                            for (var i = 0; i < priceList.length; i++) {
+                                for (var y = 0; y < temp_arr_1.length; y++) {
+                                    if (temp_arr_1[y].lowestPrice == priceList[i]) {
+                                        arr_temp.push(temp_arr_1[y])
+                                    }
+                                }
+                            }
+                            if (arr_temp.length > 0) {
+                                temp_arr_1 = arr_temp
+                            }
+                        } else temp_arr_1 = []
+                    }
+                    if (frP == 0 && toP == 0) {
+                        this.setState({ priceFilter: false })
+                    }
+                }
+                this.setState({ filtered_price_productList: temp_arr_1 }, () => { console.log(this.state.filtered_price_productList) })
+                // this.setState({currentCategory:""})
+            } else {
+                if (filtered_price_productList.length !== json.data.length) {
+                    var sellers = []
+                    for (var i = 0; i < filtered_price_productList.length; i++) {
+                        for (var x = 0; x < filtered_price_productList[i].sellers.length; x++) {
+                            sellers.push(filtered_price_productList[i].sellers[x])
+                        }
+                    }
+                    if (activeBrands.length > 0) {
+                        var temp = []
+                        for (var i = 0; i < activeBrands.length; i++) {
+                            for (var x = 0; x < filtered_price_productList.length; x++) {
+                                for (var y = 0; y < filtered_price_productList[x].sellers.length; y++) {
+                                    if (filtered_price_productList[x].sellers[y] == activeBrands[i]) {
+                                        temp.push(filtered_price_productList[x])
+                                    }
+                                }
+                            }
+                        }
+                        console.log(temp)
+                        filtered_price_productList = temp
+                        for (var i = 0; i < activeBrands.length; i++) {
+                            sellers.push(activeBrands[i])
+                        }
+                        sellers = [...new Set(sellers)]
+                        this.setState({ sellers: sellers })
+                    } else {
+                        sellers = [...new Set(sellers)]
+                        this.setState({ sellers: sellers })
+                    }
+                } else this.setState({ sellers: [] })
+                if (this.state.priceFilter == true) {
+                    if(isNaN(frP)==true){
+                        var frP = parseFloat(this.state.fromPrice.toString().replace(/,/g, ''))
+                    }
+                    if(isNaN(toP)==true){
+                        var toP = parseFloat(this.state.toPrice.toString().replace(/,/g, ''))
+                    }
+                    if(isNaN(frP)==true){
+                        frP=0
+                        this.setState({fromPrice:0})
+                    }
+                    if(isNaN(toP)==true){
+                        toP=0
+                        this.setState({toPrice:0})
+                    }
+                    if (frP > 0 && toP == 0) {
+                        var priceList = []
+                        for (var i = 0; i < filtered_price_productList.length; i++) {
+                            priceList.push(filtered_price_productList[i].lowestPrice)
+                        }
+                        priceList = priceList.filter(function (el) {
+                            return el >= frP
+                        })
+                        console.log("Price List")
+                        console.log(priceList)
+                        priceList = [...new Set(priceList)]
+                        if (priceList.length > 0) {
+                            var arr_temp = []
+                            for (var i = 0; i < priceList.length; i++) {
+                                for (var y = 0; y < filtered_price_productList.length; y++) {
+                                    if (filtered_price_productList[y].lowestPrice == priceList[i]) {
+                                        arr_temp.push(filtered_price_productList[y])
+                                    }
+                                }
+                            }
+                            if (arr_temp.length > 0) {
+                                filtered_price_productList = arr_temp
+                            }
+                        } else filtered_price_productList = []
+                    } else if (frP >= 0 && toP > frP) {
+                        var priceList = []
+                        for (var i = 0; i < filtered_price_productList.length; i++) {
+                            priceList.push(filtered_price_productList[i].lowestPrice)
+                        }
+                        priceList = priceList.filter(function (el) {
+                            return el >= frP && el <= toP
+                        })
+                        priceList = [...new Set(priceList)]
+                        if (priceList.length > 0) {
+                            var arr_temp = []
+                            for (var i = 0; i < priceList.length; i++) {
+                                for (var y = 0; y < filtered_price_productList.length; y++) {
+                                    if (filtered_price_productList[y].lowestPrice == priceList[i]) {
+                                        arr_temp.push(filtered_price_productList[y])
+                                    }
+                                }
+                            }
+                            if (arr_temp.length > 0) {
+                                filtered_price_productList = arr_temp
+                            }
+                        } else filtered_price_productList = []
+                    }
+                    if (frP == 0 && toP == 0) {
+                        this.setState({ priceFilter: false })
+                    }
+                }
+                this.setState({ filtered_price_productList: filtered_price_productList }, () => { console.log(this.state.filtered_price_productList) })
+            }
+        }
+        var categories = []
+        for (var i = 0; i < import_0.data.length; i++) {
+            categories.push(import_0.data[i].category)
+        }
+        categories = [...new Set(categories)]
+        this.setState({ categories: categories }, () => { console.log(categories) })
     }
 
     componentDidUpdate() {
@@ -753,7 +1167,7 @@ class SearchResult extends React.Component {
                                                     this.setState({homesearch:""})
                                                     this.setState({fromPrice:0})
                                                     this.setState({toPrice:0})
-                                                    this.fetchProducts()
+                                                    this.loadProducts()
                                                 }} type="button">
                                                     <i className="fa fa-search" aria-hidden="true" />
                                                 </button>
