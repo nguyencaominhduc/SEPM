@@ -1015,12 +1015,6 @@ class SearchResult extends React.Component {
                                 })}
                                 </div>
                             </p>
-                            <p className="card-text text-left">
-                                <div className="product-content">
-                                    Sellers:
-                                {p.id}
-                                </div>
-                            </p>
                             <div className="compare-btn" style={{ position: "absolute", bottom: 20 }}>
                                 {/* <a className="btn btn-primary btn-sm" href="#" onClick={() => this.gotoProductDetail(p.id)}><i className="fa fa-exchange" aria-hidden="true" /> Compare Price</a> */}
                                 <Link to={`/ProductDetail/${p.id}`} className="btn btn-primary btn-sm"><i className="fa fa-exchange" aria-hidden="true" />Compare Price</Link>
