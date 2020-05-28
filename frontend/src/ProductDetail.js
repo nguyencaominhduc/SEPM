@@ -5,6 +5,8 @@ import axios from 'axios';
 import NumberFormat from 'react-number-format';
 import Navbar from "./Navbar.js";
 import Footer from "./Footer.js";
+// import "./css/tableReview.scss";
+
 
 class ProductDetail extends React.Component {
   constructor(props) {
@@ -129,16 +131,16 @@ class ProductDetail extends React.Component {
     const that = this;
     var url = "";
     if (this.props.products.length !== 0) {//in case this condition caught undefined error since lenght isn't a method for object this.props.products, pls consider disabling the condition and use the one below
-      url = `http://localhost:5000/api/v1/products/${this.props.products._id}`;
+      url = `https://phamhang.com/api/v1/products/${this.props.products._id}`;
     } else {
-      url = `http://localhost:5000/api/v1/products/5e99d314b9128112d755c9fd`;
+      url = `https://phamhang.com/api/v1/products/5e99d314b9128112d755c9fd`;
     }
 
     //receive URL param from SearchResult component using Router to obtain product id
     if (this.props.match.params.id !== undefined) {
-      url = `http://localhost:5000/api/v1/products/${this.props.match.params.id}`;
+      url = `https://api-easyprice.herokuapp.com/api/v1/products/${this.props.match.params.id}`;
     } else {
-      url = `http://localhost:5000/api/v1/products/5e99d314b9128112d755c9fd`;
+      url = `https://api-easyprice.herokuapp.com/api/v1/products/5e99d314b9128112d755c9fd`;
     }
     //URL updated with prod id
 
@@ -168,7 +170,7 @@ class ProductDetail extends React.Component {
     console.log(Reviews);
     console.log(Comments);
     console.log(abc)
-
+   
     return (
 
       <AuthContext.Consumer>
@@ -434,7 +436,6 @@ class ProductDetail extends React.Component {
                                   <div className="col-3 store-border-button">
                                     <a
                                       href={s.product_url}
-                                      target="_blank"
                                       className="btn btn-primary wd-shop-btn pull-right"
                                     >
                                       Buy it
@@ -731,7 +732,7 @@ class ProductDetail extends React.Component {
                             </div>
                             <div className="col-12 col-md-12 col-lg-6 video-info">
                               <h6 className="video-info-title">
-                                Some prons and Cons
+                                Some pros and Cons
                         </h6>
                               <p>
                                 <strong className="video-info-subtitle">Pros:</strong>
@@ -811,7 +812,6 @@ class ProductDetail extends React.Component {
                       {/* // display all comment */}
                       <div className="row">
                       <div class="limiter">
-    <h3>List of Reviews</h3>
     <br/>
     <br/>
     {this.state.reviews.map((s, index) =>
@@ -825,27 +825,46 @@ class ProductDetail extends React.Component {
 						<div class="table100-nextcols">
             {s.reviews.map((r, index1) =>
 
-							<table>
-								<thead>
-									<tr class="row100 head">
-										<th class="cell100 column2">Name</th>
-										<th class="cell100 column4">Email</th>
-										<th class="cell100 column6">Prons</th>
-										<th class="cell100 column8">Cons</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr class="row100 body">
-										<td class="cell100 column2">{r.name}</td>
-										<td class="cell100 column4"> {r.email}</td>
-										<td class="cell100 column6">{r.pros}</td>
-										<td class="cell100 column8">{r.cons}</td>
-									
-									</tr>
+							<div class="table-users" style={require('./css/tableReview.scss')}>
+   <div class="headerNo" >List of Reviews</div>
+   
+   <table cellspacing="0">
+      <tr>
+         <th>Name</th>
+         <th>Email</th>
+         <th>Pros</th>
+         <th width="230">Cons</th>
+      </tr>
 
-									
-								</tbody>
-							</table>)}
+      <tr>
+         <td>{r.name}</td>
+         <td>{r.email}</td>
+         <td>{r.prons}</td>
+         <td>{r.cons} </td>
+      </tr>
+
+      <tr>
+         <td>John Doe</td>
+         <td>john.doe@foo.com</td>
+         <td>Blanditiis, aliquid numquam iure voluptatibus ut maiores</td>
+         <td>Blanditiis, aliquid numquam iure voluptatibus ut maiores explicabo ducimus neque, nesciunt rerum perferendis, inventore.</td>
+      </tr>
+
+      <tr>
+         <td>Jane Smith</td>
+         <td>jane.smith@foo.com</td>
+         <td>Blanditiis, aliquid numquam iure voluptatibus ut maiores</td>
+         <td> Culpa praesentium unde pariatur fugit eos recusandae voluptas.</td>
+      </tr>
+      
+      <tr>
+         <td>John Smith</td>
+         <td>john.smith@foo.com</td>
+         <td>Blanditiis, aliquid numquam iure voluptatibus ut maiores</td>
+         <td>Aut voluptatum accusantium, eveniet, sapiente quaerat adipisci consequatur maxime temporibus quas, dolorem impedit.</td>
+      </tr>
+   </table>
+</div>)}
 						</div>
 					</div>
 				</div>
