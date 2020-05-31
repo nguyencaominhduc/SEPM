@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import AuthContext from './auth-context.js'
-import { Redirect } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 export default class NewUser extends Component {
     static contextType = AuthContext;
     constructor(props) {
@@ -65,6 +65,45 @@ export default class NewUser extends Component {
 
     render() {
         return (
+            <div>
+            <div className="col-md-6 col-lg-10 col-xl-7 header-search-box d-none d-lg-block">
+            <div
+              id="main-menu-2"
+              className="main-menu-desktop no-border main-menu-sh"
+            >
+              <div className="menu-container wd-megamenu text-left">
+                <div className="menu">
+                  <ul className="wd-megamenu-ul">
+                    <li>
+                      <Link to='/HomePage' className="main-menu-list">
+                        <i
+                          className="fa fa-home"
+                          aria-hidden="true"
+                        ></i>{" "}
+                                  Home{"  "}
+                      </Link>
+                    </li>
+                    <li className="pos-inherit">
+                    <Link
+                        to="/About"
+                        className="main-menu-list"
+                      >
+                        About{"  "}
+                      </Link>
+                    </li>
+                    <li>
+                    <Link
+                        to="/Contact"
+                        className="main-menu-list"
+                      >
+                        Contact us{"  "}
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
             <div className="login-page mt-0 pt-0">
                 <div className="form-group">
                     <form className='login-form'>
@@ -78,10 +117,10 @@ export default class NewUser extends Component {
                         <input type="password" className="rounded-pill form-control" id="password" name="password" value={this.state.password} placeholder="Enter password ..." onChange={this.handleChange.bind(this)} title="- Password must has between 8 to 20 characters with at least one lowercase letter, one uppercase letter, one numeric digit, and one special character" />
 
                         <button type="submit" className="rounded-pill btn-block z-depth-0 my-4 waves-effect btn-success" onClick={this.save.bind(this)}>Sign up</button>
-
+                        <Link to="/Login"> Already have account? Login!</Link>
                     </form>
                 </div>
-            </div>
+            </div></div>
         )
     }
 }

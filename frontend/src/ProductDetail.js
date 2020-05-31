@@ -32,7 +32,8 @@ class ProductDetail extends React.Component {
       cons: '',
       image: '',
       target: '',
-      isBookmark: false
+      isBookmark: false,
+      reviewStatus:""
     };
   }
 
@@ -42,6 +43,7 @@ class ProductDetail extends React.Component {
     this.fetchReviews();
     this.fetchBookmark();
     window.scrollTo(0, 0);
+    this.setState({name: localStorage.getItem('username')})
   }
 
   fetchBookmark() {
@@ -67,7 +69,7 @@ class ProductDetail extends React.Component {
       .then(res => console.log(res.data))
       .then(json => this.fetchReviews())
     this.setState({
-      name: '',
+      name: localStorage.getItem('username'),
       pros: '',
       email: '',
       cons: '',
@@ -124,7 +126,12 @@ class ProductDetail extends React.Component {
 
     fetch(url)
       .then((res) => res.json())
-      .then((json) => that.setState({ reviews: json, comments: json.reviews }));
+      .then((json) => that.setState({ reviews: json, comments: json.reviews }))
+      .then(()=>{
+        if(this.state.reviews.length==0){
+          this.setState({reviewStatus: "No reviews, please login to add new review"})
+        }
+      })
   }
 
   fetchData() {
@@ -138,9 +145,9 @@ class ProductDetail extends React.Component {
 
     //receive URL param from SearchResult component using Router to obtain product id
     if (this.props.match.params.id !== undefined) {
-      url = `https://api-easyprice.herokuapp.com/api/v1/products/${this.props.match.params.id}`;
+      url = `https://phamhang.com/api/v1/products/${this.props.match.params.id}`;
     } else {
-      url = `https://api-easyprice.herokuapp.com/api/v1/products/5e99d314b9128112d755c9fd`;
+      url = `https://phamhang.com/api/v1/products/5e99d314b9128112d755c9fd`;
     }
     //URL updated with prod id
 
@@ -437,6 +444,7 @@ class ProductDetail extends React.Component {
                                     <a
                                       href={s.product_url}
                                       className="btn btn-primary wd-shop-btn pull-right"
+                                      target="_blank"
                                     >
                                       Buy it
                             </a>
@@ -775,14 +783,14 @@ class ProductDetail extends React.Component {
                             <div className="row">
                               <div className="col-md-6">
                                 <div className="form-group">
-                                  <label htmlFor="first" className="color-black">Name *</label>
-                                  <input type="text" className="form-control" placeholder id="first" onChange={this.onChangeName} value={this.state.name} />
+                                  <label htmlFor="first" className="color-black">Username</label>
+                                  <input type="text" className="form-control" placeholder id="first" onChange={this.onChangeName} value={this.state.name} readonly="readonly"/>
                                 </div>
                               </div>
                               <div className="col-md-6">
                                 <div className="form-group">
-                                  <label htmlFor="last" className="color-black">Email *</label>
-                                  <input type="email" className="form-control" placeholder id="last" onChange={this.onChangeEmail} value={this.state.email} />
+                                  {/* <label htmlFor="last" className="color-black">Email *</label>
+                                  <input type="email" className="form-control" placeholder id="last" onChange={this.onChangeEmail} value={this.state.email} /> */}
                                 </div>
                               </div>
                               <div className="col-md-6">
@@ -812,8 +820,9 @@ class ProductDetail extends React.Component {
                       {/* // display all comment */}
                       <div className="row">
                       <div class="limiter">
+                      <h5 style={{justifyContent: "center"}}>{this.state.reviewStatus}</h5>
     <br/>
-    <br/>
+
     {this.state.reviews.map((s, index) =>
 
 		<div class="container-table100">
@@ -823,48 +832,44 @@ class ProductDetail extends React.Component {
 					
 					<div class="wrap-table100-nextcols js-pscroll">
 						<div class="table100-nextcols">
-            {s.reviews.map((r, index1) =>
+           
 
 							<div class="table-users" style={require('./css/tableReview.scss')}>
+   
    <div class="headerNo" >List of Reviews</div>
    
    <table cellspacing="0">
       <tr>
-         <th>Name</th>
-         <th>Email</th>
+         <th>Username</th>
          <th>Pros</th>
-         <th width="230">Cons</th>
+         <th>Cons</th>
       </tr>
-
+      {s.reviews.map((r, index1) =>
       <tr>
          <td>{r.name}</td>
-         <td>{r.email}</td>
-         <td>{r.prons}</td>
+         <td>{r.pros}</td>
          <td>{r.cons} </td>
+      </tr>)}
+
+      <tr>
+         <td>JohnDoe</td>
+         <td>This is the great products</td>
+         <td>The shipping is a liitile bit long</td>
       </tr>
 
       <tr>
-         <td>John Doe</td>
-         <td>john.doe@foo.com</td>
-         <td>Blanditiis, aliquid numquam iure voluptatibus ut maiores</td>
-         <td>Blanditiis, aliquid numquam iure voluptatibus ut maiores explicabo ducimus neque, nesciunt rerum perferendis, inventore.</td>
-      </tr>
-
-      <tr>
-         <td>Jane Smith</td>
-         <td>jane.smith@foo.com</td>
-         <td>Blanditiis, aliquid numquam iure voluptatibus ut maiores</td>
-         <td> Culpa praesentium unde pariatur fugit eos recusandae voluptas.</td>
+         <td>JaneSmith</td>
+         <td>Nice packaged, wrapped carefullly</td>
+         <td>No comment</td>
       </tr>
       
       <tr>
-         <td>John Smith</td>
-         <td>john.smith@foo.com</td>
-         <td>Blanditiis, aliquid numquam iure voluptatibus ut maiores</td>
-         <td>Aut voluptatum accusantium, eveniet, sapiente quaerat adipisci consequatur maxime temporibus quas, dolorem impedit.</td>
+         <td>JohnSmith</td>
+         <td>Product is very nice, suitable for my family</td>
+         <td>Warranty service is not good</td>
       </tr>
    </table>
-</div>)}
+</div>
 						</div>
 					</div>
 				</div>

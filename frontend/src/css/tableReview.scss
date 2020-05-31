@@ -14,7 +14,7 @@ $padding: 10px;
    color: white;
    font-size: 1.5em;
    padding: 1rem;
-   text-align: center;
+   text-align: left;
    text-transform: uppercase;
 }
 
@@ -27,7 +27,7 @@ $padding: 10px;
    max-width: calc(100% - 2em);
    margin: 1em auto;
    overflow: hidden;
-   width: 800px;
+   width: 1000px;
 }
 
 table {
@@ -39,7 +39,7 @@ table {
    }
    
    td {
-      text-align: center;
+      text-align: left;
       vertical-align: middle;
       
       &:last-child {
@@ -87,8 +87,8 @@ table {
          }
       }
 
-      &:nth-child(2):before { content: 'Name:'; }
-      &:nth-child(3):before { content: 'Email:'; }
+      &:nth-child(2):before { content: 'Pros:'; }
+      &:nth-child(3):before { content: 'Cons:'; }
       &:nth-child(4):before { content: 'Pros:'; }
       &:nth-child(5):before { content: 'Cons:'; }
    }

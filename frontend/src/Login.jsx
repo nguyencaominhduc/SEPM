@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import AuthContext from './auth-context.js'
 import { Link } from 'react-router-dom'
+import Navbar from './Navbar.js';
 
 export default class Auth extends Component {
     static contextType = AuthContext;
@@ -61,7 +62,47 @@ export default class Auth extends Component {
 
     render() {
         return (
-            <div className="login-page mt-0 pt-0">
+<div>
+<div className="col-md-6 col-lg-10 col-xl-7 header-search-box d-none d-lg-block">
+            <div
+              id="main-menu-2"
+              className="main-menu-desktop no-border main-menu-sh"
+            >
+              <div className="menu-container wd-megamenu text-left">
+                <div className="menu">
+                  <ul className="wd-megamenu-ul">
+                    <li>
+                      <Link to='/HomePage' className="main-menu-list">
+                        <i
+                          className="fa fa-home"
+                          aria-hidden="true"
+                        ></i>{" "}
+                                  Home{"  "}
+                      </Link>
+                    </li>
+                    <li className="pos-inherit">
+                    <Link
+                        to="/About"
+                        className="main-menu-list"
+                      >
+                        About{"  "}
+                      </Link>
+                    </li>
+                    <li>
+                    <Link
+                        to="/Contact"
+                        className="main-menu-list"
+                      >
+                        Contact us{"  "}
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+<div className="login-page mt-0 pt-0">
                 <div className="form-group">
                     <form className='login-form' onSubmit={this.submitHandler}>
                         <h2 className="text-center" style={{ color: 'rgb(255,69,0)' }}>
@@ -78,6 +119,7 @@ export default class Auth extends Component {
                     </form>
                 </div>
             </div>
+</div>
         )
     }
 }

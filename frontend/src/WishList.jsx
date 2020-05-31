@@ -271,7 +271,7 @@ class WishList extends React.Component {
                                       <a
                                         className="btn btn-primary btn-sm"
                                         href="#"
-                                        onClick={this.viewDetail.bind(this, s._id)}
+                                        onClick={this.onDelete.bind(this, s._id)}
                                         style={{ background: "red" }}
                                       >
                                         <i
