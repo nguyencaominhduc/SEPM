@@ -13,7 +13,7 @@ export default class List extends React.Component {
   }
 
   componentDidMount() {
-    fetch(`http://localhost:5000/api/v1/products`)
+    fetch(`https://phamhang.com/api/v1/products`)
       .catch((err) => {
         console.log('ERR:',err);
       })
@@ -27,7 +27,7 @@ export default class List extends React.Component {
 
   onDelete(id) {
     if (!confirm("Do you want to delete?")) return;
-    fetch(`http://localhost:5000/api/v1/products/${id}`, {
+    fetch(`https://phamhang.com/api/v1/products/${id}`, {
       method: "delete",
     }).then(() => this.props.dispatch({ type: "DELETE_PRODUCT", payload: id }));
     alert("Product deleted");

@@ -30,7 +30,7 @@ export default class NewUser extends Component {
             return;
         }
         const token = this.context.token
-        var url = 'http://localhost:5000/api/v1/users/signup'
+        var url = 'https://phamhang.com/api/v1/users/signup'
         var regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,20}$/;
         if (!this.state.password.match(regex)) {
             alert('Password must has between 8 to 20 characters with at least one lowercase letter, one uppercase letter, one numeric digit, and one special character')

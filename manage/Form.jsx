@@ -44,7 +44,7 @@ export default class Form extends React.Component {
       if (this.state.id === "" || this.state.id === undefined) {
         var content = {"name": this.state.name,"category":this.state.category,"count":this.state.count,"data":this.state.data}
         console.log("add", JSON.stringify(content));
-        fetch(`http://localhost:5000/api/v1/products`, {
+        fetch(`https://phamhang.com/api/v1/products`, {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
@@ -64,7 +64,7 @@ export default class Form extends React.Component {
             alert('New product has been created')});
       } else {
         console.log("edit", JSON.stringify(this.state));
-        fetch(`http://localhost:5000/api/v1/products/${this.state.id}`, {
+        fetch(`https://phamhang.com/api/v1/products/${this.state.id}`, {
           headers: {
             Accept: "application/json, text/plain, */*",
             "Content-Type": "application/json",
@@ -78,7 +78,7 @@ export default class Form extends React.Component {
               type: "EDIT_PRODUCT",
               payload: {},
             });
-            fetch(`http://localhost:5000/api/v1/products`)
+            fetch(`https://phamhang.com/api/v1/products`)
             .catch((err) => {
               console.log('ERR:',err);
             })

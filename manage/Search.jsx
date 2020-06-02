@@ -16,7 +16,7 @@ export default class Search extends React.Component {
   }
 
   onClear() {
-    fetch(`http://localhost:5000/api/v1/products`)
+    fetch(`https://phamhang.com/api/v1/products`)
       .catch((err) => {
         console.log(err);
       })
@@ -33,7 +33,7 @@ export default class Search extends React.Component {
 
   onSearch() {
     if(this.state.name!==""){
-      var url =`http://localhost:5000/api/v1/products/search/${this.state.name}`
+      var url =`https://phamhang.com/api/v1/products/search/${this.state.name}`
       fetch(url)
         .catch((err) => {
           console.log('ERR:',err);

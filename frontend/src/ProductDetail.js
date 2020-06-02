@@ -47,7 +47,7 @@ class ProductDetail extends React.Component {
   }
 
   fetchBookmark() {
-    var url = `http://localhost:5000/api/v1/users/bookmark/${localStorage.getItem("username")}&${this.props.match.params.id}`;
+    var url = `https://phamhang.com/api/v1/users/bookmark/${localStorage.getItem("username")}&${this.props.match.params.id}`;
     const that = this;
     console.log(url)
     fetch(url, { method: "PUT" })
@@ -63,7 +63,7 @@ class ProductDetail extends React.Component {
       pros: this.state.pros,
       cons: this.state.cons,
     }
-    const url = `http://localhost:5000/api/v1/reviews/${this.props.match.params.id}`;
+    const url = `https://phamhang.com/api/v1/reviews/${this.props.match.params.id}`;
     console.log(url)
     axios.post(url, obj)
       .then(res => console.log(res.data))
@@ -77,7 +77,7 @@ class ProductDetail extends React.Component {
   }
 
   onAdd(e) {
-    const url = `http://localhost:5000/api/v1/users/bookmark/${localStorage.getItem("username")}&${this.props.match.params.id}`;
+    const url = `https://phamhang.com/api/v1/users/bookmark/${localStorage.getItem("username")}&${this.props.match.params.id}`;
     console.log(url)
     fetch(url, {
       method: "POST"
@@ -87,7 +87,7 @@ class ProductDetail extends React.Component {
   }
 
   onDelete(e) {
-    const url = `http://localhost:5000/api/v1/users/bookmark/${localStorage.getItem("username")}&${this.props.match.params.id}`;
+    const url = `https://phamhang.com/api/v1/users/bookmark/${localStorage.getItem("username")}&${this.props.match.params.id}`;
     console.log(url)
     fetch(url, {
       method: "DELETE"
@@ -121,7 +121,7 @@ class ProductDetail extends React.Component {
   }
 
   fetchReviews() {
-    var url = `http://localhost:5000/api/v1/reviews/${this.props.match.params.id}`;
+    var url = `https://phamhang.com/api/v1/reviews/${this.props.match.params.id}`;
     const that = this;
 
     fetch(url)

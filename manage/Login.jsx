@@ -10,7 +10,7 @@ export default class Login extends React.Component {
   login(){
     if (this.state.username=="admin"){
       this.setState({ message: 'Please wait. Logging in...' });
-      fetch('http://localhost:5000/api/v1/users/login', {
+      fetch('https://phamhang.com/api/v1/users/login', {
         method: 'POST',
         body: JSON.stringify({
             username: this.state.username,
